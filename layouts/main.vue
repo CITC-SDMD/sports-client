@@ -183,8 +183,8 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
-  { name: 'Athletes', href: '#', icon: UserGroupIcon, activeRouteNames: ['admin-dashboard'] },
-  { name: 'Coach', href: '#', icon: UserIcon, activeRouteNames: ['admin-dashboard'] },
+  { name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: ['athletes'] },
+  { name: 'Coaches', href: '/coaches', icon: UserIcon, activeRouteNames: ['coaches'] },
 ]
 const userNavigation = [
   { name: 'Your profile', href: '#' },
