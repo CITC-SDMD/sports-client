@@ -5,7 +5,7 @@
     </Head>
 
     <div>
-        Athletes
+        <p class="dark:text-white">Athletes</p>
     </div>
 </template>
 

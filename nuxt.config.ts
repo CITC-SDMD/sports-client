@@ -5,7 +5,11 @@ export default defineNuxtConfig({
   modules: [
     '@pinia/nuxt',
     'pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/color-mode'
   ],
+  colorMode: {
+    classSuffix: ''
+  },
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {

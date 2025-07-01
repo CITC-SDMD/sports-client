@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 min-h-screen">
+  <div class="bg-gray-100 min-h-screen dark:bg-slate-300">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog class="relative z-50 lg:hidden" @close="sidebarOpen = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
@@ -25,7 +25,7 @@
               </TransitionChild>
 
               <!-- Sidebar component, swap this element with another sidebar if you like -->
-              <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4">
+              <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4 dark:bg-slate-800">
                 <div class="flex h-16 shrink-0 items-center">
                   <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=white"
                     alt="Your Company" />
@@ -35,23 +35,15 @@
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
-                          <a :href="item.href"
-                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-xl font-semibold']">
+                          <NuxtLink :to="item.href"
+                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-700 text-white dark:bg-slate-700' : 'text-blue-200 hover:bg-blue-700 dark:hover:bg-slate-700 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-xl font-semibold']">
                             <component :is="item.icon"
-                              :class="[item.activeRouteNames.includes($route.name) ? 'text-white' : 'text-blue-200 group-hover:text-white', 'size-6 shrink-0']"
+                              :class="[item.activeRouteNames.includes($route.name) ? 'text-white' : 'text-blue-200 dark:text-slate-200 group-hover:text-white', 'size-6 shrink-0']"
                               aria-hidden="true" />
                             {{ item.name }}
-                          </a>
+                          </NuxtLink>
                         </li>
                       </ul>
-                    </li>
-                    <li class="mt-auto">
-                      <a href="#"
-                        class="group -mx-2 flex gap-x-3 rounded-md p-2 text-xl font-semibold text-blue-200 hover:bg-blue-700 hover:text-white">
-                        <Cog6ToothIcon class="size-6 shrink-0 text-blue-200 group-hover:text-white"
-                          aria-hidden="true" />
-                        Settings
-                      </a>
                     </li>
                   </ul>
                 </nav>
@@ -65,7 +57,7 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
       <!-- Sidebar component, swap this element with another sidebar if you like -->
-      <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4">
+      <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-600 px-6 pb-4 dark:bg-slate-800">
         <div class="flex h-16 shrink-0 items-center">
           <img class="h-8 w-auto" src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=white"
             alt="Your Company" />
@@ -75,22 +67,15 @@
             <li>
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
-                  <a :href="item.href"
-                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-700 text-white' : 'text-blue-200 hover:bg-blue-700 hover:text-white', 'group flex gap-x-3 rounded-md p-3 text-lg font-semibold']">
+                  <NuxtLink :to="item.href"
+                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-700 dark:bg-slate-700 text-white' : 'text-blue-200 dark:text-slate-200 hover:bg-blue-700 dark:hover:bg-slate-700 hover:text-white', 'group flex gap-x-3 rounded-md p-3 text-lg font-semibold']">
                     <component :is="item.icon"
-                      :class="[item.activeRouteNames.includes($route.name) ? 'text-white' : 'text-blue-200 group-hover:text-white', 'size-6 shrink-0']"
+                      :class="[item.activeRouteNames.includes($route.name) ? 'text-white' : 'text-blue-200 dark:text-slate-200 group-hover:text-white', 'size-6 shrink-0']"
                       aria-hidden="true" />
                     {{ item.name }}
-                  </a>
+                  </NuxtLink>
                 </li>
               </ul>
-            </li>
-            <li class="mt-auto">
-              <a href="#"
-                class="group -mx-2 flex gap-x-3 rounded-md p-2 text-xl font-semibold text-blue-200 hover:bg-blue-700 hover:text-white">
-                <Cog6ToothIcon class="size-6 shrink-0 text-blue-200 group-hover:text-white" aria-hidden="true" />
-                Settings
-              </a>
             </li>
           </ul>
         </nav>
@@ -110,6 +95,10 @@
 
         <div class="flex flex-1 justify-end gap-x-4 self-stretch lg:gap-x-6">
           <div class="flex items-center gap-x-4 lg:gap-x-6">
+            <button type="button" @click="toggleTheme" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
+              <MoonIcon class="size-6" aria-hidden="true" v-if="state.color == 'light'" />
+              <SunIcon class="size-6" aria-hidden="true" v-else />
+            </button>
             <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
               <span class="sr-only">View notifications</span>
               <BellIcon class="size-6" aria-hidden="true" />
@@ -149,16 +138,16 @@
         </div>
       </div>
 
-        <main class="py-10">
-          <div class="px-4 sm:px-6 lg:px-8">
-            <slot />
-          </div>
-        </main>
+      <main class="py-10">
+        <div class="px-4 sm:px-6 lg:px-8">
+          <slot />
+        </div>
+      </main>
     </div>
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 import {
   Dialog,
@@ -178,8 +167,30 @@ import {
   RectangleGroupIcon,
   UserGroupIcon,
   XMarkIcon,
+  MoonIcon,
+  SunIcon
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
+
+type Theme = 'light' | 'dark'
+
+const setColorTheme = (newTheme: Theme) => {
+  useColorMode().preference = newTheme
+}
+
+const state = reactive({
+  color: 'light'
+})
+
+function toggleTheme(){
+  if(state.color == 'light'){
+    state.color = 'dark'
+    setColorTheme(state.color);
+  }else{
+    state.color = 'light'
+    setColorTheme(state.color);
+  }
+}
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
