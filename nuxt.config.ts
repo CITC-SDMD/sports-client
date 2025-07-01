@@ -16,4 +16,11 @@ export default defineNuxtConfig({
   plugins: [
     '@/plugins/vue-notification.ts'
   ],
+  runtimeConfig: {
+    public: {
+      apiBaseURL: process.env.API_BASE_URL,
+      appName: process.env.APP_NAME
+    }
+  },
+  ssr: false,
 })
