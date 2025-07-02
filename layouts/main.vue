@@ -160,17 +160,23 @@ import {
   SunIcon,
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, UserGroupIcon } from '@heroicons/vue/20/solid'
+import { useUserStore } from '@/store/user'
+
+const userStore = useUserStore()
 
 const colorMode = useColorMode()
 
 const state = reactive({
   color: colorMode.preference,
-  open: false
+  open: false,
+  user: userStore.getUser,
 })
 
 onMounted(() => {
   state.color = colorMode.preference
 })
+
+console.log(state.user)
 
 watch(() => colorMode.preference, (newVal) => {
   state.color = newVal
@@ -185,4 +191,8 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
   { name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: ['athletes'] },
 ]
+
+async function logout() {
+  //
+}
 </script>
