@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 dark:bg-slate-600 h-screen">
+  <div class="bg-gray-100 dark:bg-slate-900 h-screen">
     <TransitionRoot as="template" :show="state.open">
       <Dialog class="relative z-50 lg:hidden" @close="state.open = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
@@ -24,7 +24,7 @@
                 </div>
               </TransitionChild>
               <div
-                class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-slate-800 px-6 pb-4 ring-1 ring-white/10">
+                class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-black px-6 pb-4 ring-1 ring-white/10">
                 <div class="flex h-16 shrink-0 items-center justify-center">
                   <span class="font-bold text-white text-center">
                     Sports Athlete Management System
@@ -52,10 +52,11 @@
       </Dialog>
     </TransitionRoot>
 
-    <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-      <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-slate-800 px-6 pb-4">
+    <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-co">
+      <div
+        class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-black px-6 pb-4 border-r dark:border-slate-700">
         <div class="flex h-16 shrink-0 items-center justify-center">
-          <span class="font-bold text-white text-center text-center">
+          <span class="font-bold text-white text-center">
             Sports Athlete Management System
           </span>
         </div>
@@ -65,7 +66,7 @@
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
                   <NuxtLink :to="item.href"
-                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-slate-700 text-white' : 'text-white hover:bg-blue-800 dark:hover:bg-slate-700 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-base font-semibold']">
+                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-white text-white dark:text-black' : 'text-white hover:bg-blue-800 dark:hover:bg-slate-700 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-base font-semibold']">
                     <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
@@ -79,13 +80,11 @@
 
     <div class="lg:pl-72">
       <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-slate-800 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-black px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
         <button type="button" class="-m-2.5 p-2.5 text-black lg:hidden" @click="state.open = true">
           <span class="sr-only">Open sidebar</span>
-          <Bars3Icon class="h-6 w-6" aria-hidden="true" />
+          <Bars3Icon class="h-6 w-6 dark:text-white" aria-hidden="true" />
         </button>
-
-        <div class="h-6 w-px bg-gray-200 dark:bg-white lg:hidden" aria-hidden="true" />
 
         <div class="flex flex-1 gap-x-4 justify-end self-stretch lg:gap-x-6">
           <div class="flex items-center gap-x-4 lg:gap-x-6">
@@ -95,13 +94,11 @@
               <SunIcon class="size-6 text-yellow-600" aria-hidden="true" v-if="state.color == 'dark'" />
             </button>
 
-            <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10 dark:bg-white" aria-hidden="true" />
-
             <Menu as="div" class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5 cursor-pointer">
                 <span class="sr-only">Open user menu</span>
                 <span
-                  class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 dark:bg-slate-900">
+                  class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 dark:bg-slate-800">
                   <span class="text-base font-bold leading-none text-white">
                     {{ state.user?.firstname.charAt(0) }}{{ state.user?.lastname.charAt(0) }}
                   </span>
@@ -110,7 +107,7 @@
                   <span class="ml-4 text-base font-semibold leading-6 text-black dark:text-white" aria-hidden="true">
                     {{ state.user?.firstname }} {{ state.user?.lastname }}
                   </span>
-                  <ChevronDownIcon class="ml-2 h-5 w-5 text-black" aria-hidden="true" />
+                  <ChevronDownIcon class="ml-2 h-5 w-5 text-black dark:text-white" aria-hidden="true" />
                 </span>
               </MenuButton>
               <transition enter-active-class="transition ease-out duration-100"
@@ -118,10 +115,10 @@
                 leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
                 leave-to-class="transform opacity-0 scale-95">
                 <MenuItems
-                  class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                  class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white dark:bg-slate-900 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                   <MenuItem>
-                  <a @click="logoutUser"
-                    class='block px-3 py-1 text-base leading-6 text-black hover:bg-gray-50 cursor-pointer'>
+                  <a @click="logout"
+                    class='block px-3 py-1 text-base leading-6 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-slate-600 cursor-pointer'>
                     Sign out
                   </a>
                   </MenuItem>
@@ -159,8 +156,9 @@ import {
   MoonIcon,
   SunIcon,
 } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, UserGroupIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, UserGroupIcon, UsersIcon } from '@heroicons/vue/20/solid'
 import { useUserStore } from '@/store/user'
+import { authService } from '@/api/auth/AuthService'
 
 const userStore = useUserStore()
 
@@ -170,6 +168,7 @@ const state = reactive({
   color: colorMode.preference,
   open: false,
   user: userStore.getUser,
+  error: null as any
 })
 
 onMounted(() => {
@@ -190,9 +189,19 @@ function toggleTheme() {
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
   { name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: ['athletes'] },
+  { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] },
 ]
 
 async function logout() {
-  //
+  try {
+    const response = await authService.logout()
+    if (response.message == 'Success.') {
+      localStorage.removeItem('_token');
+      userStore.resetUser()
+      navigateTo('/')
+    }
+  } catch (error) {
+    state.error = error
+  }
 }
 </script>

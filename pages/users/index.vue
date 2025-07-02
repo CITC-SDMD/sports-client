@@ -1,11 +1,11 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Dashboard</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Users</Title>
     </Head>
 
     <div class="text-black dark:text-white">
-        Dashboard
+        Users
     </div>
 </template>
 
