@@ -13,21 +13,21 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-gray-200 bg-white">
+                <tbody class="divide-y divide-gray-200 dark:divide-gray-500 bg-white dark:bg-slate-400">
                     <tr v-for="body in props.body?.data" :key="body.id">
-                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-800">
+                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-900">
                             {{ body.full_name }}
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-800">
+                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-900">
                             {{ body.gender }}
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-800">
+                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-900">
                             {{ body.birthdate }}
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-800">
+                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-900">
                             {{ body.age }}
                         </td>
-                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-800">
+                        <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-slate-900">
                             {{ body.phone_number }}
                         </td>
                         <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
