@@ -26,7 +26,7 @@
               <div
                 class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
                 <div class="flex h-16 shrink-0 items-center justify-center">
-                  <span class="font-bold dark:text-gray-200 text-white text-center">
+                  <span class="font-bold dark:text-gray-200 text-white text-center text-lg">
                     Sports Athlete Management System
                   </span>
                 </div>
@@ -36,7 +36,7 @@
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
                           <NuxtLink :to="item.href"
-                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-base font-semibold']">
+                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                             <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                             {{ item.name }}
                           </NuxtLink>
@@ -56,7 +56,7 @@
       <div
         class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-900 px-6 pb-4 border-r dark:border-slate-700">
         <div class="flex h-16 shrink-0 items-center justify-center">
-          <span class="font-bold text-white dark:text-gray-200 text-center">
+          <span class="font-bold text-white dark:text-gray-200 text-center text-lg">
             Sports Athlete Management System
           </span>
         </div>
@@ -66,7 +66,7 @@
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
                   <NuxtLink :to="item.href"
-                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-base font-semibold']">
+                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                     <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
