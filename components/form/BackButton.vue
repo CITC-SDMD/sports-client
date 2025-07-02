@@ -1,6 +1,6 @@
 <template>
     <button
-        class="rounded-md bg-blue-50 px-2.5 py-1.5 text-sm font-semibold text-blue-600 shadow-sm hover:bg-blue-200 flex items-center space-x-2">
+        class="rounded-md bg-blue-50 dark:bg-gray-900 px-2.5 py-1.5 text-sm font-semibold text-blue-600 dark:text-gray-200 shadow-sm hover:bg-blue-200 dark:hover:bg-gray-700 flex items-center space-x-2">
         <ChevronLeftIcon class="h-5 w-5" />
         Back
     </button>

@@ -16,9 +16,9 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-white bg-white dark:bg-gray-800">
                         <!-- Show table rows if there's data -->
-                        <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.id">
+                        <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-200">
-                                {{ body.full_name }}
+                                {{ body.firtname }} {{ body.middlename }} {{ body.lastname }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-200">
                                 {{ body.gender }}
@@ -30,10 +30,10 @@
                                 {{ body.age }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-200">
-                                {{ body.phone_number }}
+                                {{ body.contact_no }}
                             </td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
-                                <FormButton class="flex gap-x-2 items-center dark:bg-gray-900 dark:hover:bg-slate-700">
+                                <FormButton @click="goToViewPage(body.uuid)" class="flex gap-x-2 items-center">
                                     <EyeIcon class="text-white dark:text-gray-200 w-5 h-5" />
                                     View
                                 </FormButton>
@@ -55,6 +55,9 @@
 <script setup>
 import { EyeIcon } from '@heroicons/vue/24/outline';
 
+const route = useRoute()
+var path = route.fullPath
+
 const props = defineProps({
     head: {
         type: Array,
@@ -65,4 +68,8 @@ const props = defineProps({
         required: false
     },
 })
+
+function goToViewPage(uuid) {
+    navigateTo(`${path}/${uuid}`)
+}
 </script>

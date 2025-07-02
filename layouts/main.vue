@@ -188,7 +188,12 @@ function toggleTheme() {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
-  { name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: ['athletes'] },
+  {
+    name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: [
+      'athletes',
+      'athletes-uuid',
+    ]
+  },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] },
 ]
 
