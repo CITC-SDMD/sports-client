@@ -55,7 +55,7 @@ const state = reactive({
         { name: 'Age' },
         { name: 'Contact no.' },
     ],
-    body: [],
+    body: [] as any,
     search: null as any,
     searchFilter: null as any
 })
