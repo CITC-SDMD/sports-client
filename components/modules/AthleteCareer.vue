@@ -64,81 +64,79 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Full name</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.firstname }}
-                                        {{ props.player.middlename }}
-                                        {{ props.player.lastname }}
+                                        1
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Date of birth</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ moment(props.player.birthdate).format('MMMM D, YYYY') ?? '' }}
+                                        2
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.age }}
+                                        3
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.address }}
+                                        4
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Birth place</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.birth_place }}
+                                        5
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Civil status</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.civil_status }}
+                                        6
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Gender</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.gender }}
+                                        7
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Contact number</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.contact_no }}
+                                        8
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Religion</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.religion }}
+                                        9
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">School</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.school }}
+                                        10
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Occupation</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.Occupation }}
+                                        11
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Team</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.sports_team }}
+                                        12
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Date registered</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ moment(props.player.registry_date).format('MMMM DD, YYYY') ?? '' }}
+                                        13
                                     </dd>
                                 </div>
                             </dl>
@@ -159,10 +157,11 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath;
-const careerUrl = path.replace('/profile', '/career')
+const profileUrl = path.replace('/career', '/profile')
+
 const tabs = [
-    { name: 'Profile', href: `${path}`, current: true },
-    { name: 'Career', href: careerUrl, current: false },
+    { name: 'Profile', href: profileUrl, current: false },
+    { name: 'Career', href: `${path}`, current: true },
     { name: 'Recognition', href: '#', current: false },
 ]
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 dark:bg-black h-screen">
+  <div class="bg-gray-100 dark:bg-slate-900 min-h-screen">
     <TransitionRoot as="template" :show="state.open">
       <Dialog class="relative z-50 lg:hidden" @close="state.open = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
@@ -54,7 +54,7 @@
 
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-co">
       <div
-        class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-900 px-6 pb-4 border-r dark:border-slate-700">
+        class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-600 px-6 pb-4 border-r dark:border-slate-700">
         <div class="flex h-16 shrink-0 items-center justify-center">
           <span class="font-bold text-white dark:text-gray-200 text-center text-lg">
             Sports Athlete Management System
@@ -80,7 +80,7 @@
 
     <div class="lg:pl-72">
       <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-900 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-600 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
         <button type="button" class="-m-2.5 p-2.5 text-black lg:hidden" @click="state.open = true">
           <span class="sr-only">Open sidebar</span>
           <Bars3Icon class="h-6 w-6 dark:text-white" aria-hidden="true" />
@@ -156,7 +156,7 @@ import {
   MoonIcon,
   SunIcon,
 } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, UserGroupIcon, UsersIcon } from '@heroicons/vue/20/solid'
+import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import { useUserStore } from '@/store/user'
 import { authService } from '@/api/auth/AuthService'
 
@@ -175,8 +175,6 @@ onMounted(() => {
   state.color = colorMode.preference
 })
 
-console.log(state.user)
-
 watch(() => colorMode.preference, (newVal) => {
   state.color = newVal
 })
@@ -189,9 +187,17 @@ function toggleTheme() {
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] },
   {
-    name: 'Athletes', href: '/athletes', icon: UserGroupIcon, activeRouteNames: [
+    name: 'Athletes', href: '/athletes', icon: TrophyIcon, activeRouteNames: [
       'athletes',
-      'athletes-uuid',
+      'athletes-uuid-profile',
+      'athletes-uuid-career',
+    ]
+  },
+  {
+    name: 'Coaches', href: '/coaches', icon: UserGroupIcon, activeRouteNames: [
+      'coaches',
+      'coaches-uuid-profile',
+      'coaches-uuid-career',
     ]
   },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] },
