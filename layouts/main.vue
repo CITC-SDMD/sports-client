@@ -90,8 +90,8 @@
           <div class="flex items-center gap-x-4 lg:gap-x-6">
 
             <button type="button" @click="toggleTheme" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-              <MoonIcon class="size-6" aria-hidden="true" v-if="state.color == 'light'" />
-              <SunIcon class="size-6 text-yellow-600" aria-hidden="true" v-if="state.color == 'dark'" />
+              <MoonIcon class="size-6" aria-hidden="true" v-if="state.color === 'light'" />
+              <SunIcon class="size-6 text-yellow-600" aria-hidden="true" v-if="state.color === 'dark'" />
             </button>
 
             <Menu as="div" class="relative">
@@ -165,14 +165,14 @@ const user = userStore.getUser
 const colorMode = useColorMode()
 
 const state = reactive({
-  color: null as any,
+  color: colorMode.preference,
   open: false,
   user: userStore.getUser,
   error: null as any
 })
 
 onMounted(() => {
-  state.color = user?.theme
+  colorMode.preference = user?.theme
 })
 
 watch(() => colorMode.preference, (newVal) => {

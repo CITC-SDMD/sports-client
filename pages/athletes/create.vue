@@ -5,9 +5,10 @@
     </Head>
 
     <div>
+        <Loader v-if=state.isPageLoading />
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <ModulesCoachAthleteForm />
+        <ModulesCoachAthleteForm @loadPage="(value) => state.isPageLoading = value" />
     </div>
 </template>
 
@@ -22,6 +23,7 @@ definePageMeta({
 })
 
 const state = reactive({
+    isPageLoading: false,
     error: null as any
 })
 

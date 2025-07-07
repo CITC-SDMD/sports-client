@@ -7,3 +7,63 @@
 body {
     font-family: "Montserrat", sans-serif;
 }
+
+.multiselect {
+    @apply border border-blue-500 rounded-md min-h-10 text-black text-base !important;
+}
+
+.multiselect-dropdown {
+    @apply border border-blue-500 rounded-md !important;
+}
+
+.multiselect-tag {
+    @apply bg-blue-500 !important;
+}
+
+.multiselect.is-active {
+    box-shadow: none !important;
+    @apply border border-blue-500 !important;
+}
+
+.multiselect-option.is-selected,
+.multiselect-option.is-selected.is-pointed {
+    @apply bg-blue-500 !important;
+}
+
+/* Target the horizontal scrollbar */
+.flex::-webkit-scrollbar {
+    height: 8px;
+    /* Height of the scrollbar */
+    appearance: none;
+    /* Remove native appearance */
+}
+
+/* Remove the scrollbar buttons */
+.flex::-webkit-scrollbar-button {
+    display: none;
+    /* Hides the left and right arrows */
+}
+
+/* Style the scrollbar thumb */
+.flex::-webkit-scrollbar-thumb {
+    background-color: #4b5563;
+    /* Thumb color */
+    border-radius: 4px;
+    /* Rounded thumb */
+}
+
+/* Style the scrollbar track */
+.flex::-webkit-scrollbar-track {
+    background-color: #f3f4f6;
+    /* Track color */
+    border-radius: 4px;
+    /* Rounded track */
+}
+
+/* For Firefox, ensure the scrollbar works as expected */
+.flex {
+    scrollbar-width: thin;
+    /* Slim scrollbar */
+    scrollbar-color: #4b5563 #f3f4f6;
+    /* Thumb and track colors */
+}

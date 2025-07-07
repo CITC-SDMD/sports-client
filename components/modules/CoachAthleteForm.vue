@@ -1,7 +1,20 @@
 <template>
-    <form @submit.prevent="" autocomplete="off" class="max-w-2xl">
+    <form @submit.prevent="submit" autocomplete="off" class="max-w-2xl">
         <div class="mt-6 space-y-4 grid grid-cols-1">
             <div class="space-y-4">
+                <div class="flex items-center justify-center">
+                    <input type="file" ref="profileImage" @change="onCitizenImageChange" class="hidden" />
+                    <div class="relative cursor-pointer" @click="triggerCitizenImageInput">
+                        <img :src="avatarUrl" alt="Avatar"
+                            class="w-28 h-28 rounded-full object-cover border-2 border-tertiary-25" />
+                        <div
+                            class="rounded-full absolute inset-0 bg-black bg-opacity-50 text-white opacity-0 hover:opacity-100 transition-opacity">
+                            <div class="flex items-center w-full h-full justify-center text-xs">
+                                Change image
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
@@ -39,7 +52,7 @@
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormDatePicker name="birthdate" class="w-full" />
+                            <FormDatePicker name="birthdate" class="w-full" v-model="state.form.birthdate" />
                             <FormError :error="v$?.form.birthdate?.$errors[0]?.$message.toString()" />
                             <FormError :error="state.error?.errors?.form.birthdate?.[0]" />
                         </div>
@@ -61,24 +74,124 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
-                            <FormLabel for="lastname" label="Last name" />
+                            <FormLabel for="birth_place" label="Birth place" />
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="lastname" class="w-full" v-model="state.form.lastname" />
-                            <FormError :error="v$?.form.lastname?.$errors[0]?.$message.toString()" />
-                            <FormError :error="state.error?.errors?.form.lastname?.[0]" />
+                            <FormTextField name="birth_place" class="w-full" v-model="state.form.birth_place" />
+                            <FormError :error="v$?.form.birth_place?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.birth_place?.[0]" />
                         </div>
                     </div>
                     <div>
                         <div class="flex">
-                            <FormLabel for="birthdate" label="Birthday" />
+                            <FormLabel for="age" label="Age" />
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormDatePicker name="birthdate" class="w-full" />
-                            <FormError :error="v$?.form.birthdate?.$errors[0]?.$message.toString()" />
-                            <FormError :error="state.error?.errors?.form.birthdate?.[0]" />
+                            <FormTextField name="age" class="w-full" v-model="state.form.age" />
+                            <FormError :error="v$?.form.age?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.age?.[0]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="civil_status" label="Civil status" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormSelect :options="state.option.civil_status" name="civil_status" class="w-full"
+                                v-model="state.form.civil_status" />
+                            <FormError :error="v$?.form.civil_status?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.civil_status?.[0]" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="gender" label="Sex" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormSelect :options="state.option.gender" name="gender" class="w-full"
+                                v-model="state.form.gender" />
+                            <FormError :error="v$?.form.gender?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.gender?.[0]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="contact_no" label="Contact number" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormSelect :options="state.option.civil_status" name="contact_no" class="w-full"
+                                v-model="state.form.contact_no" />
+                            <FormError :error="v$?.form.contact_no?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.contact_no?.[0]" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="religion_id" label="Religion" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormSelect :options="state.option.religion" name="religion_id" class="w-full"
+                                v-model="state.form.religion_id" />
+                            <FormError :error="v$?.form.religion_id?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.religion_id?.[0]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="school" label="School" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormTextField name="school" class="w-full" v-model="state.form.school" />
+                            <FormError :error="v$?.form.school?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.school?.[0]" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="occupation" label="Occupation" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormTextField name="occupation" class="w-full" v-model="state.form.occupation" />
+                            <FormError :error="v$?.form.occupation?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.occupation?.[0]" />
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="sports_team" label="Sports team" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormTextField name="sports_team" class="w-full" v-model="state.form.sports_team" />
+                            <FormError :error="v$?.form.sports_team?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.sports_team?.[0]" />
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex">
+                            <FormLabel for="registry_date" label="Date of registration" />
+                            <span class="text-red-500">*</span>
+                        </div>
+                        <div class="mt-2">
+                            <FormDatePicker name="registry_date" class="w-full" v-model="state.form.registry_date" />
+                            <FormError :error="v$?.form.registry_date?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.registry_date?.[0]" />
                         </div>
                     </div>
                 </div>
@@ -94,6 +207,12 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
+import { religionService } from "@/api/religion/ReligionService"
+
+const emit = defineEmits(['loadPage', 'errorMessage', 'submitForm'])
+
+const avatarUrl = ref('/img/avatars/user.svg')
+const profileImage = ref<HTMLInputElement | null>(null)
 
 const state = reactive({
     form: {
@@ -107,15 +226,95 @@ const state = reactive({
         civil_status: null as any,
         gender: null as any,
         contact_no: null as any,
-        religion: null as any,
+        religion_id: null as any,
         school: null as any,
         occupation: null as any,
         sports_team: null as any,
         photo: null as any,
         registry_date: null as any,
     },
-    error: null as any
+    error: null as any,
+    option: {
+        civil_status: [
+            {
+                value: 'single',
+                label: 'Single'
+            },
+            {
+                value: 'married',
+                label: 'Married'
+            },
+            {
+                value: 'widowed',
+                label: 'Widowed'
+            },
+            {
+                value: 'divorced',
+                label: 'Divorced'
+            },
+        ],
+        gender: [
+            {
+                value: 'male',
+                label: 'Male'
+            },
+            {
+                value: 'female',
+                label: 'Female'
+            }
+        ],
+        religion: []
+    }
 })
+
+onMounted(() => {
+    fetchReligions()
+});
+
+async function fetchReligions() {
+    emit('loadPage', true)
+    try {
+        const response = await religionService.fetchReligionList()
+        if (response.data) {
+            let options: any = []
+            response.data.forEach(
+                (item: any) => options.push({
+                    value: item.id,
+                    label: item.name,
+                })
+            )
+            state.option.religion = options
+        }
+    } catch (error) {
+        emit('errorMessage', error)
+    }
+    emit('loadPage', false)
+}
+watch(() => state.form.birthdate, (newValue) => {
+    const currentYear = new Date().getFullYear();
+    const birthDate = newValue;
+    const birthYear = new Date(birthDate).getFullYear();
+    const age = currentYear - birthYear
+    state.form.age = age
+})
+
+function onCitizenImageChange(event: any) {
+    const file = event.target.files[0]
+    state.form.photo = event.target.files[0]
+    if (file) {
+        const reader = new FileReader()
+        reader.onload = (e: any) => {
+            avatarUrl.value = e.target.result
+        }
+        reader.readAsDataURL(file)
+    }
+}
+
+function triggerCitizenImageInput() {
+    if (profileImage.value) {
+        profileImage.value.click()
+    }
+}
 
 const rules = computed(() => {
     return {
@@ -147,7 +346,7 @@ const rules = computed(() => {
             contact_no: {
                 required: helpers.withMessage('This field is required.', required),
             },
-            religion: {
+            religion_id: {
                 required: helpers.withMessage('This field is required.', required),
             },
             school: {
@@ -159,9 +358,6 @@ const rules = computed(() => {
             sports_team: {
                 required: helpers.withMessage('This field is required.', required),
             },
-            photo: {
-                required: helpers.withMessage('This field is required.', required),
-            },
             registry_date: {
                 required: helpers.withMessage('This field is required.', required),
             },
@@ -170,4 +366,11 @@ const rules = computed(() => {
 })
 
 const v$ = useVuelidate(rules, state)
+
+function submit() {
+    v$.value.$validate()
+    if (!v$.value.$error) {
+        emit('submitForm', state.form)
+    }
+}
 </script>
