@@ -7,11 +7,22 @@
     <div>
         <Loader v-if="state.isPageLoading" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="flex items-center justify-end">
-            <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2">
-                <PlusIcon class="w-6 h-6" />
-                Add new athlete
-            </FormButton>
+        <div class="flex items-center justify-between">
+            <div class="w-full">
+                <form @submit.prevent="search" class="flex w-full space-x-4">
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full" />
+                    <FormButton type="submit" class="flex items-center gap-x-2">
+                        <MagnifyingGlassIcon class="w-6 h-6" />
+                        Search
+                    </FormButton>
+                </form>
+            </div>
+            <div class="w-full flex justify-end">
+                <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2">
+                    <PlusIcon class="w-6 h-6" />
+                    Add new athlete
+                </FormButton>
+            </div>
         </div>
         <TableAthlete :head=state.head :body="state.body" />
         <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
@@ -20,7 +31,7 @@
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
-import { PlusIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
@@ -43,7 +54,9 @@ const state = reactive({
         { name: 'Age' },
         { name: 'Contact no.' },
     ],
-    body: [] as any
+    body: [] as any,
+    search: null as any,
+    searchFilter: null as any
 })
 
 onMounted(() => {
@@ -54,7 +67,8 @@ async function getAthletes() {
     state.isPageLoading = true
     try {
         let params = {
-            page: currentPage
+            page: currentPage,
+            search: state.search
         }
         const response = await athleteService.fetchAthletes(params)
         if (response.data) {
@@ -64,6 +78,13 @@ async function getAthletes() {
         state.error = error
     }
     state.isPageLoading = false
+}
+
+async function search() {
+    currentPage = 1
+    let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
+    state.search = filterString
+    getAthletes()
 }
 
 async function previous() {
