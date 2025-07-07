@@ -4,7 +4,7 @@
         <Title>{{ runtimeConfig?.public?.appName }} | Login</Title>
     </Head>
 
-    <div class="flex h-screen flex-1">
+    <div class="flex h-screen flex-1 dark:bg-gray-600">
         <Loader v-if="state.isPageLoading" />
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
@@ -12,7 +12,9 @@
                     <img class="h-10 w-auto"
                         src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                         alt="Your Company" />
-                    <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+                    <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900 dark:text-gray-100">
+                        Sign in to your account
+                    </h2>
                 </div>
 
                 <div class="mt-10">

@@ -1,6 +1,6 @@
 import BaseAPIService from '@/api/BaseAPIService'
 
-class AuthService extends BaseAPIService {
+class UserService extends BaseAPIService {
     async fetchUsers(params: object): Promise<any> {
         return await this.request(`/users`, 'GET', params)
     }
@@ -17,7 +17,7 @@ class AuthService extends BaseAPIService {
         return await this.request(`/users/${uuid}`, 'PUT', params)
     }
 
-    async toggleTheme(params: object, uuid: string): Promise<any> {
+    async toggleTheme(uuid: string): Promise<any> {
         return await this.request(`/users/${uuid}/toggle-theme`, 'PUT')
     }
 
@@ -26,4 +26,4 @@ class AuthService extends BaseAPIService {
     }
 }
 
-export const authService = new AuthService()
+export const userService = new UserService()
