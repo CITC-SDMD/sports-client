@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-import { EnvelopeIcon, PencilSquareIcon, PhoneIcon } from '@heroicons/vue/20/solid'
+import { PencilSquareIcon } from '@heroicons/vue/20/solid'
 import moment from 'moment'
 
 const avatarUrl = ref('/img/avatars/user.svg')
