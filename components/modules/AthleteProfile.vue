@@ -13,8 +13,11 @@
                             <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                                 <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                                     <div class="flex">
-                                        <img class="size-24 rounded-full ring-4 ring-white sm:size-32"
-                                            :src="profile.imageUrl" alt="" />
+                                        <img v-if="props.player.photo"
+                                            class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                            :src="props.player.photo" alt="profile photo" />
+                                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                            :src="avatarUrl" alt="profile photo" />
                                     </div>
                                     <div
                                         class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
@@ -114,7 +117,7 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Religion</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.religion }}
+                                        {{ props.player.religion?.name }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
@@ -126,7 +129,7 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Occupation</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.player.Occupation }}
+                                        {{ props.player.occupation }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
@@ -154,8 +157,7 @@
 import { EnvelopeIcon, PencilSquareIcon, PhoneIcon } from '@heroicons/vue/20/solid'
 import moment from 'moment'
 
-const router = useRouter()
-const uuid = router?.currentRoute?.value?.params?.uuid
+const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
 const path = route.fullPath;

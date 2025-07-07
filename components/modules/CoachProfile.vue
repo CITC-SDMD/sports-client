@@ -114,7 +114,7 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Religion</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.coach.religion }}
+                                        {{ props.coach.religion?.name }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
@@ -126,7 +126,7 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Occupation</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
-                                        {{ props.coach.Occupation }}
+                                        {{ props.coach.occupation }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">

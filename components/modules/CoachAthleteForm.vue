@@ -65,7 +65,7 @@
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormTextarea name="address" class="w-full" />
+                            <FormTextarea name="address" class="w-full" v-model="state.form.address" />
                             <FormError :error="v$?.form.address?.$errors[0]?.$message.toString()" />
                             <FormError :error="state.error?.errors?.form.address?.[0]" />
                         </div>
@@ -128,8 +128,7 @@
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormSelect :options="state.option.civil_status" name="contact_no" class="w-full"
-                                v-model="state.form.contact_no" />
+                            <FormTextField name="contact_no" class="w-full" v-model="state.form.contact_no" />
                             <FormError :error="v$?.form.contact_no?.$errors[0]?.$message.toString()" />
                             <FormError :error="state.error?.errors?.form.contact_no?.[0]" />
                         </div>
@@ -208,6 +207,7 @@
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
 import { religionService } from "@/api/religion/ReligionService"
+import { FormTextField } from "#components"
 
 const emit = defineEmits(['loadPage', 'errorMessage', 'submitForm'])
 
