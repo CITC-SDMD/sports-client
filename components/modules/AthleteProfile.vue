@@ -62,7 +62,7 @@
                         <div class="mx-auto mt-6 max-w-5xl px-4 sm:px-6 lg:px-8 pb-10">
                             <dl class="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Full name</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Full name</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.firstname }}
                                         {{ props.player.middlename }}
@@ -70,73 +70,73 @@
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Date of birth</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Date of birth</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ moment(props.player.birthdate).format('MMMM D, YYYY') ?? '' }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Address</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.age }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Address</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.address }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Birth place</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Birth place</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.birth_place }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Civil status</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Civil status</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.civil_status }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Gender</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Gender</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.gender }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Contact number</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Contact number</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.contact_no }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Religion</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Religion</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.religion }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">School</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">School</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.school }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Occupation</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Occupation</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.Occupation }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Team</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Team</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ props.player.sports_team }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
-                                    <dt class="text-sm font-bold text-gray-900">Date registered</dt>
+                                    <dt class="text-sm font-bold text-gray-900 dark:text-gray-100">Date registered</dt>
                                     <dd class="mt-1 text-sm text-gray-600 dark:text-white">
                                         {{ moment(props.player.registry_date).format('MMMM DD, YYYY') ?? '' }}
                                     </dd>
