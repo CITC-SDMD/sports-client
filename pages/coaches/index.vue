@@ -26,6 +26,7 @@
             </div>
         </div>
         <TableAthlete :head=state.head :body="state.body" />
+        <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
 </template>
 
@@ -84,6 +85,16 @@ async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
+    getCoaches()
+}
+
+async function previous() {
+    currentPage--
+    getCoaches()
+}
+
+async function next() {
+    currentPage++
     getCoaches()
 }
 
