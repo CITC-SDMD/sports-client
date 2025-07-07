@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Create Athlete</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Create Coach</Title>
     </Head>
 
     <div>
