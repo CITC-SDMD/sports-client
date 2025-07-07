@@ -1,4 +1,9 @@
 <template>
+
+    <Head>
+        <Title>{{ runtimeConfig?.public?.appName }} | Athlete Profile</Title>
+    </Head>
+
     <div>
         <Loader v-if="state.isPageLoading" />
         <FormBackButton @click="goToPreviousPage" />
@@ -10,6 +15,8 @@
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService';
+
+const runtimeConfig = useRuntimeConfig()
 
 const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid

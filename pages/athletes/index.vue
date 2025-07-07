@@ -8,6 +8,7 @@
         <Loader v-if="state.isPageLoading" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
         <TableAthlete :head=state.head :body="state.body" />
+        <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
 </template>
 
@@ -32,7 +33,7 @@ const state = reactive({
         { name: 'Age' },
         { name: 'Contact no.' },
     ],
-    body: []
+    body: [] as any
 })
 
 onMounted(() => {
@@ -55,4 +56,13 @@ async function getAthletes() {
     state.isPageLoading = false
 }
 
+async function previous() {
+    currentPage--
+    getAthletes()
+}
+
+async function next() {
+    currentPage++
+    getAthletes()
+}
 </script>
