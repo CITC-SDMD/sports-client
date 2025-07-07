@@ -7,16 +7,38 @@
     <div>
         <Loader v-if="state.isPageLoading" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
+        <div class="flex items-center justify-between">
+            <div class="w-full">
+                <form @submit.prevent="search" class="flex w-full space-x-4">
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
+                        placeholder="Search athlete" />
+                    <FormButton type="submit" class="flex items-center gap-x-2">
+                        <MagnifyingGlassIcon class="w-6 h-6" />
+                        Search
+                    </FormButton>
+                </form>
+            </div>
+            <div class="w-full flex justify-end">
+                <FormButton @click="goToCreateCoach" class="flex items-center gap-x-2">
+                    <PlusIcon class="w-6 h-6" />
+                    Add new coach
+                </FormButton>
+            </div>
+        </div>
         <TableAthlete :head=state.head :body="state.body" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { coachService } from '@/api/coach/CoachService'
+import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
 const runtimeConfig = useRuntimeConfig()
+
+const route = useRoute()
+const path = route.fullPath;
 
 definePageMeta({
     layout: 'main'
@@ -32,7 +54,9 @@ const state = reactive({
         { name: 'Age' },
         { name: 'Contact no.' },
     ],
-    body: []
+    body: [],
+    search: null as any,
+    searchFilter: null as any
 })
 
 onMounted(() => {
@@ -43,7 +67,8 @@ async function getCoaches() {
     state.isPageLoading = true
     try {
         let params = {
-            page: currentPage
+            page: currentPage,
+            search: state.search
         }
         const response = await coachService.fetchCoaches(params)
         if (response.data) {
@@ -55,4 +80,14 @@ async function getCoaches() {
     state.isPageLoading = false
 }
 
+async function search() {
+    currentPage = 1
+    let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
+    state.search = filterString
+    getCoaches()
+}
+
+function goToCreateCoach() {
+    navigateTo(`${path}/create`)
+}
 </script>
