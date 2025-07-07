@@ -7,6 +7,12 @@
     <div>
         <Loader v-if="state.isPageLoading" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
+        <div class="flex items-center justify-end">
+            <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2">
+                <PlusIcon class="w-6 h-6" />
+                Add new athlete
+            </FormButton>
+        </div>
         <TableAthlete :head=state.head :body="state.body" />
         <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
@@ -14,10 +20,14 @@
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
 const runtimeConfig = useRuntimeConfig()
+
+const route = useRoute()
+const path = route.fullPath;
 
 definePageMeta({
     layout: 'main'
@@ -64,5 +74,9 @@ async function previous() {
 async function next() {
     currentPage++
     getAthletes()
+}
+
+function goToCreateAthlete() {
+    navigateTo(`${path}/create`)
 }
 </script>

@@ -161,18 +161,18 @@ import { useUserStore } from '@/store/user'
 import { authService } from '@/api/auth/AuthService'
 
 const userStore = useUserStore()
-
+const user = userStore.getUser
 const colorMode = useColorMode()
 
 const state = reactive({
-  color: colorMode.preference,
+  color: null as any,
   open: false,
   user: userStore.getUser,
   error: null as any
 })
 
 onMounted(() => {
-  state.color = colorMode.preference
+  state.color = user?.theme
 })
 
 watch(() => colorMode.preference, (newVal) => {
