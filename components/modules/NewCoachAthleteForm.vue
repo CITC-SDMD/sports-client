@@ -89,7 +89,7 @@
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="age" class="w-full" v-model="state.form.age" />
+                            <FormTextField type="number" name="age" class="w-full" v-model="state.form.age" />
                             <FormError :error="v$?.form.age?.$errors[0]?.$message.toString()" />
                             <FormError :error="state.error?.errors?.form.age?.[0]" />
                         </div>
