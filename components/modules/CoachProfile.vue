@@ -14,9 +14,9 @@
                                 <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                                     <div class="flex">
                                         <img v-if="props.coach.photo"
-                                            class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                            class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white"
                                             :src="props.coach.photo" alt="profile photo" />
-                                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white"
                                             :src="avatarUrl" alt="profile photo" />
                                     </div>
                                     <div
@@ -29,7 +29,7 @@
                                         </div>
                                         <div
                                             class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                                            <FormButton class="flex items-center gap-x-2">
+                                            <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
                                                 <PencilSquareIcon class="-ml-0.5 size-5 text-white"
                                                     aria-hidden="true" />
                                                 Update
@@ -175,8 +175,7 @@ const props = defineProps({
     }
 })
 
-const profile = {
-    imageUrl:
-        'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+function goToEditPage() {
+    navigateTo(`${path}/edit`)
 }
 </script>

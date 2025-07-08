@@ -18,7 +18,7 @@ class CoachService extends BaseAPIService {
     }
 
     async updateCoach(params: object, uuid: string): Promise<any> {
-        return await this.request(`/coaches/${uuid}`, 'PUT', params)
+        return await this.request(`/coaches/${uuid}/update`, 'POST', params)
     }
 
     async deleteCoach(uuid: string): Promise<any> {

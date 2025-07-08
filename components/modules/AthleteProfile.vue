@@ -14,22 +14,23 @@
                                 <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                                     <div class="flex">
                                         <img v-if="props.player.photo"
-                                            class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                            class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white"
                                             :src="props.player.photo" alt="profile photo" />
-                                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32"
+                                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white"
                                             :src="avatarUrl" alt="profile photo" />
                                     </div>
                                     <div
                                         class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                                         <div class="mt-6 min-w-0 flex-1 sm:hidden 2xl:block">
                                             <h1 class="truncate text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                                {{ props.player.firstname }} {{ props.player.middlename }}
+                                                {{ props.player.firstname }}
+                                                {{ (props.player.middlename != 'null') ? props.player.middlename : '' }}
                                                 {{ props.player.lastname }}
                                             </h1>
                                         </div>
                                         <div
                                             class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                                            <FormButton class="flex items-center gap-x-2">
+                                            <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
                                                 <PencilSquareIcon class="-ml-0.5 size-5 text-white"
                                                     aria-hidden="true" />
                                                 Update
@@ -39,7 +40,8 @@
                                 </div>
                                 <div class="mt-6 hidden min-w-0 flex-1 sm:block 2xl:hidden">
                                     <h1 class="truncate text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                        {{ props.player.firstname }} {{ props.player.middlename }}
+                                        {{ props.player.firstname }}
+                                        {{ (props.player.middlename != 'null') ? props.player.middlename : '' }}
                                         {{ props.player.lastname }}
                                     </h1>
                                 </div>
@@ -161,11 +163,12 @@ const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
 const path = route.fullPath;
-const careerUrl = path.replace('/profile', '/career')
+const careerUrl = path.replace('/profile', '/careers')
+const coachUrl = path.replace('/profile', '/coaches')
 const tabs = [
-    { name: 'Profile', href: `${path}`, current: true },
+    { name: 'Profile', href: path, current: true },
     { name: 'Career', href: careerUrl, current: false },
-    { name: 'Recognition', href: '#', current: false },
+    { name: 'Coaches', href: coachUrl, current: false },
 ]
 
 const props = defineProps({
@@ -175,8 +178,7 @@ const props = defineProps({
     }
 })
 
-const profile = {
-    imageUrl:
-        'https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=8&w=1024&h=1024&q=80',
+function goToEditPage() {
+    navigateTo(`${path}/edit`)
 }
 </script>

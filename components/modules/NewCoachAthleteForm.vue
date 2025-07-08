@@ -3,8 +3,8 @@
         <div class="mt-6 space-y-4 grid grid-cols-1">
             <div class="space-y-4">
                 <div class="flex items-center justify-center">
-                    <input type="file" ref="profileImage" @change="onCitizenImageChange" class="hidden" />
-                    <div class="relative cursor-pointer" @click="triggerCitizenImageInput">
+                    <input type="file" ref="profileImage" @change="onImageChange" class="hidden" />
+                    <div class="relative cursor-pointer" @click="triggerImageInput">
                         <img :src="avatarUrl" alt="Avatar"
                             class="w-28 h-28 rounded-full object-cover border-2 border-tertiary-25" />
                         <div
@@ -298,7 +298,7 @@ watch(() => state.form.birthdate, (newValue) => {
     state.form.age = age
 })
 
-function onCitizenImageChange(event: any) {
+function onImageChange(event: any) {
     const file = event.target.files[0]
     state.form.photo = event.target.files[0]
     if (file) {
@@ -310,7 +310,7 @@ function onCitizenImageChange(event: any) {
     }
 }
 
-function triggerCitizenImageInput() {
+function triggerImageInput() {
     if (profileImage.value) {
         profileImage.value.click()
     }

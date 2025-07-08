@@ -186,7 +186,9 @@ const navigation = [
   {
     name: 'Athletes', href: '/athletes', icon: TrophyIcon, activeRouteNames: [
       'athletes',
+      'athletes-create',
       'athletes-uuid-profile',
+      'athletes-uuid-profile-edit',
       'athletes-uuid-career',
     ] as any
   },

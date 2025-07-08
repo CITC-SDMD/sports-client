@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Athlete Profile</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Athlete Career</Title>
     </Head>
 
     <div>
@@ -9,7 +9,8 @@
         <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
-            <ModulesAthleteProfile v-if="state.athlete" :player="state.athlete" />
+            <ModulesAthleteCoach v-if="state.athlete" :player="state.athlete">
+            </ModulesAthleteCoach>
         </div>
     </div>
 </template>
@@ -24,6 +25,7 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath;
+const baseUrl = path.replace(`/${uuid}/coaches`, '')
 
 definePageMeta({
     layout: 'main'
@@ -37,7 +39,7 @@ const state = reactive({
     isPageLoading: false,
     athlete: null as any,
     error: null as any,
-    athleteUuid: uuid as string
+    athleteUuid: uuid as string,
 })
 
 async function getAthlete() {
@@ -53,10 +55,7 @@ async function getAthlete() {
     state.isPageLoading = false
 }
 
-
 function goToPreviousPage() {
-    const url = path.replace('/profile', '')
-    navigateTo('/athletes')
+    navigateTo(baseUrl)
 }
-
 </script>

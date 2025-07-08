@@ -1,38 +1,57 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Create Coach</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Update Athlete</Title>
     </Head>
 
     <div>
         <Loader v-if=state.isPageLoading />
-        <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
-            @submitForm="saveData" />
+        <FormBackButton @click="goToPreviousPage" />
+        <ModulesEditCoachAthleteForm v-if="state.athlete" :data="state.athlete"
+            @loadPage="(value: boolean) => state.isPageLoading = value" @submitForm="updateAthlete" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { coachService } from '@/api/coach/CoachService';
-import { useAlert } from '@/composables/alert';
+import { athleteService } from '@/api/athlete/AthleteService';
+import { useAlert } from '@/composables/alert'
 
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const path = route.fullPath;
-
+const router = useRouter()
+const uuid = String(router?.currentRoute?.value?.params?.uuid)
 const { successAlert } = useAlert()
 
 definePageMeta({
     layout: 'main'
 })
 
+onMounted(() => {
+    fetchAthlete()
+})
+
 const state = reactive({
     isPageLoading: false,
+    athlete: null as any,
     error: null as any
 })
 
-async function saveData(data: any) {
+async function fetchAthlete() {
+    state.isPageLoading = true
+    try {
+        const response = await athleteService.fetchAthlete(uuid)
+        if (response.data) {
+            state.athlete = response.data
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
+async function updateAthlete(data: any) {
     state.isPageLoading = true
     try {
         let params = new FormData
@@ -52,9 +71,9 @@ async function saveData(data: any) {
         params.append('sports_team', data.sports_team)
         params.append('photo', data.photo)
         params.append('registry_date', data.registry_date)
-        const response = await coachService.createCoach(params)
+        const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
-            successAlert('Success!', 'Coach created.')
+            successAlert('Success!', 'Athlete update.')
             goToPreviousPage()
         }
     } catch (error) {
@@ -64,7 +83,7 @@ async function saveData(data: any) {
 }
 
 function goToPreviousPage() {
-    const url = path.replace('/create', '')
+    const url = path.replace('/edit', '')
     navigateTo(url)
 }
 </script>

@@ -6,6 +6,7 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
+        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ModulesCoachProfile v-if="state.coach" :coach="state.coach" />

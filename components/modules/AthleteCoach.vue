@@ -73,12 +73,12 @@ const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
 const path = route.fullPath;
-const profileUrl = path.replace('/careers', '/profile')
-const coachUrl = path.replace('/careers', '/coaches')
+const profileUrl = path.replace('/coaches', '/profile')
+const coachUrl = path.replace('/coaches', '/careers')
 const tabs = [
     { name: 'Profile', href: profileUrl, current: false },
-    { name: 'Career', href: path, current: true },
-    { name: 'Coaches', href: coachUrl, current: false },
+    { name: 'Career', href: coachUrl, current: false },
+    { name: 'Coaches', href: path, current: true },
 ]
 
 const props = defineProps({

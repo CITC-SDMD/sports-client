@@ -8,7 +8,8 @@
         <Loader v-if=state.isPageLoading />
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <ModulesCoachAthleteForm @loadPage="(value) => state.isPageLoading = value" @submitForm="saveData" />
+        <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
+            @submitForm="saveData" />
     </div>
 </template>
 

@@ -6,6 +6,7 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
+        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ModulesAthleteCareer v-if="state.athlete" :player="state.athlete">
@@ -30,7 +31,6 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath;
-const profileUrl = path.replace('/career', '/profile')
 const baseUrl = path.replace(`/${uuid}/career`, '')
 
 definePageMeta({
