@@ -28,6 +28,13 @@
                                                 {{ props.player.lastname }}
                                             </h1>
                                         </div>
+                                        <div
+                                            class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
+                                            <FormButton @click="addNewCoach" class="flex items-center gap-x-2">
+                                                <PlusIcon class="-ml-0.5 size-5 text-white" aria-hidden="true" />
+                                                Add new coach
+                                            </FormButton>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="mt-6 hidden min-w-0 flex-1 sm:block 2xl:hidden">
@@ -67,7 +74,7 @@
 </template>
 
 <script setup>
-import { PencilSquareIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 const avatarUrl = ref('/img/avatars/user.svg')
 
@@ -75,6 +82,9 @@ const route = useRoute()
 const path = route.fullPath;
 const profileUrl = path.replace('/coaches', '/profile')
 const coachUrl = path.replace('/coaches', '/careers')
+
+const emit = defineEmits(['openNewCoachModal'])
+
 const tabs = [
     { name: 'Profile', href: profileUrl, current: false },
     { name: 'Career', href: coachUrl, current: false },
@@ -87,4 +97,8 @@ const props = defineProps({
         required: true
     }
 })
+
+function addNewCoach() {
+    emit('openNewCoachModal', true)
+}
 </script>

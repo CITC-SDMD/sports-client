@@ -5,7 +5,7 @@ class CoachService extends BaseAPIService {
         return await this.request(`/coaches`, 'GET', params)
     }
 
-    async ferchCoatchList(): Promise<any> {
+    async fetchCoatchList(): Promise<any> {
         return await this.request(`/coaches/all/list`, 'GET')
     }
 

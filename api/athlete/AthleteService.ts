@@ -13,6 +13,10 @@ class AthleteService extends BaseAPIService {
         return await this.request(`/athletes/${uuid}`, 'GET')
     }
 
+    async fetchCoachesByAthlete(params: object): Promise<any> {
+        return await this.request(`/athletes/coach/list`, 'GET', params)
+    }
+
     async createAthlete(params: object): Promise<any> {
         return await this.request(`/athletes`, 'POST', params)
     }

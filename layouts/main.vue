@@ -190,6 +190,7 @@ const navigation = [
       'athletes-uuid-profile',
       'athletes-uuid-profile-edit',
       'athletes-uuid-career',
+      'athletes-uuid-coaches',
     ] as any
   },
   {
