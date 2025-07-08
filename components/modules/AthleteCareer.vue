@@ -28,14 +28,14 @@
                                                 {{ props.player.lastname }}
                                             </h1>
                                         </div>
+                                        <div
+                                            class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
+                                            <FormButton @click="goToCreatePage" class="flex items-center gap-x-2">
+                                                <PlusIcon class="-ml-0.5 size-5 text-white" aria-hidden="true" />
+                                                Add new career
+                                            </FormButton>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mt-6 hidden min-w-0 flex-1 sm:block 2xl:hidden">
-                                    <h1 class="truncate text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                        {{ props.player.firstname }}
-                                        {{ (props.player.middlename != 'null') ? props.player.middlename : '' }}
-                                        {{ props.player.lastname }}
-                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
 </template>
 
 <script setup>
-import { PencilSquareIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 const avatarUrl = ref('/img/avatars/user.svg')
 
@@ -87,4 +87,8 @@ const props = defineProps({
         required: true
     }
 })
+
+function goToCreatePage() {
+    navigateTo(`${path}/create`)
+}
 </script>
