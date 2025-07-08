@@ -93,7 +93,7 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
-                            <FormLabel for="history_injury" label="Sex" />
+                            <FormLabel for="history_injury" label="History injury" />
                         </div>
                         <div class="mt-2">
                             <FormTextField name="history_injury" class="w-full" v-model="state.form.history_injury" />
