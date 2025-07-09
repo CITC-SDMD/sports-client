@@ -38,7 +38,7 @@ let currentPage = 1
 const runtimeConfig = useRuntimeConfig()
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 definePageMeta({
     layout: 'main'

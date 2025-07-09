@@ -162,7 +162,7 @@ import moment from 'moment'
 const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 const careerUrl = path.replace('/profile', '/careers')
 const coachUrl = path.replace('/profile', '/coaches')
 const tabs = [

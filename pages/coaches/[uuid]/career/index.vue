@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { careerService } from '@/api/career/CareerService';
-import { coachService } from '@/api/coach/CoachService';
+import { careerService } from '@/api/career/CareerService'
+import { coachService } from '@/api/coach/CoachService'
 
 let currentPage = 1
 
@@ -29,7 +29,7 @@ const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 const profileUrl = path.replace('/career', '/profile')
 const baseUrl = path.replace(`/${uuid}/career`, '')
 

@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { athleteService } from '@/api/athlete/AthleteService';
+import { athleteService } from '@/api/athlete/AthleteService'
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -23,7 +23,7 @@ const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 definePageMeta({
     layout: 'main'

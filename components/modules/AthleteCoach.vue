@@ -79,7 +79,7 @@ import { PlusIcon } from '@heroicons/vue/20/solid'
 const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 const profileUrl = path.replace('/coaches', '/profile')
 const coachUrl = path.replace('/coaches', '/careers')
 

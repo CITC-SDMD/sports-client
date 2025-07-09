@@ -223,8 +223,8 @@
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers, requiredIf } from '@vuelidate/validators'
-import { sportService } from '@/api/sport/SportService';
-import { competitionService } from "@/api/competition/CompetitionService";
+import { sportService } from '@/api/sport/SportService'
+import { competitionService } from "@/api/competition/CompetitionService"
 
 const emit = defineEmits(['submitForm'])
 

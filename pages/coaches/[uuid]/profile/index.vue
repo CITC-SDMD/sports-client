@@ -23,7 +23,7 @@ const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 definePageMeta({
     layout: 'main'

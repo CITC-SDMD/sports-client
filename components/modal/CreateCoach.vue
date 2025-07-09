@@ -315,9 +315,9 @@ onMounted(() => {
 })
 
 watch(() => state.form.birthdate, (newValue) => {
-    const currentYear = new Date().getFullYear();
-    const birthDate = newValue;
-    const birthYear = new Date(birthDate).getFullYear();
+    const currentYear = new Date().getFullYear()
+    const birthDate = newValue
+    const birthYear = new Date(birthDate).getFullYear()
     const age = currentYear - birthYear
     state.form.age = age
 })

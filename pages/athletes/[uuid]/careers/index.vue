@@ -19,8 +19,8 @@
 </template>
 
 <script setup lang="ts">
-import { careerService } from '@/api/career/CareerService';
-import { athleteService } from '@/api/athlete/AthleteService';
+import { careerService } from '@/api/career/CareerService'
+import { athleteService } from '@/api/athlete/AthleteService'
 
 let currentPage = 1
 
@@ -30,7 +30,7 @@ const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/career`, '')
 
 definePageMeta({

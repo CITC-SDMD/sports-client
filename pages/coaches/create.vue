@@ -14,12 +14,12 @@
 </template>
 
 <script setup lang="ts">
-import { coachService } from '@/api/coach/CoachService';
-import { useAlert } from '@/composables/alert';
+import { coachService } from '@/api/coach/CoachService'
+import { useAlert } from '@/composables/alert'
 
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 const { successAlert } = useAlert()
 

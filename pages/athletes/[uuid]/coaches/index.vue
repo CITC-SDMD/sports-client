@@ -20,8 +20,8 @@
 </template>
 
 <script setup lang="ts">
-import { athleteService } from '@/api/athlete/AthleteService';
-import { coachAthleteService } from '@/api/coachAthlete/CoachAthleteService';
+import { athleteService } from '@/api/athlete/AthleteService'
+import { coachAthleteService } from '@/api/coachAthlete/CoachAthleteService'
 import { useAlert } from '@/composables/alert'
 
 let currentPage = 1
@@ -34,7 +34,7 @@ const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/coaches`, '')
 
 definePageMeta({

@@ -61,7 +61,7 @@
 </template>
 
 <script setup lang="ts">
-import { authService } from '@/api/auth/AuthService';
+import { authService } from '@/api/auth/AuthService'
 import { useVuelidate } from '@vuelidate/core'
 import { required, helpers } from '@vuelidate/validators'
 import { useUserStore } from '~/store/user'

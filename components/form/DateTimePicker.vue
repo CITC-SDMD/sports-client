@@ -5,8 +5,8 @@
 
 <script setup lang="ts">
 import moment from 'moment'
-import flatPickr from 'vue-flatpickr-component';
-import 'flatpickr/dist/flatpickr.css';
+import flatPickr from 'vue-flatpickr-component'
+import 'flatpickr/dist/flatpickr.css'
 
 const props = defineProps({
     name: {

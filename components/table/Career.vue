@@ -46,8 +46,8 @@
 </template>
 
 <script setup lang="ts">
-import { EyeIcon } from '@heroicons/vue/24/outline';
-import moment from 'moment';
+import { EyeIcon } from '@heroicons/vue/24/outline'
+import moment from 'moment'
 
 const props = defineProps({
     head: {
@@ -61,7 +61,7 @@ const props = defineProps({
 })
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 function goToViewPage(data: any) {
     navigateTo(`${path}/${data}`)

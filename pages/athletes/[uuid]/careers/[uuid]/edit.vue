@@ -13,14 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import { careerService } from '~/api/career/CareerService';
-import { useAlert } from '~/composables/alert';
+import { careerService } from '~/api/career/CareerService'
+import { useAlert } from '~/composables/alert'
 
 
 const { successAlert } = useAlert()
 
 const route = useRoute()
-const path = route.fullPath;
+const path = route.fullPath
 
 const runtimeConfig = useRuntimeConfig()
 

@@ -54,7 +54,7 @@
 </template>
 
 <script setup>
-import { EyeIcon } from '@heroicons/vue/24/outline';
+import { EyeIcon } from '@heroicons/vue/24/outline'
 
 const route = useRoute()
 var path = route.fullPath
