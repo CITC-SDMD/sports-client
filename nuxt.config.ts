@@ -4,8 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     '@pinia/nuxt',
-    'pinia-plugin-persistedstate/nuxt',
-    '@nuxtjs/color-mode'
+    'pinia-plugin-persistedstate/nuxt'
   ],
   colorMode: {
     classSuffix: ''
