@@ -8,7 +8,13 @@
         <Loader v-if="state.isPageLoading" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
-        <div class="mt-8">
+        <div class="flex items-center justify-end mt-8">
+            <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
+                <PencilSquareIcon class="h-5 w-5" />
+                Edit
+            </FormButton>
+        </div>
+        <div class="mt-2">
             <div class="overflow-hidden rounded-lg bg-white shadow mb-6">
                 <div class="px-4 py-5 sm:p-6 grid grid-cols-1 sm:flex sm:items-center sm:gap-x-4">
                     <div class="flex items-center justify-center">
@@ -34,6 +40,7 @@
 
 <script setup lang="ts">
 import { careerService } from '@/api/career/CareerService';
+import { PencilSquareIcon } from '@heroicons/vue/20/solid';
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -75,5 +82,9 @@ async function fetchCareer() {
 function goToPreviousPage() {
     const url = path.replace(`/${uuid}`, '')
     navigateTo(url)
+}
+
+function goToEditPage() {
+    navigateTo(`${path}/edit`)
 }
 </script>

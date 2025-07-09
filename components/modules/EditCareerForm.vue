@@ -228,26 +228,33 @@ import { competitionService } from "@/api/competition/CompetitionService";
 
 const emit = defineEmits(['submitForm'])
 
+const props = defineProps({
+    career: {
+        type: Object,
+        required: true
+    }
+})
+
 const state = reactive({
     form: {
-        id_number: null as any,
-        performance: null as any,
-        career_date: null as any,
-        sport_id: null as any,
-        competition_id: null as any,
-        position_role: null as any,
-        highlights: null as any,
-        awards: null as any,
-        coach_status: null as any,
-        is_injured: null as any,
-        affiliations: null as any,
-        sports_asso: null as any,
-        training_seminar: null as any,
-        play_status: null as any,
-        health_status: null as any,
-        injury: null as any,
-        injury_date: null as any,
-        injury_desc: null as any,
+        id_number: props.career.id_number,
+        performance: props.career.performance,
+        career_date: props.career.career_date,
+        sport_id: props.career.sport_id,
+        competition_id: props.career.competition_id,
+        position_role: props.career.position_role,
+        highlights: props.career.highlights,
+        awards: props.career.awards,
+        coach_status: props.career.coach_status,
+        is_injured: props.career.is_injured,
+        affiliations: props.career.affiliations,
+        sports_asso: props.career.sports_asso,
+        training_seminar: props.career.training_seminar,
+        play_status: props.career?.healthStatus?.play_status,
+        health_status: props.career?.healthStatus?.health_status,
+        injury: props.career?.healthStatus?.injury,
+        injury_date: props.career?.healthStatus?.injury_date,
+        injury_desc: props.career?.healthStatus?.injury_desc,
     },
     option: {
         award_hightlight: [

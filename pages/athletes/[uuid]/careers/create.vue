@@ -48,11 +48,15 @@ async function saveCareer(data: any) {
             highlights: data.highlights,
             awards: data.awards,
             coach_status: data.coach_status ?? null,
-            history_injury: data.history_injury ?? null,
-            injury_date: data.injury_date ?? null,
+            is_injured: data.is_injured ?? null,
             affiliations: data.affiliations ?? null,
             sports_asso: data.sports_asso ?? null,
             training_seminar: data.training_seminar ?? null,
+            play_status: data.play_status ?? null,
+            health_status: data.health_status ?? null,
+            injury: data.injury ?? null,
+            injury_date: data.injury_date ?? null,
+            injury_desc: data.injury_desc ?? null,
         }
         const response = await careerService.createCareer(params)
         if (response.data) {
