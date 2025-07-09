@@ -35,11 +35,10 @@
                                 {{ body.contact_no }}
                             </td>
                             <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
-                                <NuxtLink @click="goToViewPage(body.uuid)"
-                                    class="group flex gap-x-2 items-center text-blue-500 cursor-pointer hover:underline">
-                                    <EyeIcon class="w-5 h-5 text-blue-500 dark:text-gray-100 group-hover:underline" />
-                                    <span class="group-hover:underline">View</span>
-                                </NuxtLink>
+                                <FormButton @click="goToViewPage(body.uuid)" class="flex items-center gap-x-2">
+                                    <EyeIcon class="w-4 h-4" />
+                                    <span class="text-sm">View</span>
+                                </FormButton>
                             </td>
                         </tr>
                         <tr v-else>

@@ -61,7 +61,8 @@ const state = reactive({
     athleteUuid: uuid as string,
     search: null as any,
     searchFilter: null as any,
-    isNewCoachModalOpen: false
+    isNewCoachModalOpen: false,
+    isCreateCoachModalOpen: false,
 })
 
 async function getAthlete() {
@@ -121,6 +122,10 @@ async function previous() {
 async function next() {
     currentPage++
     getAthleteCoaches()
+}
+
+function openCreateCoachModal(data: any) {
+    state.isCreateCoachModalOpen = data
 }
 
 function openNewCoachModal(data: any) {

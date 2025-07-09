@@ -290,6 +290,7 @@ async function fetchReligions() {
     }
     emit('loadPage', false)
 }
+
 watch(() => state.form.birthdate, (newValue) => {
     const currentYear = new Date().getFullYear();
     const birthDate = newValue;

@@ -68,7 +68,8 @@
                             <FormLabel for="highlights" label="Highlights" />
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="highlights" class="w-full" v-model="state.form.highlights" />
+                            <FormSelect :options="state.option.award_hightlight" name="highlights" class="w-full"
+                                v-model="state.form.highlights" />
                         </div>
                     </div>
                 </div>
@@ -78,7 +79,8 @@
                             <FormLabel for="awards" label="Awards" />
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="awards" class="w-full" v-model="state.form.awards" />
+                            <FormSelect :options="state.option.award_hightlight" name="awards" class="w-full"
+                                v-model="state.form.awards" />
                         </div>
                     </div>
                     <div>
@@ -93,22 +95,13 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
-                            <FormLabel for="history_injury" label="History injury" />
+                            <FormLabel for="training_seminar" label="Training seminars" />
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="history_injury" class="w-full" v-model="state.form.history_injury" />
+                            <FormTextField name="training_seminar" class="w-full"
+                                v-model="state.form.training_seminar" />
                         </div>
                     </div>
-                    <div>
-                        <div class="flex">
-                            <FormLabel for="injury_date" label="Injury date" />
-                        </div>
-                        <div class="mt-2">
-                            <FormDatePicker name="injury_date" class="w-full" v-model="state.form.injury_date" />
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
                             <FormLabel for="affiliations" label="Affiliations" />
@@ -117,6 +110,8 @@
                             <FormTextField name="affiliations" class="w-full" v-model="state.form.affiliations" />
                         </div>
                     </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
                             <FormLabel for="sports_asso" label="Sports association" />
@@ -125,15 +120,12 @@
                             <FormTextField name="sports_asso" class="w-full" v-model="state.form.sports_asso" />
                         </div>
                     </div>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                         <div class="flex">
-                            <FormLabel for="training_seminar" label="Training seminars" />
+                            <FormLabel for="is_injured" label="Was the player injured?" />
                         </div>
-                        <div class="mt-2">
-                            <FormTextField name="training_seminar" class="w-full"
-                                v-model="state.form.training_seminar" />
+                        <div class="mt-4 flex items-center justify-center">
+                            <FormToggle name="is_injured" v-model="state.form.is_injured" />
                         </div>
                     </div>
                 </div>
@@ -162,11 +154,27 @@ const state = reactive({
         highlights: null as any,
         awards: null as any,
         coach_status: null as any,
-        history_injury: null as any,
+        is_injured: null as any,
         injury_date: null as any,
         affiliations: null as any,
         sports_asso: null as any,
         training_seminar: null as any,
+    },
+    option: {
+        award_hightlight: [
+            {
+                value: 'Local',
+                label: 'Local'
+            },
+            {
+                value: 'National',
+                label: 'National'
+            },
+            {
+                value: 'International',
+                label: 'International'
+            },
+        ]
     },
     error: null as any,
 })
