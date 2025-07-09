@@ -12,8 +12,11 @@
             <div class="overflow-hidden rounded-lg bg-white shadow mb-6">
                 <div class="px-4 py-5 sm:p-6 flex items-center gap-x-4">
                     <div>
-                        <img :src="state.career?.model?.photo" alt="Profile Photo" v-if="state.career?.model?.photo" />
-                        <img v-else :src="avatarUrl" />
+                        <img v-if="state.career?.model?.photo"
+                            class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white"
+                            :src="state.career?.model?.photo" alt="profile photo" />
+                        <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32 bg-white" :src="avatarUrl"
+                            alt="profile photo" />
                     </div>
                     <div>
                         <span class="text-4xl font-bold">

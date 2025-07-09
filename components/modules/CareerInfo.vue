@@ -95,8 +95,37 @@
                 <dt class="text-xl font-medium text-gray-900">Health Status</dt>
                 <dd class="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
                     <div class="overflow-hidden rounded-lg bg-white shadow">
-                        <div class="px-4 py-5 sm:p-6">
-                            <!-- Content goes here -->
+                        <div class="px-4 py-5 sm:p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="flex flex-col">
+                                <span class="text-sm">Play status</span>
+                                <span class="text-xl font-medium">
+                                    {{ props.career?.healthStatus?.play_status ?? '\u00A0' }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm">Health Status</span>
+                                <span class="text-xl font-medium">
+                                    {{ props.career?.healthStatus?.health_status ?? '\u00A0' }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm">Injury</span>
+                                <span class="text-xl font-medium">
+                                    {{ props.career?.healthStatus?.injury ?? '\u00A0' }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm">Date of Injury</span>
+                                <span class="text-xl font-medium">
+                                    {{ props.career?.healthStatus?.injury_date ?? '\u00A0' }}
+                                </span>
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-sm">Injury Description</span>
+                                <span class="text-xl font-medium">
+                                    {{ props.career?.healthStatus?.injury_desc ?? '\u00A0' }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </dd>
