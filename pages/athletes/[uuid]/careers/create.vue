@@ -16,6 +16,7 @@
 import { careerService } from '@/api/career/CareerService';
 import { useAlert } from '@/composables/alert'
 
+
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const path = route.fullPath;
@@ -27,13 +28,10 @@ definePageMeta({
     layout: 'main'
 })
 
-onMounted(() => {
-})
-
 const state = reactive({
     isPageLoading: false,
     athlete: null as any,
-    error: null as any
+    error: null as any,
 })
 
 async function saveCareer(data: any) {
@@ -44,10 +42,11 @@ async function saveCareer(data: any) {
             id_number: data.id_number,
             performance: data.performance,
             career_date: data.career_date,
-            sports_name: data.sports_name,
+            sport_id: data.sport_id,
+            competition_id: data.competition_id,
             position_role: data.position_role,
-            highlights: data.highlights ?? null,
-            awards: data.awards ?? null,
+            highlights: data.highlights,
+            awards: data.awards,
             coach_status: data.coach_status ?? null,
             history_injury: data.history_injury ?? null,
             injury_date: data.injury_date ?? null,

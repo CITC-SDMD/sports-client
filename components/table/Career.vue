@@ -17,10 +17,16 @@
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-white bg-white dark:bg-gray-600">
                             <tr v-for="career in props.body.data" :key="career.id">
-                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100">
-                                    {{ career.sports_name }}
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
+                                    {{ career.competition.competition_name }}
                                 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100">
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
+                                    {{ career.sport.sports_name }}
+                                </td>
+                                <td
+                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
                                     {{ career.position_role }}
                                 </td>
                                 <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100">

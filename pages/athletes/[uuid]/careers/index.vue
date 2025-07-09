@@ -49,6 +49,9 @@ const state = reactive({
     athleteUuid: uuid as string,
     head: [
         {
+            name: 'Competition'
+        },
+        {
             name: 'Sport'
         },
         {
