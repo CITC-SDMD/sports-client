@@ -86,12 +86,6 @@
 
         <div class="flex flex-1 gap-x-4 justify-end self-stretch lg:gap-x-6">
           <div class="flex items-center gap-x-4 lg:gap-x-6">
-
-            <button type="button" @click="toggleUserTheme" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-              <MoonIcon class="size-6" aria-hidden="true" v-if="state.color === 'light'" />
-              <SunIcon class="size-6 text-yellow-600" aria-hidden="true" v-if="state.color === 'dark'" />
-            </button>
-
             <Menu as="div" class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5 cursor-pointer">
                 <span class="sr-only">Open user menu</span>
@@ -159,7 +153,6 @@ import { authService } from '@/api/auth/AuthService'
 import { userService } from '@/api/user/UserService'
 
 const userStore = useUserStore()
-const colorMode = useColorMode()
 const user = Object(userStore.getUser)
 
 const state = reactive({
@@ -169,14 +162,6 @@ const state = reactive({
   error: null as any
 })
 
-onMounted(() => {
-  state.color = user.theme
-  colorMode.preference = user.theme
-})
-
-watch(() => colorMode.preference, (newVal) => {
-  state.color = newVal
-})
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: RectangleGroupIcon, activeRouteNames: ['dashboard'] as any },
@@ -202,24 +187,10 @@ const navigation = [
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
 ]
 
-async function toggleUserTheme() {
-  try {
-    const response = await userService.toggleTheme(user.uuid);
-    if (response.data) {
-      const newTheme = response?.data.theme
-      colorMode.preference = newTheme
-      userStore.setUser(response.data)
-    }
-  } catch (error) {
-    state.error = error
-  }
-}
-
 async function logout() {
   try {
     const response = await authService.logout()
     if (response.message == 'Success.') {
-      colorMode.preference = 'light'
       localStorage.removeItem('_token');
       userStore.resetUser()
       navigateTo('/')

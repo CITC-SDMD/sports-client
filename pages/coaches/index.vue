@@ -10,8 +10,7 @@
         <div class="flex items-center justify-between">
             <div class="w-full">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
-                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
-                        placeholder="Search athlete" />
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search coach" />
                     <FormButton type="submit" class="flex items-center gap-x-2">
                         <MagnifyingGlassIcon class="w-6 h-6" />
                         Search
