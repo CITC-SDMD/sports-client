@@ -4,7 +4,7 @@
         <Title>{{ runtimeConfig?.public?.appName }} | Users</Title>
     </Head>
 
-    <div class="text-black dark:text-white">
+    <div class="text-black">
         Users
     </div>
 </template>

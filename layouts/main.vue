@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-100 dark:bg-slate-900 min-h-screen">
+  <div class="bg-gray-100 min-h-screen">
     <TransitionRoot as="template" :show="state.open">
       <Dialog class="relative z-50 lg:hidden" @close="state.open = false">
         <TransitionChild as="template" enter="transition-opacity ease-linear duration-300" enter-from="opacity-0"
@@ -23,10 +23,9 @@
                   </button>
                 </div>
               </TransitionChild>
-              <div
-                class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-900 px-6 pb-4 ring-1 ring-white/10">
+              <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 px-6 pb-4 ring-1 ring-white/10">
                 <div class="flex h-16 shrink-0 items-center justify-center">
-                  <span class="font-bold dark:text-gray-200 text-white text-center text-lg">
+                  <span class="font-bold text-white text-center text-lg">
                     Sports Athlete Management System
                   </span>
                 </div>
@@ -36,7 +35,7 @@
                       <ul role="list" class="-mx-2 space-y-1">
                         <li v-for="item in navigation" :key="item.name">
                           <NuxtLink :to="item.href"
-                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
+                            :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 text-white' : 'text-white hover:bg-blue-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                             <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                             {{ item.name }}
                           </NuxtLink>
@@ -53,10 +52,9 @@
     </TransitionRoot>
 
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-co">
-      <div
-        class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 dark:bg-gray-600 px-6 pb-4 border-r dark:border-slate-700">
+      <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-blue-500 px-6 pb-4 border-r">
         <div class="flex h-16 shrink-0 items-center justify-center">
-          <span class="font-bold text-white dark:text-gray-200 text-center text-lg">
+          <span class="font-bold text-white text-center text-lg">
             Sports Athlete Management System
           </span>
         </div>
@@ -66,7 +64,7 @@
               <ul role="list" class="-mx-2 space-y-1">
                 <li v-for="item in navigation" :key="item.name">
                   <NuxtLink :to="item.href"
-                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 dark:bg-gray-800 text-white dark:text-gray-200' : 'dark:text-gray-200 text-white hover:bg-blue-800 dark:hover:bg-gray-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
+                    :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 text-white' : 'text-white hover:bg-blue-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                     <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
                     {{ item.name }}
                   </NuxtLink>
@@ -80,10 +78,10 @@
 
     <div class="lg:pl-72">
       <div
-        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-600 px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
+        class="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
         <button type="button" class="-m-2.5 p-2.5 text-black lg:hidden" @click="state.open = true">
           <span class="sr-only">Open sidebar</span>
-          <Bars3Icon class="h-6 w-6 dark:text-white" aria-hidden="true" />
+          <Bars3Icon class="h-6 w-6" aria-hidden="true" />
         </button>
 
         <div class="flex flex-1 gap-x-4 justify-end self-stretch lg:gap-x-6">
@@ -97,17 +95,16 @@
             <Menu as="div" class="relative">
               <MenuButton class="-m-1.5 flex items-center p-1.5 cursor-pointer">
                 <span class="sr-only">Open user menu</span>
-                <span
-                  class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-500 dark:bg-slate-800">
+                <span class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-blue-500">
                   <span class="text-base font-bold leading-none text-white">
                     {{ state.user?.firstname.charAt(0) }}{{ state.user?.lastname.charAt(0) }}
                   </span>
                 </span>
                 <span class="flex items-center">
-                  <span class="ml-4 text-base font-semibold leading-6 text-black dark:text-white" aria-hidden="true">
+                  <span class="ml-4 text-base font-semibold leading-6 text-black" aria-hidden="true">
                     {{ state.user?.firstname }} {{ state.user?.lastname }}
                   </span>
-                  <ChevronDownIcon class="ml-2 h-5 w-5 text-black dark:text-white" aria-hidden="true" />
+                  <ChevronDownIcon class="ml-2 h-5 w-5 text-black" aria-hidden="true" />
                 </span>
               </MenuButton>
               <transition enter-active-class="transition ease-out duration-100"
@@ -115,10 +112,10 @@
                 leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100"
                 leave-to-class="transform opacity-0 scale-95">
                 <MenuItems
-                  class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white dark:bg-slate-900 py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                  class="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                   <MenuItem>
                   <a @click="logout"
-                    class='block px-3 py-1 text-base leading-6 text-black dark:text-white hover:bg-gray-50 dark:hover:bg-slate-600 cursor-pointer'>
+                    class='block px-3 py-1 text-base leading-6 text-black hover:bg-gray-50 cursor-pointer'>
                     Sign out
                   </a>
                   </MenuItem>
@@ -189,7 +186,9 @@ const navigation = [
       'athletes-create',
       'athletes-uuid-profile',
       'athletes-uuid-profile-edit',
-      'athletes-uuid-career',
+      'athletes-uuid-careers',
+      'athletes-uuid-careers-create',
+      'athletes-uuid-careers-uuid',
       'athletes-uuid-coaches',
     ] as any
   },

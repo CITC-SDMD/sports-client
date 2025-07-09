@@ -4,7 +4,7 @@
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                 <div class="overflow-hidden shadow ring-1 ring-black/5 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-gray-300">
-                        <thead class="bg-blue-500 dark:bg-gray-700">
+                        <thead class="bg-blue-500">
                             <tr>
                                 <th v-for="(head, index) in props.head" :key="index" scope="col"
                                     class="px-3 py-3.5 text-left text-lg font-bold text-gray-100">
@@ -15,26 +15,26 @@
                                 </th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-gray-200 dark:divide-white bg-white dark:bg-gray-600">
+                        <tbody class="divide-y divide-gray-200 bg-white">
                             <tr v-for="career in props.body.data" :key="career.id">
-                                <td
-                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
+                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 max-w-48 truncate">
                                     {{ career.competition.competition_name }}
                                 </td>
-                                <td
-                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
+                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 max-w-48 truncate">
                                     {{ career.sport.sports_name }}
                                 </td>
-                                <td
-                                    class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100 max-w-48 truncate">
+                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 max-w-48 truncate">
                                     {{ career.position_role }}
                                 </td>
-                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500 dark:text-gray-100">
+                                <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                     {{ moment(career.career_date).format('MMMM DD, YYYY') }}
                                 </td>
                                 <td
                                     class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                    <FormButton @click="goToViewPage(career.uuid)" class="flex items-center gap-x-2">
+                                        <EyeIcon class="w-4 h-4" />
+                                        <span class="text-sm">View</span>
+                                    </FormButton>
                                 </td>
                             </tr>
                         </tbody>
@@ -46,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import { EyeIcon } from '@heroicons/vue/24/outline';
 import moment from 'moment';
 
 const props = defineProps({
@@ -58,4 +59,11 @@ const props = defineProps({
         required: true
     }
 })
+
+const route = useRoute()
+const path = route.fullPath;
+
+function goToViewPage(data: any) {
+    navigateTo(`${path}/${data}`)
+}
 </script>

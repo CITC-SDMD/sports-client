@@ -1,5 +1,5 @@
 <template>
-    <label :for="props.for" class="block text-base font-medium text-gray-900 dark:text-gray-100">
+    <label :for="props.for" class="block text-base font-medium text-gray-900">
         {{ props.label }}
     </label>
 </template>

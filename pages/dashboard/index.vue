@@ -4,7 +4,7 @@
         <Title>{{ runtimeConfig?.public?.appName }} | Dashboard</Title>
     </Head>
 
-    <div class="text-black dark:text-white">
+    <div class="text-black">
         Dashboard
     </div>
 </template>
