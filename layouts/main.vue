@@ -144,13 +144,10 @@ import {
   Bars3Icon,
   RectangleGroupIcon,
   XMarkIcon,
-  MoonIcon,
-  SunIcon,
 } from '@heroicons/vue/24/outline'
 import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon } from '@heroicons/vue/24/outline'
 import { useUserStore } from '@/store/user'
 import { authService } from '@/api/auth/AuthService'
-import { userService } from '@/api/user/UserService'
 
 const userStore = useUserStore()
 const user = Object(userStore.getUser)
