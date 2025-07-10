@@ -67,81 +67,81 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Full name</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.firstname }}
-                                        {{ props.coach.middlename }}
-                                        {{ props.coach.lastname }}
+                                        {{ props.coach?.firstname }}
+                                        {{ props.coach?.middlename }}
+                                        {{ props.coach?.lastname }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Date of birth</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ moment(props.coach.birthdate).format('MMMM D, YYYY') ?? '' }}
+                                        {{ moment(props.coach?.birthdate).format('MMMM D, YYYY') ?? '' }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.age }}
+                                        {{ props.coach?.age }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Address</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.address }}
+                                        {{ props.coach?.address }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Birth place</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.birth_place }}
+                                        {{ props.coach?.birth_place }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Civil status</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.civil_status }}
+                                        {{ props.coach?.civil_status }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Gender</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.gender }}
+                                        {{ props.coach?.gender }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Contact number</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.contact_no }}
+                                        {{ props.coach?.contact_no }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Religion</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.religion?.name }}
+                                        {{ props.coach?.religion?.name }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">School</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.player.school.school_name }}
+                                        {{ props.coach.school?.school_name }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Occupation</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.occupation }}
+                                        {{ props.coach?.occupation }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Team</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.sports_team }}
+                                        {{ props.coach?.sports_team }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">Date registered</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ moment(props.coach.registry_date).format('MMMM DD, YYYY') ?? '' }}
+                                        {{ moment(props.coach?.registry_date).format('MMMM DD, YYYY') ?? '' }}
                                     </dd>
                                 </div>
                             </dl>
