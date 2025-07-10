@@ -124,8 +124,8 @@ async function next() {
     getAthleteCoaches()
 }
 
-function openCreateCoachModal(data: any) {
-    state.isCreateCoachModalOpen = data
+function showError(data: any) {
+    state.error = data
 }
 
 function openNewCoachModal(data: any) {

@@ -77,7 +77,6 @@ function submitSchool() {
         emit('saveSchool', state.school_name)
         closeModal()
     }
-    console.log(v$.value)
 }
 
 function closeModal() {

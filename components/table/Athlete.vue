@@ -71,7 +71,11 @@ const props = defineProps({
     },
 })
 
-function goToViewPage(uuid) {
-    navigateTo(`${path}/${uuid}/profile`)
+function goToViewPage(uuid: any) {
+    if (path === '/athletes') {
+        navigateTo(`${path}/${uuid}/profile`)
+    } else {
+        navigateTo(`/athletes/${uuid}/profile`)
+    }
 }
 </script>

@@ -179,7 +179,9 @@ const navigation = [
       'coaches',
       'coaches-create',
       'coaches-uuid-profile',
+      'coaches-uuid-profile-edit',
       'coaches-uuid-careers',
+      'coaches-uuid-careers-create',
       'coaches-uuid-athletes',
     ] as any
   },

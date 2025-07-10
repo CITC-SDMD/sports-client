@@ -340,7 +340,7 @@ async function saveNewSchool(data: any) {
             fetchSchools()
         }
     } catch (error) {
-        emit('errorMessage', state.error)
+        emit('errorMessage', error)
     }
 }
 

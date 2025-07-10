@@ -10,7 +10,7 @@
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesCoachAthlete v-if="state.coach" :coach="state.coach" @openNewCoachModal="openNewCoachModal">
-                <TableCoach :head="state.head" :body="state.body" />
+                <TableAthlete :head="state.head" :body="state.body" />
                 <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()"
                     @next="next()" />
             </ModulesCoachAthlete>
