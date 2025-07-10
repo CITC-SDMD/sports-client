@@ -17,10 +17,6 @@ class UserService extends BaseAPIService {
         return await this.request(`/users/${uuid}`, 'PUT', params)
     }
 
-    async toggleTheme(uuid: string): Promise<any> {
-        return await this.request(`/users/${uuid}/toggle-theme`, 'PUT')
-    }
-
     async deleteUser(uuid: string): Promise<any> {
         return await this.request(`/users/${uuid}`, 'DELETE')
     }

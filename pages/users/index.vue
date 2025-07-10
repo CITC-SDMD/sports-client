@@ -4,8 +4,8 @@
         <Title>{{ runtimeConfig?.public?.appName }} | Users</Title>
     </Head>
 
-    <div class="text-black">
-        Users
+    <div>
+        <TableUser :head="state.head" />
     </div>
 </template>
 
@@ -15,6 +15,21 @@ const runtimeConfig = useRuntimeConfig()
 
 definePageMeta({
     layout: 'main'
+})
+
+const state = reactive({
+    head: [
+        {
+            name: 'Full name'
+        },
+        {
+            name: 'Username'
+        },
+        {
+            name: 'Role'
+        }
+    ],
+    body: []
 })
 
 </script>
