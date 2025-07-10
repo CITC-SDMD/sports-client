@@ -167,7 +167,7 @@ const careerUrl = path.replace('/profile', '/careers')
 const coachUrl = path.replace('/profile', '/coaches')
 const tabs = [
     { name: 'Profile', href: path, current: true },
-    { name: 'Career', href: careerUrl, current: false },
+    { name: 'Careers', href: careerUrl, current: false },
     { name: 'Coaches', href: coachUrl, current: false },
 ]
 

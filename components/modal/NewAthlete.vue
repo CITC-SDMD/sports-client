@@ -17,15 +17,15 @@
                             <ErrorAlert v-if="state.error" :message="state.error.message" />
                             <div class="grid grid-cols-1 gap-y-2">
                                 <div class="flex justify-end">
-                                    <a @click="newCoach" class="text-sm cursor-pointer text-blue-500 underline">
-                                        Add new coach
+                                    <a @click="newAthlete" class="text-sm cursor-pointer text-blue-500 underline">
+                                        Add new athlete
                                     </a>
                                 </div>
                                 <div>
-                                    <FormSelect :options="state.option.coach" placeholder="Select coach"
-                                        v-model="state.selectedCoach" />
-                                    <FormError :error="v$?.selectedCoach?.$errors[0]?.$message.toString()" />
-                                    <FormError :error="state.error?.errors?.selectedCoach?.[0]" />
+                                    <FormSelect :options="state.option.athletes" placeholder="Select athlete"
+                                        v-model="state.selectedAthlete" />
+                                    <FormError :error="v$?.selectedAthlete?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.selectedAthlete?.[0]" />
                                 </div>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
@@ -43,12 +43,13 @@
                 </div>
             </Dialog>
         </TransitionRoot>
-        <ModalCreateCoachAthlete v-model:open="state.isCreateCoachModalOpen" @createNewCoachAthlete="createNewCoach" />
+        <ModalCreateCoachAthlete v-model:open="state.isCreateAthleteModalOpen"
+            @createNewCoachAthlete="createNewAthlete" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { coachService } from '@/api/coach/CoachService'
+import { athleteService } from '~/api/athlete/AthleteService'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
@@ -63,24 +64,24 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['update:open', 'saveCoach'])
+const emit = defineEmits(['update:open', 'saveAthlete'])
 
 const state = reactive({
     error: null as any,
     option: {
-        coach: []
+        athletes: []
     },
-    selectedCoach: null as any,
-    isCreateCoachModalOpen: false
+    selectedAthlete: null as any,
+    isCreateAthleteModalOpen: false
 })
 
 onMounted(() => {
-    fetchCoaches()
+    fetchAthletes()
 })
 
-async function fetchCoaches() {
+async function fetchAthletes() {
     try {
-        const response = await coachService.fetchCoatchList()
+        const response = await athleteService.fetchAthleteList()
         if (response.data) {
             let options: any = []
             response.data.forEach(
@@ -89,7 +90,7 @@ async function fetchCoaches() {
                     label: item.firstname + ' ' + item.middlename + ' ' + item.lastname,
                 })
             )
-            state.option.coach = options
+            state.option.athletes = options
         }
     } catch (error) {
         state.error = error
@@ -98,7 +99,7 @@ async function fetchCoaches() {
 
 const rules = computed(() => {
     return {
-        selectedCoach: {
+        selectedAthlete: {
             required: helpers.withMessage('This field is required.', required),
         },
     }
@@ -109,12 +110,12 @@ const v$ = useVuelidate(rules, state)
 function submitCoach() {
     v$.value.$validate()
     if (!v$.value.$error) {
-        emit('saveCoach', state.selectedCoach)
+        emit('saveAthlete', state.selectedAthlete)
     }
     console.log(v$.value)
 }
 
-async function createNewCoach(data: any) {
+async function createNewAthlete(data: any) {
     try {
         let params = new FormData
         params.append('religion_id', data.religion_id)
@@ -133,18 +134,18 @@ async function createNewCoach(data: any) {
         params.append('sports_team', data.sports_team)
         params.append('photo', data.photo)
         params.append('registry_date', data.registry_date)
-        const response = await coachService.createCoach(params)
+        const response = await athleteService.createAthlete(params)
         if (response.data) {
-            successAlert('Success!', 'Coach created.')
-            fetchCoaches()
+            successAlert('Success!', 'Athlete created.')
+            fetchAthletes()
         }
     } catch (error) {
         state.error = error
     }
 }
 
-function newCoach() {
-    state.isCreateCoachModalOpen = true
+function newAthlete() {
+    state.isCreateAthleteModalOpen = true
 }
 
 function closeModal() {

@@ -13,9 +13,9 @@
                             <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                                 <div class="-mt-12 sm:-mt-16 sm:flex sm:items-end sm:space-x-5">
                                     <div class="flex">
-                                        <img v-if="props.player.photo"
+                                        <img v-if="props.coach.photo"
                                             class="size-24 rounded-full ring-4 ring-white sm:size-32"
-                                            :src="props.player.photo" alt="profile photo" />
+                                            :src="props.coach.photo" alt="profile photo" />
                                         <img v-else class="size-24 rounded-full ring-4 ring-white sm:size-32"
                                             :src="avatarUrl" alt="profile photo" />
                                     </div>
@@ -23,25 +23,23 @@
                                         class="mt-6 sm:flex sm:min-w-0 sm:flex-1 sm:items-center sm:justify-end sm:space-x-6 sm:pb-1">
                                         <div class="mt-6 min-w-0 flex-1 sm:hidden 2xl:block">
                                             <h1 class="truncate text-2xl font-bold text-gray-900">
-                                                {{ props.player.firstname }}
-                                                {{ (props.player.middlename != 'null') ? props.player.middlename : '' }}
-                                                {{ props.player.lastname }}
+                                                {{ props.coach.firstname }} {{ props.coach.middlename }}
+                                                {{ props.coach.lastname }}
                                             </h1>
                                         </div>
                                         <div
                                             class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
                                             <FormButton @click="addNewCoach" class="flex items-center gap-x-2">
                                                 <PlusIcon class="-ml-0.5 size-5 text-white" aria-hidden="true" />
-                                                Add new coach
+                                                Add new athlete
                                             </FormButton>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="mt-6 hidden min-w-0 flex-1 sm:block 2xl:hidden">
                                     <h1 class="truncate text-2xl font-bold text-gray-900">
-                                        {{ props.player.firstname }}
-                                        {{ (props.player.middlename != 'null') ? props.player.middlename : '' }}
-                                        {{ props.player.lastname }}
+                                        {{ props.coach.firstname }} {{ props.coach.middlename }}
+                                        {{ props.coach.lastname }}
                                     </h1>
                                 </div>
                             </div>
@@ -80,19 +78,19 @@ const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
 const path = route.fullPath
-const profileUrl = path.replace('/coaches', '/profile')
-const coachUrl = path.replace('/coaches', '/careers')
+const profileUrl = path.replace('/athletes', '/profile')
+const careerUrl = path.replace('/athletes', '/careers')
 
 const emit = defineEmits(['openNewCoachModal'])
 
 const tabs = [
     { name: 'Profile', href: profileUrl, current: false },
-    { name: 'Careers', href: coachUrl, current: false },
-    { name: 'Coaches', href: path, current: true },
+    { name: 'Careers', href: careerUrl, current: false },
+    { name: 'Athletes', href: path, current: true },
 ]
 
 const props = defineProps({
-    player: {
+    coach: {
         type: Object,
         required: true
     }

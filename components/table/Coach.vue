@@ -26,7 +26,7 @@
                                 {{ body.gender }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.birthdate }}
+                                {{ body.birthdate ? moment(body.birthdate).format('MMMM DD, YYYY') : '' }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.age }}
@@ -55,6 +55,7 @@
 
 <script setup>
 import { EyeIcon } from '@heroicons/vue/24/outline'
+import moment from 'moment'
 
 const route = useRoute()
 var path = route.fullPath

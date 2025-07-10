@@ -255,7 +255,7 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['update:open', 'createNewCoach'])
+const emit = defineEmits(['update:open', 'createNewCoachAthlete'])
 
 const state = reactive({
     form: {
@@ -426,7 +426,7 @@ const x$ = useVuelidate(rules, state)
 function submitForm() {
     x$.value.$validate()
     if (!x$.value.$error) {
-        emit('createNewCoach', state.form)
+        emit('createNewCoachAthlete', state.form)
         closeModal()
     }
 }
