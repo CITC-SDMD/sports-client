@@ -6,9 +6,11 @@
 
     <div>
         <Loader v-if=state.isPageLoading />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
-        <ModulesNewCareerForm @submitForm="saveCareer" />
+        <div class="mt-8">
+            <ErrorAlert v-if="state.error" :message="state.error.message" />
+            <ModulesNewCareerForm @submitForm="saveCareer" />
+        </div>
     </div>
 </template>
 

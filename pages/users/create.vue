@@ -6,9 +6,9 @@
 
     <div>
         <Loader v-if=state.isPageLoading />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
+            <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesCreateUserForm @submitForm="makeUser" />
         </div>
     </div>
@@ -51,7 +51,7 @@ async function makeUser(data: any) {
             goToPreviousPage()
         }
     } catch (error) {
-        error
+        state.error = error
     }
     state.isPageLoading = false
 }

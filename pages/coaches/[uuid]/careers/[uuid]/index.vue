@@ -6,8 +6,8 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
+        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <div class="flex items-center justify-end mt-8 space-x-2">
             <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
                 <PencilSquareIcon class="h-5 w-5" />

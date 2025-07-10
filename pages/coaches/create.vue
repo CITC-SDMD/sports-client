@@ -7,9 +7,11 @@
     <div>
         <Loader v-if=state.isPageLoading />
         <FormBackButton @click="goToPreviousPage" />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
-            @submitForm="saveData" />
+        <div class="mt-8">
+            <ErrorAlert v-if="state.error" :message="state.error.message" />
+            <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
+                @submitForm="saveData" />
+        </div>
     </div>
 </template>
 

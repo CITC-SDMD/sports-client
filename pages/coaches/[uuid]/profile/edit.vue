@@ -6,10 +6,12 @@
 
     <div>
         <Loader v-if=state.isPageLoading />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
         <FormBackButton @click="goToPreviousPage" />
-        <ModulesEditCoachAthleteForm v-if="state.coach" :data="state.coach"
-            @loadPage="(value: boolean) => state.isPageLoading = value" @submitForm="updateCoach" />
+        <div class="mt-8">
+            <ErrorAlert v-if="state.error" :message="state.error.message" />
+            <ModulesEditCoachAthleteForm v-if="state.coach" :data="state.coach"
+                @loadPage="(value: boolean) => state.isPageLoading = value" @submitForm="updateCoach" />
+        </div>
     </div>
 </template>
 

@@ -8,6 +8,7 @@
         <Loader v-if="state.isPageLoading" />
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
+            <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesCoachCareer v-if="state.coach" :coach="state.coach">
                 <TableCareer v-if="state.body" :head="state.head" :body="state.body" />
                 <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()"
