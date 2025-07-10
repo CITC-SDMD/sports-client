@@ -123,7 +123,7 @@
                                 <div class="sm:col-span-1">
                                     <dt class="text-sm font-bold text-gray-900">School</dt>
                                     <dd class="mt-1 text-sm text-gray-600">
-                                        {{ props.coach.school }}
+                                        {{ props.player.school.school_name }}
                                     </dd>
                                 </div>
                                 <div class="sm:col-span-1">
