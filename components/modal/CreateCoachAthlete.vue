@@ -171,13 +171,14 @@
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div>
                                         <div class="flex">
-                                            <FormLabel for="school" label="School" />
+                                            <FormLabel for="school_id" label="School" />
                                             <span class="text-red-500">*</span>
                                         </div>
                                         <div class="mt-2">
-                                            <FormTextField name="school" class="w-full" v-model="state.form.school" />
-                                            <FormError :error="x$?.form.school?.$errors[0]?.$message.toString()" />
-                                            <FormError :error="state.error?.errors?.form.school?.[0]" />
+                                            <FormSelect :options="state.option.school" name="school_id" class="w-full"
+                                                v-model="state.form.school_id" />
+                                            <FormError :error="x$?.form.school_id?.$errors[0]?.$message.toString()" />
+                                            <FormError :error="state.error?.errors?.form.school_id?.[0]" />
                                         </div>
                                     </div>
                                     <div>
@@ -244,6 +245,7 @@ import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessu
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers, requiredIf } from '@vuelidate/validators'
 import { religionService } from "@/api/religion/ReligionService"
+import { schoolService } from '~/api/school/SchoolService'
 
 const avatarUrl = ref('/img/avatars/user.svg')
 const profileImage = ref<HTMLInputElement | null>(null)
@@ -270,7 +272,7 @@ const state = reactive({
         gender: null as any,
         contact_no: null as any,
         religion_id: null as any,
-        school: null as any,
+        school_id: null as any,
         occupation: null as any,
         sports_team: null as any,
         photo: null as any,
@@ -305,13 +307,15 @@ const state = reactive({
                 label: 'Female'
             }
         ],
-        religion: []
+        religion: [],
+        school: []
     },
     error: null as any
 })
 
 onMounted(() => {
     fetchReligions()
+    fetchSchools()
 })
 
 watch(() => state.form.birthdate, (newValue) => {
@@ -334,6 +338,24 @@ async function fetchReligions() {
                 })
             )
             state.option.religion = options
+        }
+    } catch (error) {
+        state.error = error
+    }
+}
+
+async function fetchSchools() {
+    try {
+        const response = await schoolService.fetchSchoolList()
+        if (response.data) {
+            let options: any = []
+            response.data.forEach(
+                (item: any) => options.push({
+                    value: item.id,
+                    label: item.school_name,
+                })
+            )
+            state.option.school = options
         }
     } catch (error) {
         state.error = error
@@ -401,7 +423,7 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.',
                     requiredIf(() => props.open == true)),
             },
-            school: {
+            school_id: {
                 required: helpers.withMessage('This field is required.',
                     requiredIf(() => props.open == true)),
             },

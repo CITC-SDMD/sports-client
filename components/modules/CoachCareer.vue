@@ -29,10 +29,9 @@
                                         </div>
                                         <div
                                             class="mt-6 flex flex-col justify-stretch space-y-3 sm:flex-row sm:space-x-4 sm:space-y-0">
-                                            <FormButton class="flex items-center gap-x-2">
-                                                <PencilSquareIcon class="-ml-0.5 size-5 text-white"
-                                                    aria-hidden="true" />
-                                                Update
+                                            <FormButton @click="goToCreatePage" class="flex items-center gap-x-2">
+                                                <PlusIcon class="-ml-0.5 size-5 text-white" aria-hidden="true" />
+                                                Add new career
                                             </FormButton>
                                         </div>
                                     </div>
@@ -73,7 +72,7 @@
 </template>
 
 <script setup>
-import { PencilSquareIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 const avatarUrl = ref('/img/avatars/user.svg')
 
@@ -94,4 +93,8 @@ const props = defineProps({
         required: true
     }
 })
+
+function goToCreatePage() {
+    navigateTo(`${path}/create`)
+}
 </script>

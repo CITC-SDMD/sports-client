@@ -14,7 +14,7 @@
                 <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()"
                     @next="next()" />
             </ModulesCoachAthlete>
-            <ModalNewAthlete v-model:open="state.isNewCoachModalOpen" @saveAthlete="saveCoachAthlete" />
+            <ModalNewAthlete v-model:open="state.isNewAthleteOpen" @saveAthlete="saveCoachAthlete" />
         </div>
     </div>
 </template>
@@ -60,8 +60,7 @@ const state = reactive({
     error: null as any,
     search: null as any,
     searchFilter: null as any,
-    isNewCoachModalOpen: false,
-    isCreateCoachModalOpen: false,
+    isNewAthleteOpen: false,
 })
 
 async function getCoach() {
@@ -105,7 +104,7 @@ async function saveCoachAthlete(data: any) {
         if (response.data) {
             successAlert('Success!', 'Coach saved to athlete.')
             getCoachAthletes()
-            state.isNewCoachModalOpen = false
+            state.isNewAthleteOpen = false
         }
     } catch (error) {
         state.error = error
@@ -123,12 +122,8 @@ async function next() {
     getCoachAthletes()
 }
 
-function openCreateCoachModal(data: any) {
-    state.isCreateCoachModalOpen = data
-}
-
 function openNewCoachModal(data: any) {
-    state.isNewCoachModalOpen = data
+    state.isNewAthleteOpen = data
 }
 
 function goToPreviousPage() {

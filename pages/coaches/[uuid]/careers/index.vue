@@ -31,8 +31,8 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath
-const profileUrl = path.replace('/career', '/profile')
-const baseUrl = path.replace(`/${uuid}/career`, '')
+const profileUrl = path.replace('/careers', '/profile')
+const baseUrl = path.replace(`/${uuid}/careers`, '')
 
 definePageMeta({
     layout: 'main'
