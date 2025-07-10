@@ -117,7 +117,9 @@
                             <div class="flex flex-col">
                                 <span class="text-sm">Date of Injury</span>
                                 <span class="text-xl font-medium">
-                                    {{ props.career?.healthStatus?.injury_date ?? '\u00A0' }}
+                                    {{ props.career?.healthStatus?.injury_date ?
+                                        moment(props.career?.healthStatus?.injury_date).format('MMMM DD, YYYY') :
+                                        '\u00A0' }}
                                 </span>
                             </div>
                             <div class="flex flex-col">

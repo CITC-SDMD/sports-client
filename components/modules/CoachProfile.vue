@@ -161,7 +161,7 @@ const avatarUrl = ref('/img/avatars/user.svg')
 
 const route = useRoute()
 const path = route.fullPath
-const careerUrl = path.replace('/profile', '/career')
+const careerUrl = path.replace('/profile', '/careers')
 const tabs = [
     { name: 'Profile', href: `${path}`, current: true },
     { name: 'Career', href: careerUrl, current: false },

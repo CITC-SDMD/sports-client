@@ -49,6 +49,9 @@ const state = reactive({
     coachUuid: uuid as string,
     head: [
         {
+            name: 'Competition'
+        },
+        {
             name: 'Sport'
         },
         {
