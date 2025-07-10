@@ -207,7 +207,6 @@
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
 import { religionService } from "@/api/religion/ReligionService"
-import { FormTextField } from "#components"
 
 const emit = defineEmits(['loadPage', 'errorMessage', 'submitForm'])
 
