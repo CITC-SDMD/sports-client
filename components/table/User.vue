@@ -54,8 +54,6 @@
 </template>
 
 <script setup lang="ts">
-import moment from 'moment'
-
 const props = defineProps({
     head: {
         type: Array,

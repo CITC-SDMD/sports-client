@@ -102,6 +102,6 @@ async function next() {
 }
 
 function goToCreateUser() {
-
+    navigateTo('/users/create')
 }
 </script>

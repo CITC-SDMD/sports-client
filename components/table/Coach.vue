@@ -53,7 +53,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { EyeIcon } from '@heroicons/vue/24/outline'
 import moment from 'moment'
 

@@ -39,8 +39,7 @@
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormTextField type="password" name="password" class="w-full"
-                                        v-model="state.password" />
+                                    <FormPassword name="password" class="w-full" v-model="state.password" />
                                     <FormError :error="v$?.password?.$errors[0]?.$message.toString()" />
                                     <FormError :error="state.error?.errors?.password?.[0]" />
                                 </div>

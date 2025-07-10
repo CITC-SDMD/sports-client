@@ -63,8 +63,9 @@
                             <FormLabel for="password" label="Password" />
                         </div>
                         <div class="mt-2">
-                            <FormTextField type="password" name="password" class="w-full"
-                                v-model="state.form.password" />
+                            <FormPassword class="w-full" name="password" v-model="state.form.password" />
+                            <FormError :error="v$?.form.password?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.password?.[0]" />
                         </div>
                     </div>
                 </div>
@@ -83,20 +84,13 @@ import { required, helpers } from '@vuelidate/validators'
 
 const emit = defineEmits(['submitForm'])
 
-const props = defineProps({
-    user: {
-        type: Object,
-        required: true
-    }
-})
-
 const state = reactive({
     form: {
-        firstname: props.user.firstname,
-        middlename: props.user.middlename,
-        lastname: props.user.lastname,
-        username: props.user.username,
-        role: props.user.role,
+        firstname: null as any,
+        middlename: null as any,
+        lastname: null as any,
+        username: null as any,
+        role: null as any,
         password: null as any,
     },
     error: null as any,
@@ -124,6 +118,9 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.', required),
             },
             username: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            password: {
                 required: helpers.withMessage('This field is required.', required),
             },
             role: {
