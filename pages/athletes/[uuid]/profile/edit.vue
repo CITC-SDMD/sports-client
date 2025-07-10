@@ -68,7 +68,7 @@ async function updateAthlete(data: any) {
         params.append('gender', data.gender)
         params.append('contact_no', data.contact_no)
         params.append('religion_id', data.religion_id)
-        params.append('school', data.school)
+        params.append('school_id', data.school_id)
         params.append('occupation', data.occupation)
         params.append('sports_team', data.sports_team)
         params.append('photo', data.photo)

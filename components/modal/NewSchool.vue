@@ -45,7 +45,7 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { useVuelidate } from "@vuelidate/core"
-import { required, helpers } from '@vuelidate/validators'
+import { required, helpers, requiredIf } from '@vuelidate/validators'
 
 const props = defineProps({
     open: {
@@ -64,7 +64,7 @@ const state = reactive({
 const rules = computed(() => {
     return {
         school_name: {
-            required: helpers.withMessage('This field is required.', required),
+            required: helpers.withMessage('This field is required.', requiredIf(props.open)),
         },
     }
 })

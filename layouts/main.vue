@@ -177,8 +177,10 @@ const navigation = [
   {
     name: 'Coaches', href: '/coaches', icon: UserGroupIcon, activeRouteNames: [
       'coaches',
+      'coaches-create',
       'coaches-uuid-profile',
-      'coaches-uuid-career',
+      'coaches-uuid-careers',
+      'coaches-uuid-athletes',
     ] as any
   },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
