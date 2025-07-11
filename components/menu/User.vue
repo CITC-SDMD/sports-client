@@ -23,7 +23,7 @@
                     </NuxtLink>
                     </MenuItem>
                     <MenuItem v-slot="{ active }">
-                    <NuxtLink @click=""
+                    <NuxtLink @click="deleteUser(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-red-500 outline-none' : 'text-gray-700', 'flex block px-4 py-2 text-sm cursor-pointer']">
                         <TrashIcon :class="[active ? 'text-red-500' : 'text-gray-900', 'size-5 mr-2']" />
                         Delete User
@@ -39,6 +39,8 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon, PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
+const emit = defineEmits(['passToTable'])
+
 const props = defineProps({
     uuid: {
         type: String,
@@ -51,5 +53,9 @@ const path = route.fullPath
 
 function goToEdit(data: string) {
     navigateTo(`${path}/${data}/edit`)
+}
+
+function deleteUser(data: any) {
+    emit('passToTable', data);
 }
 </script>

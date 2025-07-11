@@ -31,7 +31,7 @@
                                 </td>
                                 <td
                                     class="whitespace-nowrap pl-3 pr-4 flex justify-end gap-x-2 text-base font-medium sm:pr-6">
-                                    <MenuUser :uuid="body.uuid" />
+                                    <MenuUser :uuid="body.uuid" @passToTable="deleteUser" />
                                 </td>
                             </tr>
                         </tbody>
@@ -54,6 +54,9 @@
 </template>
 
 <script setup lang="ts">
+
+const emit = defineEmits(['passToParent'])
+
 const props = defineProps({
     head: {
         type: Array,
@@ -64,4 +67,8 @@ const props = defineProps({
         required: false
     },
 })
+
+function deleteUser(data: any) {
+    emit('passToParent', data)
+}
 </script>

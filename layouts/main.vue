@@ -33,7 +33,7 @@
                   <ul role="list" class="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" class="-mx-2 space-y-1">
-                        <li v-for="item in navigation" :key="item.name">
+                        <li v-for="item in filteredNavigation" :key="item.name">
                           <NuxtLink :to="item.href"
                             :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 text-white' : 'text-white hover:bg-blue-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                             <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
@@ -62,7 +62,7 @@
           <ul role="list" class="flex flex-1 flex-col gap-y-7">
             <li>
               <ul role="list" class="-mx-2 space-y-1">
-                <li v-for="item in navigation" :key="item.name">
+                <li v-for="item in filteredNavigation" :key="item.name">
                   <NuxtLink :to="item.href"
                     :class="[item.activeRouteNames.includes($route.name) ? 'bg-blue-800 text-white' : 'text-white hover:bg-blue-800 hover:text-white', 'group flex gap-x-3 rounded-md p-2 text-lg font-semibold']">
                     <component :is="item.icon" class="size-6 shrink-0" aria-hidden="true" />
@@ -187,6 +187,13 @@ const navigation = [
   },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
 ]
+
+const filteredNavigation = computed(() => {
+  if (state.user?.role !== 'Admin') {
+    return navigation.filter(item => item.name !== 'Users')
+  }
+  return navigation
+})
 
 async function logout() {
   try {

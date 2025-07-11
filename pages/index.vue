@@ -68,12 +68,6 @@ import { useUserStore } from '~/store/user'
 const runtimeConfig = useRuntimeConfig()
 const userStore = useUserStore()
 
-onMounted(() => {
-    if (localStorage.getItem('_token')) {
-        navigateTo('/dashboard')
-    }
-})
-
 const state = reactive({
     error: null as any,
     isPageLoading: null as any,
