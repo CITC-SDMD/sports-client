@@ -60,7 +60,7 @@ const state = reactive({
     error: null as any,
     head: [
         { name: 'Full name' },
-        { name: 'Gender' },
+        { name: 'Sex' },
         { name: 'Date of birth' },
         { name: 'Age' },
         { name: 'Contact no.' },
