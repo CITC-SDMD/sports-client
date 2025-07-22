@@ -31,7 +31,7 @@
                 </FormButton>
             </form>
         </div>
-        <TableAthlete :head=state.head :body="state.body" />
+        <TableAthleteCoach :head=state.head :body="state.body" />
         <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
 </template>
@@ -59,10 +59,10 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
-        { name: 'Full name' },
+        { name: 'Name' },
         { name: 'Sex' },
-        { name: 'Date of birth' },
-        { name: 'Age' },
+        { name: 'Birthday' },
+        { name: 'Civil Status' },
         { name: 'Contact no.' },
     ],
     body: [] as any,

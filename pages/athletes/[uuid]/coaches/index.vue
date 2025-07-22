@@ -12,112 +12,37 @@
         </div>
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
-        <ModulesAthleteProfile class="mt-4">
-            <div class="flex flex-col sm:flex-row sm:gap-x-10 space-y-4 sm:space-y-0">
-                <div class="flex items-center justify-center sm:justify-normal">
-                    <img class="size-32 rounded-full ring-4 ring-white sm:size-48 bg-white" :src="avatarUrl"
-                        alt="profile photo" />
-                </div>
-                <div class="space-y-3">
-                    <div>
-                        <span class="font-bold text-3xl">
-                            {{ state.athlete?.firstname }} {{ state.athlete?.middlename ?? '' }}
-                            {{ state.athlete?.lastname }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <CakeIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ (state.athlete?.birthdate) ?
-                                moment(state.athlete?.birthdate).format('MMMM DD, YYYY') : '' }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <MapPinIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.address }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <ScaleIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.civil_status }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <UserIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.gender }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <PhoneIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.contact_no }}
-                        </span>
-                    </div>
-                </div>
-                <div class="flex-col space-y-3">
-                    <div class="flex items-center gap-x-2">
-                        <BuildingLibraryIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.religion?.name }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <AcademicCapIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.school?.school_name }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <BriefcaseIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.occupation }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <TrophyIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ state.athlete?.sports_team }}
-                        </span>
-                    </div>
-                    <div class="flex items-center gap-x-2">
-                        <CalendarDateRangeIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ (state.athlete?.registry_date) ?
-                                moment(state.athlete?.registry_date).format("MMMM DD, YYYY") : '' }}
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </ModulesAthleteProfile>
+        <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <Tabs :tabs="tabs" class="mt-4" />
-        <div>
-
+        <div class="mt-4">
+            <div class="w-full flex justify-end">
+                <FormButton @click="goToCreateCoach" class="flex items-center gap-x-2 w-full sm:w-auto">
+                    <PlusIcon class="w-6 h-6" />
+                    New coach
+                </FormButton>
+            </div>
+            <div class="w-full mt-4">
+                <form @submit.prevent="search" class="flex w-full space-x-4">
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
+                        placeholder="Search athlete" />
+                    <FormButton type="submit" class="flex items-center gap-x-2">
+                        <MagnifyingGlassIcon class="w-6 h-6" />
+                        Search
+                    </FormButton>
+                </form>
+            </div>
+            <TableAthleteCoach :head=state.head :body="state.body" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
-import {
-    AcademicCapIcon,
-    BriefcaseIcon,
-    BuildingLibraryIcon,
-    CakeIcon,
-    CalendarDateRangeIcon,
-    MapPinIcon,
-    PhoneIcon,
-    ScaleIcon,
-    TrophyIcon,
-    UserIcon
-} from '@heroicons/vue/24/outline'
-import moment from 'moment'
+import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+
+let currentPage = 1
 
 const runtimeConfig = useRuntimeConfig()
-
-const avatarUrl = ref('/img/avatars/user.svg')
 
 const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
@@ -143,13 +68,44 @@ definePageMeta({
 
 onMounted(() => {
     getAthlete()
+    state.age = computedAge
 })
 
 const state = reactive({
     isPageLoading: false,
     athlete: null as any,
     error: null as any,
-    athleteUuid: uuid as string
+    athleteUuid: uuid as string,
+    age: null as any,
+    head: [
+        { name: 'Name' },
+        { name: 'Sex' },
+        { name: 'Birthday' },
+        { name: 'Civil Status' },
+        { name: 'Contact no.' },
+    ],
+    body: [] as any,
+    searchFilter: null as any,
+    search: null as any
+})
+
+const computedAge = computed(() => {
+    const birthDate = state.athlete?.birth_date
+    if (!birthDate) return ''
+
+    const today = new Date()
+    const birth = new Date(birthDate)
+
+    if (isNaN(birth.getTime())) return ''
+
+    let age = today.getFullYear() - birth.getFullYear()
+    const m = today.getMonth() - birth.getMonth()
+
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        age--
+    }
+
+    return age
 })
 
 async function getAthlete() {
@@ -165,10 +121,21 @@ async function getAthlete() {
     state.isPageLoading = false
 }
 
+async function search() {
+    currentPage = 1
+    let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
+    state.search = filterString
+    // getAthletes()
+}
+
 
 function goToPreviousPage() {
     const url = path.replace('/profile', '')
     navigateTo('/athletes')
+}
+
+function goToCreateCoach() {
+    navigateTo(`${path}/create`)
 }
 
 </script>

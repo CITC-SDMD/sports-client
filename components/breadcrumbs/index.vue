@@ -12,8 +12,9 @@
             <li v-for="page in props.pages" :key="page.name">
                 <div class="flex items-center">
                     <ChevronRightIcon class="size-5 shrink-0 text-blue-400" aria-hidden="true" />
-                    <NuxtLink :to="page.href" class="ml-4 text-base font-medium text-blue-500 hover:text-blue-700"
-                        :aria-current="page.current ? 'page' : undefined">
+                    <NuxtLink :to="page.href" :class="[
+                        page.current ? 'font-bold' : 'font-normal',
+                        'ml-4 text-base text-blue-500 hover:text-blue-700']">
                         {{ page.name }}
                     </NuxtLink>
                 </div>

@@ -1,14 +1,14 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Create Athlete</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Create Coach</Title>
     </Head>
 
     <div>
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">New Athlete</span>
+            <span class="text-3xl font-bold text-blue-500">New Coach</span>
         </div>
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
@@ -18,20 +18,26 @@
 </template>
 
 <script setup lang="ts">
-import { athleteService } from '@/api/athlete/AthleteService'
+import { coachService } from '@/api/coach/CoachService'
 import { useAlert } from '@/composables/alert'
 
 const { successAlert } = useAlert()
 
 const runtimeConfig = useRuntimeConfig()
+
+const router = useRouter()
+const uuid = router?.currentRoute?.value?.params?.uuid
+
 const route = useRoute()
 const path = route.fullPath
 
-const athleteUrl = path.replace('/create', '')
+const athleteUrl = path.replace(path, '/athletes')
+const coachesUrl = path.replace('/create', '')
 
 const pages = [
     { name: 'Athletes', href: athleteUrl, current: false },
-    { name: 'New Athlete', href: path, current: true },
+    { name: 'Coaches', href: coachesUrl, current: false },
+    { name: 'New Coach', href: path, current: true },
 ]
 
 definePageMeta({
@@ -63,9 +69,9 @@ async function saveData(data: any) {
         params.append('sports_team', data.sports_team)
         params.append('photo', data.photo)
         params.append('registry_date', data.registry_date)
-        const response = await athleteService.createAthlete(params)
+        const response = await coachService.createCoach(params)
         if (response.data) {
-            successAlert('Success!', 'Athlete created.')
+            successAlert('Success!', 'Coach created.')
             goToPreviousPage()
         }
     } catch (error) {
@@ -75,7 +81,6 @@ async function saveData(data: any) {
 }
 
 function goToPreviousPage() {
-    const url = path.replace('/create', '')
-    navigateTo(url)
+    navigateTo(coachesUrl)
 }
 </script>

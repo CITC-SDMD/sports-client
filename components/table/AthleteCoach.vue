@@ -23,13 +23,13 @@
                                 {{ body.lastname }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.gender }}
+                                {{ body.sex }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.birthdate ? moment(body.birthdate).format('MMMM DD, YYYY') : '' }}
+                                {{ body.birth_date ? moment(body.birth_date).format('MMMM DD, YYYY') : '' }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.age }}
+                                {{ body.civil_status }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.contact_no }}

@@ -140,6 +140,8 @@
                 </div>
             </div>
 
+            <hr>
+
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
                 <div class="px-4 sm:px-0">
                     <h2 class="text-base/7 font-semibold text-gray-900">Others</h2>
@@ -280,12 +282,27 @@ const state = reactive({
     error: null as any,
 })
 
-watch(() => state.form.birth_date, (newValue) => {
-    const currentYear = new Date().getFullYear()
-    const birthDate = newValue
-    const birthYear = new Date(birthDate).getFullYear()
-    const age = currentYear - birthYear
-    state.form.age = age
+onMounted(() => {
+    state.form.age = computedAge
+})
+
+const computedAge = computed(() => {
+    const birthDate = state.form.birth_date
+    if (!birthDate) return ''
+
+    const today = new Date()
+    const birth = new Date(birthDate)
+
+    if (isNaN(birth.getTime())) return ''
+
+    let age = today.getFullYear() - birth.getFullYear()
+    const m = today.getMonth() - birth.getMonth()
+
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) {
+        age--
+    }
+
+    return age
 })
 
 function onImageChange(event: any) {
