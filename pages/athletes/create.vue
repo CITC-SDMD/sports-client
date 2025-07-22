@@ -5,23 +5,33 @@
     </Head>
 
     <div>
-        <Loader v-if=state.isPageLoading />
-        <FormBackButton @click="goToPreviousPage" />
-        <div class="mt-8">
-            <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
-                @submitForm="saveData" />
+        <Loader v-if="state.isPageLoading" />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">New Athlete</span>
         </div>
+        <FormBackButton @click="goToPreviousPage" class="mt-4" />
+        <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
+        <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value" @submitForm="saveData"
+            @cancelAction="goToPreviousPage" class="mt-4" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { athleteService } from '~/api/athlete/AthleteService'
+import { athleteService } from '@/api/athlete/AthleteService'
 import { useAlert } from '@/composables/alert'
 
 const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const path = route.fullPath
+
+const athleteUrl = path.replace('/create', '')
+
+const pages = [
+    { name: 'Athletes', href: athleteUrl, current: false },
+    { name: 'New Athlete', href: path, current: true },
+]
+
 
 const { successAlert } = useAlert()
 

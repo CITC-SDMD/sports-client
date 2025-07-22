@@ -15,8 +15,8 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        <!-- Show table rows if there's data -->
-                        <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
+                        <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
+                            :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.firstname }}
                                 {{ (body.middlename != 'null') ? body.middlename : '' }}
@@ -34,11 +34,10 @@
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.contact_no }}
                             </td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
-                                <FormButton @click="goToViewPage(body.uuid)" class="flex items-center gap-x-2">
-                                    <EyeIcon class="w-4 h-4" />
-                                    <span class="text-sm">View</span>
-                                </FormButton>
+                            <td
+                                class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
+                                <MenuAthleteTable :uuid="body.uuid"
+                                    :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>
                         <tr v-else>
@@ -54,7 +53,6 @@
 </template>
 
 <script setup lang="ts">
-import { EyeIcon } from '@heroicons/vue/24/outline'
 import moment from 'moment'
 
 const route = useRoute()
@@ -64,18 +62,10 @@ const props = defineProps({
     head: {
         type: Array,
         required: true
-    },
+    } as any,
     body: {
         type: Object,
         required: false
-    },
+    } as any,
 })
-
-function goToViewPage(uuid: any) {
-    if (path === '/athletes') {
-        navigateTo(`${path}/${uuid}/profile`)
-    } else {
-        navigateTo(`/athletes/${uuid}/profile`)
-    }
-}
 </script>

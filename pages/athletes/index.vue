@@ -6,24 +6,30 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
+        <div>
+            <Breadcrumbs :pages="pages" />
+        </div>
+
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">Athletes</span>
+        </div>
+
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="flex items-center justify-between">
-            <div class="w-full">
-                <form @submit.prevent="search" class="flex w-full space-x-4">
-                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
-                        placeholder="Search athlete" />
-                    <FormButton type="submit" class="flex items-center gap-x-2">
-                        <MagnifyingGlassIcon class="w-6 h-6" />
-                        Search
-                    </FormButton>
-                </form>
-            </div>
-            <div class="w-full flex justify-end">
-                <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2">
-                    <PlusIcon class="w-6 h-6" />
-                    Add new athlete
+
+        <div class="w-full flex justify-end">
+            <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2">
+                <PlusIcon class="w-6 h-6" />
+                New athlete
+            </FormButton>
+        </div>
+        <div class="w-full mt-4">
+            <form @submit.prevent="search" class="flex w-full space-x-4">
+                <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search athlete" />
+                <FormButton type="submit" class="flex items-center gap-x-2">
+                    <MagnifyingGlassIcon class="w-6 h-6" />
+                    Search
                 </FormButton>
-            </div>
+            </form>
         </div>
         <TableAthlete :head=state.head :body="state.body" />
         <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
@@ -40,6 +46,10 @@ const runtimeConfig = useRuntimeConfig()
 
 const route = useRoute()
 const path = route.fullPath
+
+const pages = [
+    { name: 'Athletes', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'

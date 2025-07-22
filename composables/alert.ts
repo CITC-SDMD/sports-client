@@ -6,6 +6,8 @@ export function useAlert() {
             title: title,
             text: message || 'An unknown error occurred.',
             type: 'error',
+            closeOnClick: true,
+            duration: -1
         })
     }
 
