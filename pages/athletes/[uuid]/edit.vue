@@ -13,7 +13,7 @@
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesEditCoachAthleteForm v-if="state.athlete" :model="state.athlete" class="mt-4"
-            @cancelAction="goToPreviousPage" @submitAction="editAthlete" />
+            @cancelAction="goToPreviousPage" @submitAction="editAthlete" @showError="showErrorMessage" />
     </div>
 </template>
 
@@ -82,7 +82,8 @@ async function editAthlete(data: any) {
         params.append('school_id', data.school_id)
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
-        params.append('image', data.image)
+        params.append('photo', data.image)
+        params.append('address', data.address)
         const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
             state.athlete = response.data
@@ -94,6 +95,10 @@ async function editAthlete(data: any) {
         state.error = error
     }
     state.isPageLoading = false
+}
+
+function showErrorMessage(data: any) {
+    state.error = data
 }
 
 function goToPreviousPage() {

@@ -120,6 +120,7 @@ const state = reactive({
 
 onMounted(() => {
     state.age = computedAge
+    avatarUrl.value = props.model.image
 })
 
 const computedAge = computed(() => {

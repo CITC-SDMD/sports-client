@@ -6,25 +6,32 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
-        <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="flex items-center justify-between">
-            <div class="w-full">
-                <form @submit.prevent="search" class="flex w-full space-x-4">
-                    <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search coach" />
-                    <FormButton type="submit" class="flex items-center gap-x-2">
-                        <MagnifyingGlassIcon class="w-6 h-6" />
-                        Search
-                    </FormButton>
-                </form>
-            </div>
-            <div class="w-full flex justify-end">
-                <FormButton @click="goToCreateCoach" class="flex items-center gap-x-2">
-                    <PlusIcon class="w-6 h-6" />
-                    Add new coach
-                </FormButton>
-            </div>
+        <div>
+            <Breadcrumbs :pages="pages" />
         </div>
-        <TableCoach :head=state.head :body="state.body" />
+
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">Coaches</span>
+        </div>
+
+        <ErrorAlert v-if="state.error" :message="state.error.message" />
+
+        <div class="w-full flex justify-end">
+            <FormButton @click="goToCreateCoach" class="flex items-center gap-x-2">
+                <PlusIcon class="w-6 h-6" />
+                New coach
+            </FormButton>
+        </div>
+        <div class="w-full mt-4">
+            <form @submit.prevent="search" class="flex w-full space-x-4">
+                <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search athlete" />
+                <FormButton type="submit" class="flex items-center gap-x-2">
+                    <MagnifyingGlassIcon class="w-6 h-6" />
+                    Search
+                </FormButton>
+            </form>
+        </div>
+        <TableAthleteCoach :head=state.head :body="state.body" />
         <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
 </template>
@@ -39,6 +46,10 @@ const runtimeConfig = useRuntimeConfig()
 
 const route = useRoute()
 const path = route.fullPath
+
+const pages = [
+    { name: 'Coaches', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'

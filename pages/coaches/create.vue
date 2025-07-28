@@ -10,7 +10,7 @@
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
-                @submitForm="saveData" />
+                @submitAction="saveData" :model="'coach'" @showError="showErrorMessage" />
         </div>
     </div>
 </template>
@@ -41,19 +41,17 @@ async function saveData(data: any) {
         params.append('firstname', data.firstname)
         params.append('middlename', data.middlename)
         params.append('lastname', data.lastname)
+        params.append('email', data.email)
         params.append('address', data.address)
-        params.append('age', data.age)
-        params.append('birthdate', data.birthdate)
+        params.append('birth_date', data.birth_date)
         params.append('birth_place', data.birth_place)
         params.append('civil_status', data.civil_status)
-        params.append('gender', data.gender)
+        params.append('sex', data.sex)
         params.append('contact_no', data.contact_no)
-        params.append('religion_id', data.religion_id)
         params.append('school_id', data.school_id)
         params.append('occupation', data.occupation)
-        params.append('sports_team', data.sports_team)
-        params.append('photo', data.photo)
-        params.append('registry_date', data.registry_date)
+        params.append('club_name', data.club_name)
+        params.append('photo', data.image)
         const response = await coachService.createCoach(params)
         if (response.data) {
             successAlert('Success!', 'Coach created.')
@@ -68,5 +66,9 @@ async function saveData(data: any) {
 function goToPreviousPage() {
     const url = path.replace('/create', '')
     navigateTo(url)
+}
+
+function showErrorMessage(data: any) {
+    state.error = data
 }
 </script>

@@ -23,8 +23,7 @@
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
-                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
-                        placeholder="Search athlete" />
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search coach" />
                     <FormButton type="submit" class="flex items-center gap-x-2">
                         <MagnifyingGlassIcon class="w-6 h-6" />
                         Search
@@ -32,15 +31,22 @@
                 </form>
             </div>
             <TableAthleteCoach :head=state.head :body="state.body" />
+            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
+        <ModalNewCoachAthlete v-model:open="state.isNewCoachOpen" :model="'coach'" :buttonText="'New Coach'"
+            @saveCoach="saveAthleteCoach" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
+import { coachAthleteService } from '@/api/coachAthlete/CoachAthleteService'
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { useAlert } from '@/composables/alert'
 
 let currentPage = 1
+
+const { successAlert } = useAlert()
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -68,6 +74,7 @@ definePageMeta({
 
 onMounted(() => {
     getAthlete()
+    getCoaches()
     state.age = computedAge
 })
 
@@ -86,7 +93,8 @@ const state = reactive({
     ],
     body: [] as any,
     searchFilter: null as any,
-    search: null as any
+    search: null as any,
+    isNewCoachOpen: false
 })
 
 const computedAge = computed(() => {
@@ -108,12 +116,48 @@ const computedAge = computed(() => {
     return age
 })
 
+async function saveAthleteCoach(data: any) {
+    state.isPageLoading = true
+    try {
+        let params = {
+            athlete_uuid: state.athleteUuid,
+            coach_uuid: data
+        }
+        const response = await coachAthleteService.createCoachAthlete(params)
+        if (response.data) {
+            successAlert('Success!', 'Coach saved.')
+            getCoaches()
+            state.isNewCoachOpen = false
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
 async function getAthlete() {
     state.isPageLoading = true
     try {
         const response = await athleteService.fetchAthlete(state.athleteUuid)
         if (response.data) {
             state.athlete = response.data
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
+async function getCoaches() {
+    state.isPageLoading = true
+    try {
+        let params = {
+            page: currentPage,
+            athlete_uuid: state.athleteUuid
+        }
+        const response = await athleteService.fetchCoachesByAthlete(params)
+        if (response.data) {
+            state.body = response
         }
     } catch (error) {
         state.error = error
@@ -128,6 +172,15 @@ async function search() {
     // getAthletes()
 }
 
+async function previous() {
+    currentPage--
+    getCoaches()
+}
+
+async function next() {
+    currentPage++
+    getCoaches()
+}
 
 function goToPreviousPage() {
     const url = path.replace('/profile', '')
@@ -135,7 +188,8 @@ function goToPreviousPage() {
 }
 
 function goToCreateCoach() {
-    navigateTo(`${path}/create`)
+    // navigateTo(`${path}/create`)
+    state.isNewCoachOpen = true
 }
 
 </script>

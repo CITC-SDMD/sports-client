@@ -2,9 +2,17 @@
     <div class="divide-y divide-gray-900/10">
         <form @submit.prevent="submit">
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
-                <div class="px-4 sm:px-0">
+                <div class="px-4 sm:px-0" v-if="props.model == 'coach'">
+                    <h2 class="text-base/7 font-semibold text-gray-900">Coach Information</h2>
+                    <p class="mt-1 text-sm/6 text-gray-600">
+                        Essential details of the coach
+                    </p>
+                </div>
+                <div class="px-4 sm:px-0" v-else>
                     <h2 class="text-base/7 font-semibold text-gray-900">Athlete Information</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">Essential details of the athlete.</p>
+                    <p class="mt-1 text-sm/6 text-gray-600">
+                        Essential details of the athlete.
+                    </p>
                 </div>
 
                 <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -90,12 +98,9 @@
                             <div>
                                 <div class="flex">
                                     <FormLabel for="age" label="Age" />
-                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormTextField name="age" class="w-full" v-model="state.form.age" />
-                                    <FormError :error="v$?.form.age?.$errors[0]?.$message.toString()" />
-                                    <FormError :error="state.error?.errors?.form.age?.[0]" />
+                                    <FormTextField name="age" class="w-full" v-model="state.form.age" readonly />
                                 </div>
                             </div>
                             <div>
@@ -159,28 +164,45 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex">
-                                    <FormLabel for="school_id" label="School" />
+                                <div class="flex items-center justify-between">
+                                    <div class="flex">
+                                        <FormLabel for="school_id" label="School" />
+                                        <span class="text-red-500">*</span>
+                                    </div>
+                                    <div>
+                                        <a @click="openNewSchool"
+                                            class="text-sm underline text-blue-500 cursor-pointer">
+                                            Add new school
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="mt-2">
                                     <FormSelect :options="state.option.school" name="school_id" class="w-full"
                                         v-model="state.form.school_id" />
+                                    <FormError :error="v$?.form.school_id?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.school_id?.[0]" />
                                 </div>
                             </div>
                             <div>
                                 <div class="flex">
                                     <FormLabel for="occupation" label="Occupation" />
+                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormTextField name="occupation" class="w-full" v-model="state.form.occupation" />
+                                    <FormError :error="v$?.form.occupation?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.occupation?.[0]" />
                                 </div>
                             </div>
                             <div>
                                 <div class="flex">
                                     <FormLabel for="club_name" label="Club name" />
+                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormTextField name="club_name" class="w-full" v-model="state.form.club_name" />
+                                    <FormError :error="v$?.form.club_name?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.club_name?.[0]" />
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -206,17 +228,29 @@
                 <FormButton type="submit" class="w-full">Submit</FormButton>
             </div>
         </form>
+        <ModalNewSchool v-model:open="state.isNewSchoolOpen" @saveSchool="saveNewSchool" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
+import { useAlert } from '@/composables/alert'
+import { schoolService } from "@/api/school/SchoolService"
 
-const emit = defineEmits(['cancelAction', 'submitAction'])
+const emit = defineEmits(['cancelAction', 'submitForm', 'showError'])
+
+const { successAlert } = useAlert()
 
 const avatarUrl = ref('/img/avatars/user.svg')
 const profileImage = ref<HTMLInputElement | null>(null)
+
+const props = defineProps({
+    model: {
+        type: String,
+        required: true
+    }
+})
 
 const state = reactive({
     form: {
@@ -269,6 +303,11 @@ const state = reactive({
         school: []
     },
     error: null as any,
+    isNewSchoolOpen: false
+})
+
+onMounted(() => {
+    fetchSchools()
 })
 
 watch(() => state.form.birth_date, (newValue) => {
@@ -330,6 +369,15 @@ const rules = computed(() => {
             address: {
                 required: helpers.withMessage('This field is required.', required),
             },
+            school_id: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            occupation: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            club_name: {
+                required: helpers.withMessage('This field is required.', required),
+            },
         }
     }
 })
@@ -339,8 +387,46 @@ const v$ = useVuelidate(rules, state)
 function submit() {
     v$.value.$validate()
     if (!v$.value.$error) {
-        emit('submitAction', state.form)
+        emit('submitForm', state.form)
     }
+}
+
+async function fetchSchools() {
+    try {
+        const response = await schoolService.fetchSchoolList()
+        if (response.data) {
+            let options: any = []
+            response.data.forEach(
+                (item: any) => options.push({
+                    value: item.id,
+                    label: item.school_name,
+                })
+            )
+            state.option.school = options
+        }
+    } catch (error) {
+        state.error = error
+    }
+}
+
+async function saveNewSchool(data: any) {
+    try {
+        let params = {
+            school_name: data
+        }
+        const response = await schoolService.createSchool(params)
+        if (response.data) {
+            successAlert('Success!', 'School created.')
+            fetchSchools()
+            state.form.school_id = response.data.id
+        }
+    } catch (error) {
+        emit('showError', state.error)
+    }
+}
+
+function openNewSchool() {
+    state.isNewSchoolOpen = true
 }
 
 function cancelEdit() {

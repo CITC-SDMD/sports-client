@@ -12,9 +12,7 @@
                         <div class="flex items-center justify-center">
                             <input type="file" ref="profileImage" @change="onImageChange" class="hidden" />
                             <div class="relative cursor-pointer" @click="triggerImageInput">
-                                <img v-if="state.form.image" :src="state.form.image" alt="Avatar"
-                                    class="size-40 rounded-full object-cover border-2 border-tertiary-25" />
-                                <img v-else :src="avatarUrl" alt="Avatar"
+                                <img :src="avatarUrl" alt="Avatar"
                                     class="size-40 rounded-full object-cover border-2 border-tertiary-25" />
                                 <div
                                     class="rounded-full absolute inset-0 bg-black bg-opacity-50 text-white opacity-0 hover:opacity-100 transition-opacity">
@@ -163,28 +161,45 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex">
-                                    <FormLabel for="school_id" label="School" />
+                                <div class="flex items-center justify-between">
+                                    <div class="flex">
+                                        <FormLabel for="school_id" label="School" />
+                                        <span class="text-red-500">*</span>
+                                    </div>
+                                    <div>
+                                        <a @click="openNewSchool"
+                                            class="text-sm underline text-blue-500 cursor-pointer">
+                                            Add new school
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="mt-2">
                                     <FormSelect :options="state.option.school" name="school_id" class="w-full"
                                         v-model="state.form.school_id" />
+                                    <FormError :error="v$?.form.school_id?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.school_id?.[0]" />
                                 </div>
                             </div>
                             <div>
                                 <div class="flex">
                                     <FormLabel for="occupation" label="Occupation" />
+                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormTextField name="occupation" class="w-full" v-model="state.form.occupation" />
+                                    <FormError :error="v$?.form.occupation?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.occupation?.[0]" />
                                 </div>
                             </div>
                             <div>
                                 <div class="flex">
                                     <FormLabel for="club_name" label="Club name" />
+                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormTextField name="club_name" class="w-full" v-model="state.form.club_name" />
+                                    <FormError :error="v$?.form.club_name?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.club_name?.[0]" />
                                 </div>
                             </div>
                             <div class="col-span-2">
@@ -210,14 +225,19 @@
                 <FormButton type="submit" class="w-full">Submit</FormButton>
             </div>
         </form>
+        <ModalNewSchool v-model:open="state.isNewSchoolOpen" @saveSchool="saveNewSchool" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
 import { required, helpers } from '@vuelidate/validators'
+import { useAlert } from '@/composables/alert'
+import { schoolService } from "@/api/school/SchoolService"
 
-const emit = defineEmits(['cancelAction', 'submitAction'])
+const emit = defineEmits(['cancelAction', 'submitAction', 'showError'])
+
+const { successAlert } = useAlert()
 
 const avatarUrl = ref('/img/avatars/user.svg')
 const profileImage = ref<HTMLInputElement | null>(null)
@@ -245,8 +265,9 @@ const state = reactive({
         contact_no: props.model.contact_no,
         occupation: props.model.occupation,
         club_name: props.model.club_name,
-        image: props.model.image,
-        age: null as any
+        image: null as any,
+        age: null as any,
+        imagePreview: null as any
     },
     option: {
         sex: [
@@ -280,10 +301,15 @@ const state = reactive({
         school: []
     },
     error: null as any,
+    isNewSchoolOpen: false
 })
 
 onMounted(() => {
     state.form.age = computedAge
+    if (props.model.image) {
+        avatarUrl.value = props.model.image
+    }
+    fetchSchools()
 })
 
 const computedAge = computed(() => {
@@ -311,7 +337,8 @@ function onImageChange(event: any) {
     if (file) {
         const reader = new FileReader()
         reader.onload = (e: any) => {
-            avatarUrl.value = e.target.result
+            const result = e.target.result
+            avatarUrl.value = result
         }
         reader.readAsDataURL(file)
     }
@@ -356,6 +383,15 @@ const rules = computed(() => {
             address: {
                 required: helpers.withMessage('This field is required.', required),
             },
+            school_id: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            occupation: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            club_name: {
+                required: helpers.withMessage('This field is required.', required),
+            },
         }
     }
 })
@@ -367,6 +403,44 @@ function submit() {
     if (!v$.value.$error) {
         emit('submitAction', state.form)
     }
+}
+
+async function fetchSchools() {
+    try {
+        const response = await schoolService.fetchSchoolList()
+        if (response.data) {
+            let options: any = []
+            response.data.forEach(
+                (item: any) => options.push({
+                    value: item.id,
+                    label: item.school_name,
+                })
+            )
+            state.option.school = options
+        }
+    } catch (error) {
+        state.error = error
+    }
+}
+
+async function saveNewSchool(data: any) {
+    try {
+        let params = {
+            school_name: data
+        }
+        const response = await schoolService.createSchool(params)
+        if (response.data) {
+            successAlert('Success!', 'School created.')
+            fetchSchools()
+            state.form.school_id = response.data.id
+        }
+    } catch (error) {
+        emit('showError', state.error)
+    }
+}
+
+function openNewSchool() {
+    state.isNewSchoolOpen = true
 }
 
 function cancelEdit() {
