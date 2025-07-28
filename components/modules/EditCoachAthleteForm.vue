@@ -253,7 +253,7 @@ const state = reactive({
     form: {
         school_id: props.model.school_id,
         firstname: props.model.firstname,
-        middlename: props.model.middlename,
+        middlename: (props.model.middlename == 'null') ? '' : props.model.middlename,
         lastname: props.model.lastname,
         email: props.model.email,
         nationality: props.model.nationality,

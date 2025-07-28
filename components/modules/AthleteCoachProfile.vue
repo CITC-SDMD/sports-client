@@ -9,7 +9,8 @@
                 <div class="space-y-3">
                     <div>
                         <span class="font-bold text-xl">
-                            {{ props.model?.firstname }} {{ props.model?.middlename ?? '' }}
+                            {{ props.model?.firstname }}
+                            {{ (props.model?.middlename === 'null') ? '' : props.model?.middlename }}
                             {{ props.model?.lastname }}
                         </span>
                     </div>

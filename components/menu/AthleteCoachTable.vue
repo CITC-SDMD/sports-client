@@ -62,6 +62,9 @@ import {
 const route = useRoute()
 const path = route.fullPath
 
+const router = useRouter()
+const uuid = router?.currentRoute?.value?.params?.uuid
+
 const props = defineProps({
     isReversedDropdown: {
         type: Boolean,
@@ -74,10 +77,39 @@ const props = defineProps({
 })
 
 function goToViewPage(data) {
-    navigateTo(`${path}/${data}/coaches`)
+    if (path === '/coaches') {
+        navigateTo(`${path}/${data}/athletes`)
+    }
+
+    if (path === `/coaches/${uuid}/athletes`) {
+        navigateTo(`/athletes/${data}/coaches`)
+    }
+
+    if (path === `/athletes/${uuid}/coaches`) {
+        navigateTo(`/coaches/${data}/athletes`)
+    }
+
+    if (path === '/athletes') {
+        navigateTo(`${path}/${data}/coaches`)
+    }
 }
 
 function goToEditPage(data) {
-    navigateTo(`${path}/${data}/edit`)
+
+    if (path === '/coaches') {
+        navigateTo(`${path}/${data}/edit`)
+    }
+
+    if (path === `/coaches/${uuid}/athletes`) {
+        navigateTo(`/athletes/${data}/edit`)
+    }
+
+    if (path === `/athletes/${uuid}/coaches`) {
+        navigateTo(`/coaches/${data}/edit`)
+    }
+
+    if (path === '/athletes') {
+        navigateTo(`${path}/${data}/edit`)
+    }
 }
 </script>

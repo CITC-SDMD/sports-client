@@ -22,8 +22,9 @@
                                     </a>
                                 </div>
                                 <div>
-                                    <FormSelect :options="state.option.model" placeholder="Select coach"
-                                        v-model="state.selectedCoach" />
+                                    <FormSelect :options="state.option.model"
+                                        :placeholder="props.model == 'coach' ? 'Select coach' : 'Select athlete'"
+                                        v-model="state.selectedCoachAthlete" />
                                     <FormError :error="v$?.selectedCoach?.$errors[0]?.$message.toString()" />
                                     <FormError :error="state.error?.errors?.selectedCoach?.[0]" />
                                 </div>
@@ -43,7 +44,8 @@
                 </div>
             </Dialog>
         </TransitionRoot>
-        <ModalCreateCoachAthlete v-model:open="state.isCreateCoachModalOpen" @createNewCoachAthlete="createNewCoach" />
+        <ModalCreateCoachAthlete v-model:open="state.isCreateCoachModalOpen"
+            @createNewCoachAthlete="createCoachAthlete" />
     </div>
 </template>
 
@@ -79,7 +81,7 @@ const state = reactive({
     option: {
         model: []
     },
-    selectedCoach: null as any,
+    selectedCoachAthlete: null as any,
     isCreateCoachModalOpen: false
 })
 
@@ -96,7 +98,7 @@ async function fetchModel() {
                 response.data.forEach(
                     (item: any) => options.push({
                         value: item.uuid,
-                        label: item.firstname + ' ' + item.middlename + ' ' + item.lastname,
+                        label: item.firstname + ' ' + item.lastname,
                     })
                 )
                 state.option.model = options
@@ -108,7 +110,7 @@ async function fetchModel() {
                 response.data.forEach(
                     (item: any) => options.push({
                         value: item.uuid,
-                        label: item.firstname + ' ' + item.middlename + ' ' + item.lastname,
+                        label: item.firstname + ' ' + (item.middlename != 'null') ? item.middlename : '' + ' ' + item.lastname,
                     })
                 )
                 state.option.model = options
@@ -121,7 +123,7 @@ async function fetchModel() {
 
 const rules = computed(() => {
     return {
-        selectedCoach: {
+        selectedCoachAthlete: {
             required: helpers.withMessage('This field is required.', required),
         },
     }
@@ -132,12 +134,12 @@ const v$ = useVuelidate(rules, state)
 function submitCoach() {
     v$.value.$validate()
     if (!v$.value.$error) {
-        emit('saveCoach', state.selectedCoach)
-        state.selectedCoach = false
+        emit('saveCoach', state.selectedCoachAthlete)
+        state.selectedCoachAthlete = false
     }
 }
 
-async function createNewCoach(data: any) {
+async function createCoachAthlete(data: any) {
     try {
         let params = new FormData
         params.append('firstname', data.firstname)
@@ -156,11 +158,20 @@ async function createNewCoach(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.photo)
-        const response = await coachService.createCoach(params)
-        if (response.data) {
-            successAlert('Success!', 'Coach created.')
-            fetchModel()
-            state.selectedCoach = response.data.uuid
+        if (props.model === 'coach') {
+            const response = await coachService.createCoach(params)
+            if (response.data) {
+                successAlert('Success!', 'Coach created.')
+                fetchModel()
+                state.selectedCoachAthlete = response.data.uuid
+            }
+        } else {
+            const response = await athleteService.createAthlete(params)
+            if (response.data) {
+                successAlert('Success!', 'Athlete created.')
+                fetchModel()
+                state.selectedCoachAthlete = response.data.uuid
+            }
         }
     } catch (error) {
         state.error = error
