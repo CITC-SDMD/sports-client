@@ -51,7 +51,8 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath
-const baseUrl = path.replace(`/${uuid}/career`, '')
+
+const baseUrl = path.replace(`/${uuid}/careers`, '')
 const coachUrl = path.replace('/careers', '/coaches')
 const athleteUrl = path.replace(path, '/athletes')
 
