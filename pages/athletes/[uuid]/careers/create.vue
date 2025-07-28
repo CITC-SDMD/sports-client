@@ -1,12 +1,16 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Update Athlete</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Create career</Title>
     </Head>
 
     <div>
         <Loader v-if=state.isPageLoading />
-        <FormBackButton @click="goToPreviousPage" />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">New Performance & Career</span>
+        </div>
+        <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesNewCareerForm @submitForm="saveCareer" />
@@ -26,6 +30,15 @@ const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
 const { successAlert } = useAlert()
 
+const athleteUrl = path.replace(path, '/athletes')
+const careerUrl = path.replace('/create', '')
+
+const pages = [
+    { name: 'Athletes', href: athleteUrl, current: false },
+    { name: 'Performance & Careers', href: careerUrl, current: false },
+    { name: 'New Performance & Career', href: path, current: true },
+]
+
 definePageMeta({
     layout: 'main'
 })
@@ -42,7 +55,7 @@ async function saveCareer(data: any) {
         let params = {
             model_uuid: uuid,
             id_number: data.id_number,
-            performance: data.performance,
+            // performance: data.performance,
             career_date: data.career_date,
             sport_id: data.sport_id,
             competition_id: data.competition_id,
@@ -50,7 +63,7 @@ async function saveCareer(data: any) {
             highlights: data.highlights,
             awards: data.awards,
             coach_status: data.coach_status ?? null,
-            is_injured: data.is_injured ?? null,
+            is_injured: data.is_injured ?? false,
             affiliations: data.affiliations ?? null,
             sports_asso: data.sports_asso ?? null,
             training_seminar: data.training_seminar ?? null,

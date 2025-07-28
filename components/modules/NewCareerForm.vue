@@ -317,9 +317,9 @@ const rules = computed(() => {
             id_number: {
                 required: helpers.withMessage('This field is required.', required),
             },
-            performance: {
-                required: helpers.withMessage('This field is required.', required),
-            },
+            // performance: {
+            //     required: helpers.withMessage('This field is required.', required),
+            // },
             career_date: {
                 required: helpers.withMessage('This field is required.', required),
             },

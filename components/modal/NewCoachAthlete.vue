@@ -110,7 +110,7 @@ async function fetchModel() {
                 response.data.forEach(
                     (item: any) => options.push({
                         value: item.uuid,
-                        label: item.firstname + ' ' + (item.middlename != 'null') ? item.middlename : '' + ' ' + item.lastname,
+                        label: item.firstname + ' ' + item.lastname,
                     })
                 )
                 state.option.model = options

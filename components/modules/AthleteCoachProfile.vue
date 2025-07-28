@@ -42,7 +42,7 @@
                     <div class="flex items-center gap-x-2">
                         <IdentificationIcon class="w-5 h-5 text-blue-600" />
                         <span class="text-sm">
-                            {{ state.age }}
+                            {{ state.age }} years old
                         </span>
                     </div>
                 </div>
@@ -121,7 +121,9 @@ const state = reactive({
 
 onMounted(() => {
     state.age = computedAge
-    avatarUrl.value = props.model.image
+    if (props.model.image) {
+        avatarUrl.value = props.model.image
+    }
 })
 
 const computedAge = computed(() => {

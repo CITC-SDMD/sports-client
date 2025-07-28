@@ -57,6 +57,7 @@ const route = useRoute()
 const path = route.fullPath
 
 const athleteUrl = path.replace(path, '/athletes')
+const careerUrl = path.replace('/coaches', '/careers')
 
 const pages = [
     { name: 'Athletes', href: athleteUrl, current: false },
@@ -65,7 +66,7 @@ const pages = [
 
 const tabs = [
     { name: 'Coaches', href: path, current: true },
-    { name: 'Performance and Career', href: '#', current: false },
+    { name: 'Performance and Career', href: careerUrl, current: false },
 ]
 
 definePageMeta({
@@ -153,7 +154,8 @@ async function getCoaches() {
     try {
         let params = {
             page: currentPage,
-            athlete_uuid: state.athleteUuid
+            athlete_uuid: state.athleteUuid,
+            search: state.search
         }
         const response = await athleteService.fetchCoachesByAthlete(params)
         if (response.data) {
@@ -169,7 +171,7 @@ async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    // getAthletes()
+    getCoaches()
 }
 
 async function previous() {
@@ -188,7 +190,6 @@ function goToPreviousPage() {
 }
 
 function goToCreateCoach() {
-    // navigateTo(`${path}/create`)
     state.isNewCoachOpen = true
 }
 

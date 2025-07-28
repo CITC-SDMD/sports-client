@@ -78,7 +78,7 @@ async function editCareer(data: any) {
             health_status: data.health_status ?? null,
             injury: data.injury ?? null,
             injury_date: data.injury_date ?? null,
-            injury_desc: data.injury_desc ?? null,
+            description: data.injury_desc ?? null,
         }
         const response = await careerService.updateCareer(params, uuid)
         if (response.data) {

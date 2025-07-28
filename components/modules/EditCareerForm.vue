@@ -254,7 +254,7 @@ const state = reactive({
         health_status: props.career?.healthStatus?.health_status,
         injury: props.career?.healthStatus?.injury,
         injury_date: props.career?.healthStatus?.injury_date,
-        injury_desc: props.career?.healthStatus?.injury_desc,
+        injury_desc: props.career?.healthStatus?.description,
     },
     option: {
         award_hightlight: [
@@ -324,9 +324,9 @@ const rules = computed(() => {
             id_number: {
                 required: helpers.withMessage('This field is required.', required),
             },
-            performance: {
-                required: helpers.withMessage('This field is required.', required),
-            },
+            // performance: {
+            //     required: helpers.withMessage('This field is required.', required),
+            // },
             career_date: {
                 required: helpers.withMessage('This field is required.', required),
             },

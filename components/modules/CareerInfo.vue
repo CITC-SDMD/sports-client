@@ -125,7 +125,7 @@
                             <div class="flex flex-col">
                                 <span class="text-sm">Injury Description</span>
                                 <span class="text-xl font-medium">
-                                    {{ props.career?.healthStatus?.injury_desc ?? '\u00A0' }}
+                                    {{ props.career?.healthStatus?.description ?? '\u00A0' }}
                                 </span>
                             </div>
                         </div>
