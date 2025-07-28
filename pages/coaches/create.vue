@@ -42,6 +42,7 @@ async function saveData(data: any) {
         params.append('middlename', data.middlename)
         params.append('lastname', data.lastname)
         params.append('email', data.email)
+        params.append('nationality', data.nationality)
         params.append('address', data.address)
         params.append('birth_date', data.birth_date)
         params.append('birth_place', data.birth_place)
