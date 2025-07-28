@@ -6,7 +6,11 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
-        <FormBackButton @click="goToPreviousPage" />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">Edit Performance & Career</span>
+        </div>
+        <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesEditCareerForm v-if="state.career" :career="state.career" @submitForm="editCareer" />
@@ -28,6 +32,15 @@ const runtimeConfig = useRuntimeConfig()
 
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
+
+const baseUrl = path.replace(path, '/athletes')
+const careerUrl = path.replace(`/${uuid}/edit`, '')
+
+const pages = [
+    { name: 'Athletes', href: baseUrl, current: false },
+    { name: 'Performance & Careers', href: careerUrl, current: false },
+    { name: 'Edit Performance & Career', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'
@@ -92,7 +105,6 @@ async function editCareer(data: any) {
 }
 
 function goToPreviousPage() {
-    const url = path.replace('/edit', '')
-    navigateTo(url)
+    navigateTo(careerUrl)
 }
 </script>
