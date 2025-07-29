@@ -16,13 +16,14 @@
                     </div>
                     <div>
                         <div class="flex">
-                            <FormLabel for="performance" label="Performance" />
+                            <FormLabel for="performance_id" label="Performance" />
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="performance" class="w-full" v-model="state.form.performance" />
-                            <FormError :error="v$?.form.performance?.$errors[0]?.$message.toString()" />
-                            <FormError :error="state.error?.errors?.form.performance?.[0]" />
+                            <FormSelect :options="state.option.performances" name="performance_id" class="w-full"
+                                v-model="state.form.performance_id" />
+                            <FormError :error="v$?.form.performance_id?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.performance_id?.[0]" />
                         </div>
                     </div>
                 </div>
@@ -225,6 +226,7 @@ import { useVuelidate } from "@vuelidate/core"
 import { required, helpers, requiredIf } from '@vuelidate/validators'
 import { sportService } from '@/api/sport/SportService'
 import { competitionService } from "@/api/competition/CompetitionService"
+import { performanceService } from "@/api/performance/PerformanceService"
 
 const emit = defineEmits(['submitForm'])
 
@@ -232,13 +234,17 @@ const props = defineProps({
     career: {
         type: Object,
         required: true
+    },
+    model: {
+        type: String,
+        required: true
     }
 })
 
 const state = reactive({
     form: {
         id_number: props.career.id_number,
-        performance: props.career.performance,
+        performance_id: props.career.performance_id,
         career_date: props.career.career_date,
         sport_id: props.career.sport_id,
         competition_id: props.career.competition_id,
@@ -272,7 +278,8 @@ const state = reactive({
             },
         ],
         sports: [],
-        competitions: []
+        competitions: [],
+        performances: []
     },
     error: null as any,
 })
@@ -280,6 +287,7 @@ const state = reactive({
 onMounted(() => {
     fetchSports()
     fetchCompetitions()
+    fetchPerformances()
 })
 
 async function fetchSports() {
@@ -318,15 +326,36 @@ async function fetchCompetitions() {
     }
 }
 
+async function fetchPerformances() {
+    try {
+        let params = {
+            type: props.model
+        }
+        const response = await performanceService.fetchPerformanceList(params)
+        if (response.data) {
+            let options: any = []
+            response.data.forEach(
+                (item: any) => options.push({
+                    value: item.id,
+                    label: item.name,
+                })
+            )
+            state.option.performances = options
+        }
+    } catch (error) {
+        state.error = error
+    }
+}
+
 const rules = computed(() => {
     return {
         form: {
             id_number: {
                 required: helpers.withMessage('This field is required.', required),
             },
-            // performance: {
-            //     required: helpers.withMessage('This field is required.', required),
-            // },
+            performance_id: {
+                required: helpers.withMessage('This field is required.', required),
+            },
             career_date: {
                 required: helpers.withMessage('This field is required.', required),
             },

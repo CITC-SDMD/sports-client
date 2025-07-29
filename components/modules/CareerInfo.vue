@@ -27,7 +27,7 @@
                             <div class="flex flex-col">
                                 <span class="text-sm">Performance</span>
                                 <span class="text-xl font-medium">
-                                    {{ props.career.performance }}
+                                    {{ props.career.performance?.name }}
                                 </span>
                             </div>
                             <div class="flex flex-col">

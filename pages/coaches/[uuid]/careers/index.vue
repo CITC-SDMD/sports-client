@@ -6,14 +6,33 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
-        <FormBackButton @click="goToPreviousPage" />
-        <div class="mt-8">
-            <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesCoachCareer v-if="state.coach" :coach="state.coach">
-                <TableCareer v-if="state.body" :head="state.head" :body="state.body" />
-                <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()"
-                    @next="next()" />
-            </ModulesCoachCareer>
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">Coaches</span>
+        </div>
+        <FormBackButton @click="goToPreviousPage" class="mt-4" />
+        <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
+        <ModulesAthleteCoachProfile class="mt-4" v-if="state.coach" :model="state.coach" />
+        <Tabs :tabs="tabs" class="mt-4" />
+        <div class="mt-4">
+            <div class="w-full flex justify-end">
+                <FormButton @click="goToCreateCareer" class="flex items-center gap-x-2 w-full sm:w-auto">
+                    <PlusIcon class="w-6 h-6" />
+                    New career
+                </FormButton>
+            </div>
+            <div class="w-full mt-4">
+                <form @submit.prevent="search" class="flex w-full space-x-4">
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
+                        placeholder="Search career" />
+                    <FormButton type="submit" class="flex items-center gap-x-2">
+                        <MagnifyingGlassIcon class="w-6 h-6" />
+                        Search
+                    </FormButton>
+                </form>
+            </div>
+            <TableCareer :head=state.head :body="state.body" />
+            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
     </div>
 </template>
@@ -21,6 +40,7 @@
 <script setup lang="ts">
 import { careerService } from '@/api/career/CareerService'
 import { coachService } from '@/api/coach/CoachService'
+import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
@@ -31,8 +51,18 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 
 const route = useRoute()
 const path = route.fullPath
-const profileUrl = path.replace('/careers', '/profile')
 const baseUrl = path.replace(`/${uuid}/careers`, '')
+const athleteUrl = path.replace('/careers', '/athletes')
+
+const pages = [
+    { name: 'Coaches', href: baseUrl, current: false },
+    { name: 'Performance and Career', href: path, current: true },
+]
+
+const tabs = [
+    { name: 'Athletes', href: athleteUrl, current: false },
+    { name: 'Performance and Career', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'
@@ -50,6 +80,9 @@ const state = reactive({
     coachUuid: uuid as string,
     head: [
         {
+            name: 'ID number'
+        },
+        {
             name: 'Competition'
         },
         {
@@ -62,7 +95,9 @@ const state = reactive({
             name: 'Date'
         },
     ],
-    body: [] as any
+    body: [] as any,
+    search: null as any,
+    searchFilter: null as any
 })
 
 async function getCoach() {
@@ -83,7 +118,8 @@ async function fetchCareers() {
     try {
         let params = {
             page: currentPage,
-            model_uuid: uuid
+            model_uuid: uuid,
+            search: state.search
         }
         const response = await careerService.fetchCareers(params)
         if (response.data) {
@@ -94,6 +130,14 @@ async function fetchCareers() {
     }
     state.isPageLoading = false
 }
+
+async function search() {
+    currentPage = 1
+    let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
+    state.search = filterString
+    fetchCareers()
+}
+
 
 function goToPreviousPage() {
     navigateTo(baseUrl)
@@ -107,5 +151,9 @@ async function previous() {
 async function next() {
     currentPage++
     fetchCareers()
+}
+
+function goToCreateCareer() {
+    navigateTo(`${path}/create`)
 }
 </script>

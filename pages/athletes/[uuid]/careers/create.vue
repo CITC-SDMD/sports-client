@@ -13,7 +13,7 @@
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesNewCareerForm @submitForm="saveCareer" />
+            <ModulesNewCareerForm @submitForm="saveCareer" :model="'athlete'" />
         </div>
     </div>
 </template>
@@ -55,7 +55,7 @@ async function saveCareer(data: any) {
         let params = {
             model_uuid: uuid,
             id_number: data.id_number,
-            // performance: data.performance,
+            performance_id: data.performance_id,
             career_date: data.career_date,
             sport_id: data.sport_id,
             competition_id: data.competition_id,

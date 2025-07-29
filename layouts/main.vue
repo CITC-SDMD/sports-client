@@ -172,6 +172,7 @@ const navigation = [
       'athletes-uuid-careers',
       'athletes-uuid-careers-create',
       'athletes-uuid-careers-uuid',
+      'athletes-uuid-careers-uuid-edit',
     ] as any
   },
   {
@@ -182,6 +183,8 @@ const navigation = [
       'coaches-uuid-edit',
       'coaches-uuid-careers',
       'coaches-uuid-careers-create',
+      'coaches-uuid-careers-uuid',
+      'coaches-uuid-careers-uuid-edit',
       'coaches-uuid-athletes',
     ] as any
   },

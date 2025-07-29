@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Athlete Career</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Athletes</Title>
     </Head>
 
     <div>
@@ -56,6 +56,7 @@ const uuid = String(router?.currentRoute?.value?.params?.uuid)
 const route = useRoute()
 const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/athletes`, '')
+const careerUrl = path.replace('/athletes', '/careers')
 
 const pages = [
     { name: 'Coaches', href: baseUrl, current: false },
@@ -64,7 +65,7 @@ const pages = [
 
 const tabs = [
     { name: 'Athletes', href: path, current: true },
-    { name: 'Performance and Career', href: '#', current: false },
+    { name: 'Performance and Career', href: careerUrl, current: false },
 ]
 
 definePageMeta({
