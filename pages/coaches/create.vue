@@ -10,7 +10,7 @@
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesNewCoachAthleteForm @loadPage="(value: boolean) => state.isPageLoading = value"
-                @submitAction="saveData" :model="'coach'" @showError="showErrorMessage" />
+                @submitForm="saveData" :model="'coach'" @showError="showErrorMessage" />
         </div>
     </div>
 </template>
@@ -53,6 +53,11 @@ async function saveData(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.image)
+        params.append('identification', data.identification)
+        params.append('birth_certificate', data.birth_certificate)
+        params.append('pre_qualifying', data.pre_qualifying)
+        params.append('entry_form', data.entry_form)
+        params.append('passport', data.passport)
         const response = await coachService.createCoach(params)
         if (response.data) {
             successAlert('Success!', 'Coach created.')

@@ -10,7 +10,10 @@
         <div class="mt-4">
             <span class="text-3xl font-bold text-blue-500">Coaches</span>
         </div>
-        <FormBackButton @click="goToPreviousPage" class="mt-4" />
+        <div class="flex items-center justify-between">
+            <FormBackButton @click="goToPreviousPage" class="mt-4" />
+            <FormButton @click="openRequirement">View Documents</FormButton>
+        </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile class="mt-4" v-if="state.coach" :model="state.coach" />
         <Tabs :tabs="tabs" class="mt-4" />
@@ -35,6 +38,8 @@
         </div>
         <ModalNewCoachAthlete v-model:open="state.isNewAthleteOpen" :model="'athlete'" :buttonText="'New Athlete'"
             @saveCoach="saveCoachAthlete" />
+        <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
@@ -92,6 +97,7 @@ const state = reactive({
     searchFilter: null as any,
     search: null as any,
     isNewAthleteOpen: false,
+    isRequirementOpen: false
 })
 
 async function getCoach() {
@@ -112,7 +118,8 @@ async function getCoachAthletes() {
     try {
         let params = {
             page: currentPage,
-            coach_uuid: uuid
+            coach_uuid: uuid,
+            search: state.search
         }
         const response = await coachService.fetchAthletesByCoach(params)
         if (response.data) {
@@ -143,6 +150,10 @@ async function saveCoachAthlete(data: any) {
     state.isPageLoading = false
 }
 
+function openRequirement() {
+    state.isRequirementOpen = true
+}
+
 async function previous() {
     currentPage--
     getCoachAthletes()
@@ -157,7 +168,7 @@ async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    // getAthletes()
+    getCoachAthletes()
 }
 
 function goToCreateAthlete() {

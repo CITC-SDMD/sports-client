@@ -6,7 +6,11 @@
 
     <div>
         <Loader v-if="state.isPageLoading" />
-        <FormBackButton @click="goToPreviousPage" />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">Performance & Career Details</span>
+        </div>
+        <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
         <div class="flex items-center justify-end mt-8 space-x-2">
             <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
@@ -59,6 +63,15 @@ const path = route.fullPath
 
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
+
+const baseUrl = path.replace(path, '/coaches')
+const careerUrl = path.replace(`/${uuid}`, '')
+
+const pages = [
+    { name: 'Coaches', href: baseUrl, current: false },
+    { name: 'Performance & Careers', href: careerUrl, current: false },
+    { name: 'Performance & Career Details', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'

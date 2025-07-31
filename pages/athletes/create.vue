@@ -62,6 +62,11 @@ async function saveData(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.image)
+        params.append('identification', data.identification)
+        params.append('birth_certificate', data.birth_certificate)
+        params.append('pre_qualifying', data.pre_qualifying)
+        params.append('entry_form', data.entry_form)
+        params.append('passport', data.passport)
         const response = await athleteService.createAthlete(params)
         if (response.data) {
             successAlert('Success!', 'Athlete created.')

@@ -12,6 +12,16 @@
         </div>
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
+        <div class="flex items-center justify-end mt-8 space-x-2">
+            <FormButton @click="goToEditPage" class="flex items-center gap-x-2">
+                <PencilSquareIcon class="h-5 w-5" />
+                Edit
+            </FormButton>
+            <FormButton @click="openDeleteModal" class="flex items-center gap-x-2 bg-red-500 hover:bg-red-700">
+                <TrashIcon class="h-5 w-5" />
+                Delete
+            </FormButton>
+        </div>
         <div class="mt-2">
             <ModulesCareerInfo v-if="state.career" :career="state.career" />
         </div>
@@ -22,6 +32,7 @@
 <script setup lang="ts">
 import { careerService } from '@/api/career/CareerService'
 import { useAlert } from '~/composables/alert'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/vue/20/solid'
 
 const runtimeConfig = useRuntimeConfig()
 

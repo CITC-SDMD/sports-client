@@ -10,7 +10,10 @@
         <div class="mt-4">
             <span class="text-3xl font-bold text-blue-500">Performance & Career</span>
         </div>
-        <FormBackButton @click="goToPreviousPage" class="mt-4" />
+        <div class="flex items-center justify-between">
+            <FormBackButton @click="goToPreviousPage" class="mt-4" />
+            <FormButton @click="openRequirement">View Documents</FormButton>
+        </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <Tabs :tabs="tabs" class="mt-4" />
@@ -34,6 +37,8 @@
             <TableCareer :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
+        <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
@@ -99,7 +104,8 @@ const state = reactive({
     ],
     body: [] as any,
     search: null as any,
-    searchFilter: null as any
+    searchFilter: null as any,
+    isRequirementOpen: false
 })
 
 async function getAthlete() {
@@ -140,6 +146,9 @@ async function search() {
     fetchCareers()
 }
 
+function openRequirement() {
+    state.isRequirementOpen = true
+}
 
 function goToPreviousPage() {
     navigateTo(baseUrl)

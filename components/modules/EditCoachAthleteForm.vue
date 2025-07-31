@@ -2,9 +2,17 @@
     <div class="divide-y divide-gray-900/10">
         <form @submit.prevent="submit">
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
-                <div class="px-4 sm:px-0">
+                <div class="px-4 sm:px-0" v-if="props.entity == 'coach'">
+                    <h2 class="text-base/7 font-semibold text-gray-900">Coach Information</h2>
+                    <p class="mt-1 text-sm/6 text-gray-600">
+                        Essential details of the coach
+                    </p>
+                </div>
+                <div class="px-4 sm:px-0" v-else>
                     <h2 class="text-base/7 font-semibold text-gray-900">Athlete Information</h2>
-                    <p class="mt-1 text-sm/6 text-gray-600">Essential details of the athlete.</p>
+                    <p class="mt-1 text-sm/6 text-gray-600">
+                        Essential details of the athlete.
+                    </p>
                 </div>
 
                 <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
@@ -217,6 +225,80 @@
                     </div>
                 </div>
             </div>
+
+            <hr>
+
+            <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
+                <div class="px-4 sm:px-0">
+                    <h2 class="text-base/7 font-semibold text-gray-900">Documents</h2>
+                    <p class="mt-1 text-sm/6 text-gray-600">The required documents for registration</p>
+                </div>
+
+                <div class="md:col-span-2">
+                    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl space-y-6 p-6">
+                        <div>
+                            <div class="flex">
+                                <FormLabel for="identification" label="Proof of Identification" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="identification"
+                                    @fileSelected="(value) => state.form.identification = value" />
+                                <FormError :error="v$?.form.identification?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.identification?.[0]" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex">
+                                <FormLabel for="birth_certificate" label="Birth Certificate" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="birth_certificate"
+                                    @fileSelected="(value) => state.form.birth_certificate = value" />
+                                <FormError :error="v$?.form.birth_certificate?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.birth_certificate?.[0]" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex">
+                                <FormLabel for="pre_qualifying" label="Pre-Qualifying Results" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="pre_qualifying"
+                                    @fileSelected="(value) => state.form.pre_qualifying = value" />
+                                <FormError :error="v$?.form.pre_qualifying?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.pre_qualifying?.[0]" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex">
+                                <FormLabel for="entry_form" label="Entry Form" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="entry_form"
+                                    @fileSelected="(value) => state.form.entry_form = value" />
+                                <FormError :error="v$?.form.entry_form?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.entry_form?.[0]" />
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex">
+                                <FormLabel for="passport" label="Passport" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="passport"
+                                    @fileSelected="(value) => state.form.passport = value" />
+                                <FormError :error="v$?.form.passport?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.passport?.[0]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="flex items-center justify-end gap-x-4">
                 <FormButton type="button" @click="cancelEdit"
                     class="w-full bg-gray-300 !text-gray-900 hover:!bg-gray-200">
@@ -246,6 +328,10 @@ const props = defineProps({
     model: {
         type: Object,
         required: true
+    },
+    entity: {
+        type: String,
+        required: true
     }
 })
 
@@ -267,7 +353,11 @@ const state = reactive({
         club_name: props.model.club_name,
         image: null as any,
         age: null as any,
-        imagePreview: null as any
+        identification: null as any,
+        birth_certificate: null as any,
+        pre_qualifying: null as any,
+        entry_form: null as any,
+        passport: null as any,
     },
     option: {
         sex: [
@@ -390,6 +480,21 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.', required),
             },
             club_name: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            identification: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            birth_certificate: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            pre_qualifying: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            entry_form: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            passport: {
                 required: helpers.withMessage('This field is required.', required),
             },
         }

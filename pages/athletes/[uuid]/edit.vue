@@ -12,7 +12,7 @@
         </div>
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
-        <ModulesEditCoachAthleteForm v-if="state.athlete" :model="state.athlete" class="mt-4"
+        <ModulesEditCoachAthleteForm :entity="'athlete'" v-if="state.athlete" :model="state.athlete" class="mt-4"
             @cancelAction="goToPreviousPage" @submitAction="editAthlete" @showError="showErrorMessage" />
     </div>
 </template>
@@ -74,6 +74,7 @@ async function editAthlete(data: any) {
         params.append('lastname', data.lastname)
         params.append('email', data.email)
         params.append('nationality', data.nationality)
+        params.append('address', data.address)
         params.append('birth_date', data.birth_date)
         params.append('sex', data.sex)
         params.append('civil_status', data.civil_status)
@@ -83,7 +84,11 @@ async function editAthlete(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.image)
-        params.append('address', data.address)
+        params.append('identification', data.identification)
+        params.append('birth_certificate', data.birth_certificate)
+        params.append('pre_qualifying', data.pre_qualifying)
+        params.append('entry_form', data.entry_form)
+        params.append('passport', data.passport)
         const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
             state.athlete = response.data

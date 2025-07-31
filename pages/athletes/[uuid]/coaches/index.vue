@@ -10,7 +10,10 @@
         <div class="mt-4">
             <span class="text-3xl font-bold text-blue-500">Coaches</span>
         </div>
-        <FormBackButton @click="goToPreviousPage" class="mt-4" />
+        <div class="flex items-center justify-between">
+            <FormBackButton @click="goToPreviousPage" class="mt-4" />
+            <FormButton @click="openRequirement">View Documents</FormButton>
+        </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <Tabs :tabs="tabs" class="mt-4" />
@@ -35,6 +38,8 @@
         </div>
         <ModalNewCoachAthlete v-model:open="state.isNewCoachOpen" :model="'coach'" :buttonText="'New Coach'"
             @saveCoach="saveAthleteCoach" />
+        <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
@@ -95,7 +100,8 @@ const state = reactive({
     body: [] as any,
     searchFilter: null as any,
     search: null as any,
-    isNewCoachOpen: false
+    isNewCoachOpen: false,
+    isRequirementOpen: false
 })
 
 const computedAge = computed(() => {
@@ -191,6 +197,10 @@ function goToPreviousPage() {
 
 function goToCreateCoach() {
     state.isNewCoachOpen = true
+}
+
+function openRequirement() {
+    state.isRequirementOpen = true
 }
 
 </script>
