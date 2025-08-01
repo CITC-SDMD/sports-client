@@ -36,15 +36,6 @@
                     </a>
                     </MenuItem>
                 </div>
-                <div class="py-1">
-                    <MenuItem v-slot="{ active }">
-                    <a href="#"
-                        :class="[active ? 'bg-gray-100 text-red-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
-                        <TrashIcon :class="[active ? 'text-red-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Delete
-                    </a>
-                    </MenuItem>
-                </div>
             </MenuItems>
         </transition>
     </Menu>
