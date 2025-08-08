@@ -3,9 +3,8 @@
     <Head>
         <Title>{{ runtimeConfig?.public?.appName }} | Dashboard</Title>
     </Head>
-
-    <div class="text-black">
-        Dashboard
+    <div>
+        <ModulesDashboard />
     </div>
 </template>
 

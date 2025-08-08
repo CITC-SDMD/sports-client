@@ -8,11 +8,15 @@
         <Loader v-if="state.isPageLoading" />
         <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
+                <div class="flex justify-center">
+                    <img class="w-24" src="assets/img/sport.png" alt="Your Company" />
+                </div>
+                <div class="text-center tracking-tight text-gray-900 py-5">
+                    <p class="font-bold text-2xl">Davao City Athlete and</p>
+                    <p class="font-bold text-2xl">Sports Information System</p>
+                </div>
                 <div>
-                    <img class="h-10 w-auto"
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company" />
-                    <h2 class="mt-8 text-2xl/9 font-bold tracking-tight text-gray-900">
+                    <h2 class="mt-8 text-base font-bold tracking-tight text-gray-900">
                         Sign in to your account
                     </h2>
                 </div>
