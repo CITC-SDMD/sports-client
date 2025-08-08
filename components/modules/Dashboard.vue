@@ -16,7 +16,8 @@
                 Top
                 Performing Athletes</h3>
             <div class="space-y-5 mt-5">
-                <div v-for="(value, index) in performance" :key="index" class="flex items-center justify-between">
+                <div v-for="(value, index) in state.options.performance" :key="index"
+                    class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div>
                             <p class="font-semibold text-gray-800 text-sm dark:text-white/90">
@@ -81,122 +82,6 @@ import { FormSelect } from '#components';
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 import VueApexCharts from 'vue3-apexcharts';
 
-const sportsParticipation = [
-    {
-        year: 2023,
-        name: 'Rodel Fernandez',
-        sport: 'Baseball',
-        participationCount: 25
-    },
-    {
-        year: 2023,
-        name: 'Allan Ray',
-        sport: 'Football',
-        participationCount: 30
-    },
-    {
-        year: 2023,
-        name: 'John Diems',
-        sport: 'Skateboarding',
-        participationCount: 28
-    },
-    {
-        year: 2023,
-        name: 'Emily Davis',
-        sport: 'Swimming',
-        participationCount: 20
-    },
-    {
-        year: 2024,
-        name: 'Chris Lee',
-        sport: 'Swimming',
-        participationCount: 35
-    },
-    {
-        year: 2024,
-        name: 'Sarah Kim',
-        sport: 'Skateboarding',
-        participationCount: 40
-    },
-    {
-        year: 2024,
-        name: 'David Brown',
-        sport: 'Baseball',
-        participationCount: 18
-    },
-    {
-        year: 2024,
-        name: 'Anna Wilson',
-        sport: 'Baseball',
-        participationCount: 22
-    },
-    {
-        year: 2025,
-        name: 'James Miller',
-        sport: 'Volleyball',
-        participationCount: 31
-    },
-    {
-        year: 2025,
-        name: 'Laura Garcia',
-        sport: 'Golf',
-        participationCount: 29
-    }
-];
-
-const performance = [
-    {
-        id: 1,
-        name: 'Rodel Fernandez',
-        sport: 'Baseball',
-    },
-    {
-        id: 2,
-        name: 'Allan Ray',
-        sport: 'Football',
-    },
-    {
-        id: 3,
-        name: 'John Diems',
-        sport: 'Skateboarding',
-    },
-    {
-        id: 4,
-        name: 'Emily Davis',
-        sport: 'Swimming',
-    },
-    {
-        id: 5,
-        name: 'Chris Lee',
-        sport: 'Baseball',
-    },
-    {
-        id: 6,
-        name: 'Sarah Kim',
-        sport: 'Volleyball',
-    },
-    {
-        id: 7,
-        name: 'David Brown',
-        sport: 'Golf',
-    },
-    {
-        id: 8,
-        name: 'Anna Wilson',
-        sport: 'Badminton',
-    },
-    {
-        id: 9,
-        name: 'James Miller',
-        sport: 'Boxing',
-    },
-    {
-        id: 10,
-        name: 'Laura Garcia',
-        sport: 'Table Tennis',
-    }
-]
-
 const medals = [
     {
         gold: 39,
@@ -238,8 +123,122 @@ const state = reactive({
     nameFilter: '',
     yearFilter: '',
     eventFilter: '',
-    filteredSportsParticipation: [...sportsParticipation],
+    filteredSportsParticipation: [],
     options: {
+        performance: [
+            {
+                id: 1,
+                name: 'Rodel Fernandez',
+                sport: 'Baseball',
+            },
+            {
+                id: 2,
+                name: 'Allan Ray',
+                sport: 'Football',
+            },
+            {
+                id: 3,
+                name: 'John Diems',
+                sport: 'Skateboarding',
+            },
+            {
+                id: 4,
+                name: 'Emily Davis',
+                sport: 'Swimming',
+            },
+            {
+                id: 5,
+                name: 'Chris Lee',
+                sport: 'Baseball',
+            },
+            {
+                id: 6,
+                name: 'Sarah Kim',
+                sport: 'Volleyball',
+            },
+            {
+                id: 7,
+                name: 'David Brown',
+                sport: 'Golf',
+            },
+            {
+                id: 8,
+                name: 'Anna Wilson',
+                sport: 'Badminton',
+            },
+            {
+                id: 9,
+                name: 'James Miller',
+                sport: 'Boxing',
+            },
+            {
+                id: 10,
+                name: 'Laura Garcia',
+                sport: 'Table Tennis',
+            }
+        ],
+        sportsParticipation: [
+            {
+                year: 2023,
+                name: 'Rodel Fernandez',
+                sport: 'Baseball',
+                participationCount: 25
+            },
+            {
+                year: 2023,
+                name: 'Allan Ray',
+                sport: 'Football',
+                participationCount: 30
+            },
+            {
+                year: 2023,
+                name: 'John Diems',
+                sport: 'Skateboarding',
+                participationCount: 28
+            },
+            {
+                year: 2023,
+                name: 'Emily Davis',
+                sport: 'Swimming',
+                participationCount: 20
+            },
+            {
+                year: 2024,
+                name: 'Chris Lee',
+                sport: 'Swimming',
+                participationCount: 35
+            },
+            {
+                year: 2024,
+                name: 'Sarah Kim',
+                sport: 'Skateboarding',
+                participationCount: 40
+            },
+            {
+                year: 2024,
+                name: 'David Brown',
+                sport: 'Baseball',
+                participationCount: 18
+            },
+            {
+                year: 2024,
+                name: 'Anna Wilson',
+                sport: 'Baseball',
+                participationCount: 22
+            },
+            {
+                year: 2025,
+                name: 'James Miller',
+                sport: 'Volleyball',
+                participationCount: 31
+            },
+            {
+                year: 2025,
+                name: 'Laura Garcia',
+                sport: 'Golf',
+                participationCount: 29
+            }
+        ],
         sports: [
             {
                 value: 'baseball',
@@ -310,16 +309,16 @@ const state = reactive({
     }
 })
 
-
 onMounted(() => {
     filterData();
 });
 
-
 const filterData = () => {
-    state.filteredSportsParticipation = sportsParticipation.filter(student => {
+    state.filteredSportsParticipation = state.options.sportsParticipation.filter(student => {
         const nameMatches = student.name.toLowerCase().includes(state.nameFilter.toLowerCase());
-        const sportMatches = student.sport.toLowerCase().includes(state.eventFilter.toLowerCase())
+        const sportMatches = state.eventFilter
+            ? student.sport.toLowerCase().includes(state.eventFilter.toLowerCase())
+            : true;
         const yearMatches = state.yearFilter
             ? student.year === Number(state.yearFilter)
             : true;
