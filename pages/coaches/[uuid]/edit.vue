@@ -92,11 +92,11 @@ async function editAthlete(data: any) {
         const response = await coachService.updateCoach(params, uuid)
         if (response.data) {
             state.coach = response.data
-            successAlert('Success!', 'Athlete updated.')
+            successAlert('Success!', 'coache updated.')
             navigateTo(coachUrl)
         }
     } catch (error) {
-        errorAlert('Error!', 'Error in updating athlete.')
+        errorAlert('Error!', 'Error in updating coache.')
         state.error = error
     }
     state.isPageLoading = false
