@@ -32,11 +32,10 @@
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.location }}
                             </td>
-                            <td class="relative whitespace-nowrap py-4 pl-3 pr-4 flex justify-end font-medium sm:pr-6">
-                                <FormButton @click="goToViewPage(body.uuid)" class="flex items-center gap-x-2">
-                                    <EyeIcon class="w-4 h-4" />
-                                    <span class="text-sm">View</span>
-                                </FormButton>
+                            <td
+                                class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
+                                <MenuEventAthleteTable :uuid="body.uuid"
+                                    :is-reversed-dropdown="props.body.data >= props.body.data.length - 3" />
                             </td>
                         </tr>
                         <tr v-else>
@@ -52,6 +51,7 @@
 </template>
 
 <script setup lang="ts">
+import { MenuEventAthleteTable } from '#components'
 import { EyeIcon } from '@heroicons/vue/24/outline'
 import moment from 'moment'
 
@@ -62,18 +62,10 @@ const props = defineProps({
     head: {
         type: Array,
         required: true
-    },
+    } as any,
     body: {
         type: Object,
         required: false
-    },
+    } as any,
 })
-
-function goToViewPage(uuid: any) {
-    if (path == '/events') {
-        navigateTo(`${path}/${uuid}/edit`)
-    } else {
-        navigateTo(`/events/${uuid}`)
-    }
-}
 </script>
