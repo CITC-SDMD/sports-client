@@ -485,7 +485,6 @@ function submit() {
     if (!v$.value.$error) {
         emit('submitForm', state.form)
     }
-    console.log(v$.value)
 }
 
 async function fetchSchools() {

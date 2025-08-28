@@ -145,7 +145,7 @@ import {
   RectangleGroupIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon } from '@heroicons/vue/24/outline'
+import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon, CalendarIcon } from '@heroicons/vue/24/outline'
 import { useUserStore } from '@/store/user'
 import { authService } from '@/api/auth/AuthService'
 
@@ -188,6 +188,7 @@ const navigation = [
       'coaches-uuid-athletes',
     ] as any
   },
+  { name: 'Events', href: '/events', icon: CalendarIcon, activeRouteNames: ['events'] as any },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
 ]
 
