@@ -76,7 +76,7 @@
 
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
                 <div class="px-4 sm:px-0">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Event Schedule</h2>
+                    <h2 class="text-base/7 font-semibold text-gray-900">Schedule</h2>
                     <p class="mt-1 text-sm/6 text-gray-600">
                         Essential details of the event.
                     </p>
@@ -115,7 +115,7 @@
 
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
                 <div class="px-4 sm:px-0">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Event Categories & Divisions</h2>
+                    <h2 class="text-base/7 font-semibold text-gray-900">Categories & Divisions</h2>
                     <p class="mt-1 text-sm/6 text-gray-600">
                         Essential details of the event.
                     </p>
@@ -167,7 +167,7 @@
 
             <div class="grid grid-cols-1 gap-x-8 gap-y-8 py-10 md:grid-cols-3">
                 <div class="px-4 sm:px-0">
-                    <h2 class="text-base/7 font-semibold text-gray-900">Event Venue</h2>
+                    <h2 class="text-base/7 font-semibold text-gray-900">Venue</h2>
                     <p class="mt-1 text-sm/6 text-gray-600">
                         Essential details of the event.
                     </p>

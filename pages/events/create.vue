@@ -6,6 +6,10 @@
 
     <div>
         <Loader v-if=state.isPageLoading />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">New Event</span>
+        </div>
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -26,6 +30,13 @@ const { successAlert } = useAlert()
 
 const route = useRoute()
 const path = route.fullPath
+
+const eventeUrl = path.replace('/create', '')
+
+const pages = [
+    { name: 'Events', href: eventeUrl, current: false },
+    { name: 'New Event', href: path, current: true },
+]
 
 definePageMeta({
     layout: 'main'

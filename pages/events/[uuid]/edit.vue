@@ -13,7 +13,7 @@
         <FormBackButton @click="goToPreviousPage" class="mt-4" />
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesEditEventForm v-if="state.event" :event="state.event" @submitForm="editEvent"
-            @showError="showErrorMessage" />
+            @showError="showErrorMessage" @cancelAction="goToPreviousPage" />
     </div>
 </template>
 

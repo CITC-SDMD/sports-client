@@ -8,20 +8,19 @@
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Coaches</span>
+            <span class="text-3xl font-bold text-blue-500">Events</span>
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <FormButton @click="openRequirement">View Documents</FormButton>
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
-        <ModulesAthleteCoachProfile class="mt-4" v-if="state.coach" :model="state.coach" />
+        <ModulesEventProfile class="mt-4" v-if="state.event" :model="state.event" />
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end">
                 <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PlusIcon class="w-6 h-6" />
-                    New athlete
+                    Qualified athlete
                 </FormButton>
             </div>
             <div class="w-full mt-4">
@@ -35,19 +34,14 @@
                 </form>
             </div>
             <TableAthleteCoach :head=state.head :body="state.body" />
-            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
+            <!-- <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" /> -->
         </div>
-        <ModalNewCoachAthlete v-model:open="state.isNewAthleteOpen" :model="'athlete'" :buttonText="'New Athlete'"
-            @saveCoach="saveCoachAthlete" />
-        <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { coachAthleteService } from '@/api/coachAthlete/CoachAthleteService'
+import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
-import { coachService } from '~/api/coach/CoachService'
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
@@ -65,13 +59,12 @@ const baseUrl = path.replace(`/${uuid}/athletes`, '')
 const careerUrl = path.replace('/athletes', '/careers')
 
 const pages = [
-    { name: 'Coaches', href: baseUrl, current: false },
+    { name: 'Events', href: baseUrl, current: false },
     { name: 'Athletes', href: path, current: true },
 ]
 
 const tabs = [
     { name: 'Athletes', href: path, current: true },
-    { name: 'Performance and Career', href: careerUrl, current: false },
 ]
 
 definePageMeta({
@@ -79,8 +72,7 @@ definePageMeta({
 })
 
 onMounted(() => {
-    getCoach()
-    getCoachAthletes()
+    getEvent()
 })
 
 const state = reactive({
@@ -93,7 +85,7 @@ const state = reactive({
         { name: 'Contact no.' },
     ],
     body: [] as any,
-    coach: null as any,
+    event: null as any,
     error: null as any,
     searchFilter: null as any,
     search: null as any,
@@ -101,75 +93,32 @@ const state = reactive({
     isRequirementOpen: false
 })
 
-async function getCoach() {
+async function getEvent() {
     state.isPageLoading = true
     try {
-        const response = await coachService.fetchCoach(uuid)
+        const response = await eventService.fetchEvent(uuid)
         if (response.data) {
-            state.coach = response.data
+            state.event = response.data
+            console.log(response.data, 'event data')
         }
     } catch (error) {
         state.error = error
     }
     state.isPageLoading = false
-}
-
-async function getCoachAthletes() {
-    state.isPageLoading = true
-    try {
-        let params = {
-            page: currentPage,
-            coach_uuid: uuid,
-            search: state.search
-        }
-        const response = await coachService.fetchAthletesByCoach(params)
-        if (response.data) {
-            state.body = response
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-async function saveCoachAthlete(data: any) {
-    state.isPageLoading = true
-    try {
-        let params = {
-            athlete_uuid: data,
-            coach_uuid: uuid
-        }
-        const response = await coachAthleteService.createCoachAthlete(params)
-        if (response.data) {
-            successAlert('Success!', 'Coach saved to athlete.')
-            getCoachAthletes()
-            state.isNewAthleteOpen = false
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-function openRequirement() {
-    state.isRequirementOpen = true
 }
 
 async function previous() {
     currentPage--
-    getCoachAthletes()
 }
 
 async function next() {
     currentPage++
-    getCoachAthletes()
 }
 
 async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    getCoachAthletes()
 }
 
 function goToCreateAthlete() {
