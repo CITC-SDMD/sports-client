@@ -67,7 +67,7 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Athletes', href: path, current: true },
+    { name: 'Qualified Athletes', href: path, current: true },
 ]
 
 definePageMeta({
