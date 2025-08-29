@@ -6,6 +6,10 @@
 
     <div>
         <Loader v-if=state.isPageLoading />
+        <Breadcrumbs :pages="pages" class="mt-4" />
+        <div class="mt-4">
+            <span class="text-3xl font-bold text-blue-500">New Coach</span>
+        </div>
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -20,10 +24,19 @@ import { coachService } from '@/api/coach/CoachService'
 import { useAlert } from '@/composables/alert'
 
 const runtimeConfig = useRuntimeConfig()
+
+const { successAlert } = useAlert()
+
 const route = useRoute()
 const path = route.fullPath
 
-const { successAlert } = useAlert()
+const coacheUrl = path.replace('/create', '')
+
+const pages = [
+    { name: 'Coaches', href: coacheUrl, current: false },
+    { name: 'New Coach', href: path, current: true },
+]
+
 
 definePageMeta({
     layout: 'main'

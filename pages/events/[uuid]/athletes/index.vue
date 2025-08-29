@@ -18,7 +18,7 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end">
-                <FormButton @click="goToCreateAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
+                <FormButton @click="goToCreateQualifiedAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PlusIcon class="w-6 h-6" />
                     Qualified athlete
                 </FormButton>
@@ -36,10 +36,13 @@
             <TableAthleteCoach :head=state.head :body="state.body" />
             <!-- <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" /> -->
         </div>
+        <ModalNewQualified v-model:open="state.isNewQualifiedOpen" :model="'Qualified athlete'"
+            :buttonText="'New Qualified athlete'" @saveQualified="saveQualifiedAthlete" />
     </div>
 </template>
 
 <script setup lang="ts">
+import { eventAthleteService } from '@/api/eventAthlete/EventAthleteService'
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
@@ -89,8 +92,7 @@ const state = reactive({
     error: null as any,
     searchFilter: null as any,
     search: null as any,
-    isNewAthleteOpen: false,
-    isRequirementOpen: false
+    isNewQualifiedOpen: false,
 })
 
 async function getEvent() {
@@ -99,13 +101,32 @@ async function getEvent() {
         const response = await eventService.fetchEvent(uuid)
         if (response.data) {
             state.event = response.data
-            console.log(response.data, 'event data')
         }
     } catch (error) {
         state.error = error
     }
     state.isPageLoading = false
 }
+
+async function saveQualifiedAthlete(data: any) {
+    state.isPageLoading = true
+    try {
+        let params = {
+            event_uuid: uuid,
+            athlete_uuid: data
+        }
+        const response = await eventAthleteService.createEventAthlete(params)
+        if (response.data) {
+            successAlert('Success!', 'Event qualified created.')
+            getEvent()
+            state.isNewQualifiedOpen = false
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
 
 async function previous() {
     currentPage--
@@ -121,8 +142,8 @@ async function search() {
     state.search = filterString
 }
 
-function goToCreateAthlete() {
-    state.isNewAthleteOpen = true
+function goToCreateQualifiedAthlete() {
+    state.isNewQualifiedOpen = true
 }
 
 function goToPreviousPage() {

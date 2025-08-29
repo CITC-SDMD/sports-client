@@ -44,12 +44,6 @@
                                 moment(props.model?.event_end).format("MMMM DD, YYYY") : '' }}
                         </span>
                     </div>
-                    <div class="flex items-center gap-x-2">
-                        <PencilIcon class="w-5 h-5 text-blue-600" />
-                        <span class="text-sm">
-                            {{ props.model?.description }}
-                        </span>
-                    </div>
                 </div>
                 <div class="flex-col space-y-3">
                     <div class="flex items-center gap-x-2">
@@ -84,6 +78,12 @@
                             {{ props.model?.age_category }}
                         </span>
                     </div>
+                    <div class="flex items-center gap-x-2">
+                        <PencilIcon class="w-5 h-5 text-blue-600" />
+                        <span class="text-sm">
+                            {{ props.model?.description }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -105,7 +105,7 @@ import {
     TagIcon
 } from '@heroicons/vue/24/outline'
 
-const avatarUrl = ref('/img/avatars/tropy.png')
+const avatarUrl = ref('/img/avatars/user.svg')
 
 const props = defineProps({
     model: {

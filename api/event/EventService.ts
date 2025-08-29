@@ -24,6 +24,10 @@ class EventService extends BaseAPIService {
     async deleteEvent(uuid: string): Promise<any> {
         return await this.request(`/events/${uuid}`, 'DELETE')
     }
+
+    async fetchQualifiedAthletes(uuid: string): Promise<any> {
+        return await this.request(`/events/${uuid}/athletes`, 'GET')
+    }
 }
 
 export const eventService = new EventService()
