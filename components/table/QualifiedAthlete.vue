@@ -15,24 +15,29 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
-                        <!-- Show table rows if there's data -->
-                        <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
+                        <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
+                            :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_name }}
+                                {{ body.firstname }}
+                                {{ (body.middlename != 'null') ? body.middlename : '' }}
+                                {{ body.lastname }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_start ? moment(body.event_start).format('MMMM DD, YYYY') : '' }}
+                                {{ body.sex }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_end ? moment(body.event_end).format('MMMM DD, YYYY') : '' }}
+                                {{ body.birth_date ? moment(body.birth_date).format('MMMM DD, YYYY') : '' }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.location }}
+                                {{ body.civil_status }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ body.contact_no }}
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
                                 <MenuQualifiedAthlete :uuid="body.uuid"
-                                    :is-reversed-dropdown="props.body.data >= props.body.data.length - 3" />
+                                    :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>
                         <tr v-else>
@@ -48,11 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { EyeIcon } from '@heroicons/vue/24/outline'
 import moment from 'moment'
-
-const route = useRoute()
-var path = route.fullPath
 
 const props = defineProps({
     head: {

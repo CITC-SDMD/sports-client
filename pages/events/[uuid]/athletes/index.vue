@@ -8,7 +8,7 @@
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Events</span>
+            <span class="text-3xl font-bold text-blue-500">Qualified</span>
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
@@ -33,7 +33,7 @@
                     </FormButton>
                 </form>
             </div>
-            <TableAthleteCoach :head=state.head :body="state.body" />
+            <TableQualifiedAthlete :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
     </div>
@@ -63,7 +63,7 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Qualified Athletes', href: path, current: true },
+    { name: 'Qualified', href: path, current: true },
 ]
 
 definePageMeta({
@@ -73,8 +73,6 @@ definePageMeta({
 onMounted(() => {
     getEvent()
 })
-
-
 
 const state = reactive({
     isPageLoading: false,
@@ -105,6 +103,22 @@ async function getEvent() {
     state.isPageLoading = false
 }
 
+async function fetchQualifiedAthletes() {
+    state.isPageLoading = true
+    try {
+        let params = {
+            search: state.search
+        }
+        const response = await eventService.fetchQualifiedAthletes(params, uuid)
+        if (response.data) {
+            state.body = response
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
 async function saveQualifiedAthlete() {
     state.isPageLoading = true
     try {
@@ -122,37 +136,21 @@ async function saveQualifiedAthlete() {
     state.isPageLoading = false
 }
 
-async function fetchQualifiedAthlete() {
-    state.isPageLoading = true
-    try {
-        let params = {
-            search: state.search
-        }
-        const response = await eventService.fetchQualifiedAthletes(params, uuid)
-        if (response.data) {
-            state.body = response
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
 async function previous() {
     currentPage--
-    fetchQualifiedAthlete()
+    fetchQualifiedAthletes()
 }
 
 async function next() {
     currentPage++
-    fetchQualifiedAthlete()
+    fetchQualifiedAthletes()
 }
 
 async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    fetchQualifiedAthlete()
+    fetchQualifiedAthletes()
 }
 
 
