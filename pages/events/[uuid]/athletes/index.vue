@@ -70,7 +70,7 @@ const state = reactive({
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },
-        { name: 'Age' },
+        { name: 'Civil Status' },
         { name: 'Contact no.' },
     ],
     body: [] as any,
@@ -99,6 +99,7 @@ async function saveQualifiedAthlete() {
         const response = await eventService.fetchQualifiedAthletes(uuid)
         if (response.data) {
             state.body = response
+            console.log(response.data)
             successAlert('Success!', 'Qualified created.')
         }
     } catch (error) {

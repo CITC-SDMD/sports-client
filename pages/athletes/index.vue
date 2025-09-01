@@ -59,9 +59,9 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
-        { name: 'Name' },
-        { name: 'Sex' },
-        { name: 'Birthday' },
+        { name: 'Full name' },
+        { name: 'Gender' },
+        { name: 'Date of birth' },
         { name: 'Civil Status' },
         { name: 'Contact no.' },
     ],

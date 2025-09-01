@@ -62,7 +62,7 @@ const state = reactive({
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },
-        { name: 'Age' },
+        { name: 'Civil Status' },
         { name: 'Contact no.' },
     ],
     body: [] as any,

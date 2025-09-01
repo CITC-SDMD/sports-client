@@ -60,7 +60,6 @@ const state = reactive({
     error: null as any,
     head: [
         { name: 'Event name' },
-        { name: 'Gender' },
         { name: 'Event start' },
         { name: 'Event end' },
         { name: 'Location' },

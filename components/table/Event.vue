@@ -21,9 +21,6 @@
                                 {{ body.event_name }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.gender_category }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.event_start ? moment(body.event_start).format('MMMM DD, YYYY') : '' }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
