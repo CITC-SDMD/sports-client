@@ -18,9 +18,9 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end">
-                <FormButton @click="goToCreateQualifiedAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
+                <FormButton @click="saveQualifiedAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PlusIcon class="w-6 h-6" />
-                    Qualified athlete
+                    Qualified athletes
                 </FormButton>
             </div>
             <div class="w-full mt-4">
@@ -34,15 +34,12 @@
                 </form>
             </div>
             <TableAthleteCoach :head=state.head :body="state.body" />
-            <!-- <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" /> -->
+            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <ModalNewQualified v-model:open="state.isNewQualifiedOpen" :model="'Qualified athlete'"
-            :buttonText="'New Qualified athlete'" @saveQualified="saveQualifiedAthlete" />
     </div>
 </template>
 
 <script setup lang="ts">
-import { eventAthleteService } from '@/api/eventAthlete/EventAthleteService'
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
@@ -59,11 +56,10 @@ const uuid = String(router?.currentRoute?.value?.params?.uuid)
 const route = useRoute()
 const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/athletes`, '')
-const careerUrl = path.replace('/athletes', '/careers')
 
 const pages = [
     { name: 'Events', href: baseUrl, current: false },
-    { name: 'Athletes', href: path, current: true },
+    { name: 'Qualified athletes', href: path, current: true },
 ]
 
 const tabs = [
@@ -92,7 +88,6 @@ const state = reactive({
     error: null as any,
     searchFilter: null as any,
     search: null as any,
-    isNewQualifiedOpen: false,
 })
 
 async function getEvent() {
@@ -108,18 +103,13 @@ async function getEvent() {
     state.isPageLoading = false
 }
 
-async function saveQualifiedAthlete(data: any) {
+async function saveQualifiedAthlete() {
     state.isPageLoading = true
     try {
-        let params = {
-            event_uuid: uuid,
-            athlete_uuid: data
-        }
-        const response = await eventAthleteService.createEventAthlete(params)
+        const response = await eventService.fetchQualifiedAthletes(uuid)
         if (response.data) {
+            await fetchQualifiedAthlete()
             successAlert('Success!', 'Event qualified created.')
-            getEvent()
-            state.isNewQualifiedOpen = false
         }
     } catch (error) {
         state.error = error
@@ -127,23 +117,35 @@ async function saveQualifiedAthlete(data: any) {
     state.isPageLoading = false
 }
 
+async function fetchQualifiedAthlete() {
+    state.isPageLoading = true
+    try {
+        const response = await eventService.fetchQualifiedAthletes(uuid)
+        if (response.data) {
+            state.body = response
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
 
 async function previous() {
     currentPage--
+    fetchQualifiedAthlete()
 }
 
 async function next() {
     currentPage++
+    fetchQualifiedAthlete()
+
 }
 
 async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-}
-
-function goToCreateQualifiedAthlete() {
-    state.isNewQualifiedOpen = true
+    fetchQualifiedAthlete()
 }
 
 function goToPreviousPage() {

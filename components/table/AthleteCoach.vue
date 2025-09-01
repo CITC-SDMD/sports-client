@@ -36,7 +36,7 @@
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuAthleteCoachTable :uuid="body.uuid"
+                                <MenuEventQualifiedTable :uuid="body.uuid"
                                     :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>

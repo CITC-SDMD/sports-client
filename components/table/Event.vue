@@ -34,7 +34,7 @@
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuEventAthleteTable :uuid="body.uuid"
+                                <MenuEventQualifiedTable :uuid="body.uuid"
                                     :is-reversed-dropdown="props.body.data >= props.body.data.length - 3" />
                             </td>
                         </tr>
@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import { MenuEventAthleteTable } from '#components'
 import { EyeIcon } from '@heroicons/vue/24/outline'
 import moment from 'moment'
 
