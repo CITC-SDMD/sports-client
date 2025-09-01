@@ -23,16 +23,6 @@
                     Qualified athletes
                 </FormButton>
             </div>
-            <div class="w-full mt-4">
-                <form @submit.prevent="search" class="flex w-full space-x-4">
-                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
-                        placeholder="Search athletes" />
-                    <FormButton type="submit" class="flex items-center gap-x-2">
-                        <MagnifyingGlassIcon class="w-6 h-6" />
-                        Search
-                    </FormButton>
-                </form>
-            </div>
             <TableAthleteCoach :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
@@ -42,7 +32,7 @@
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
-import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
@@ -108,21 +98,8 @@ async function saveQualifiedAthlete() {
     try {
         const response = await eventService.fetchQualifiedAthletes(uuid)
         if (response.data) {
-            await fetchQualifiedAthlete()
-            successAlert('Success!', 'Event qualified created.')
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-async function fetchQualifiedAthlete() {
-    state.isPageLoading = true
-    try {
-        const response = await eventService.fetchQualifiedAthletes(uuid)
-        if (response.data) {
             state.body = response
+            successAlert('Success!', 'Qualified created.')
         }
     } catch (error) {
         state.error = error
@@ -132,20 +109,11 @@ async function fetchQualifiedAthlete() {
 
 async function previous() {
     currentPage--
-    fetchQualifiedAthlete()
 }
 
 async function next() {
     currentPage++
-    fetchQualifiedAthlete()
 
-}
-
-async function search() {
-    currentPage = 1
-    let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
-    state.search = filterString
-    fetchQualifiedAthlete()
 }
 
 function goToPreviousPage() {

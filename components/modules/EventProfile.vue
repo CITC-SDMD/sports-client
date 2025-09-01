@@ -105,7 +105,7 @@ import {
     TagIcon
 } from '@heroicons/vue/24/outline'
 
-const avatarUrl = ref('/img/avatars/user.svg')
+const avatarUrl = ref('/img/avatars/tropy.png')
 
 const props = defineProps({
     model: {
