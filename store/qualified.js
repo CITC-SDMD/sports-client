@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useUserStore = defineStore("userStore", {
+export const useQualifiedStore = defineStore("qualifiedStore", {
     persist: true,
     state: () => ({
         qualified: null,
@@ -8,8 +8,8 @@ export const useUserStore = defineStore("userStore", {
         selectedQualified: null,
     }),
     actions: {
-        setQualified(user) {
-            this.qualified = user;
+        setQualified(qualified) {
+            this.qualified = qualified;
         },
         setCurrentQualifiedsPage(pageNumber) {
             this.currentQualifiedsPage = pageNumber;

@@ -20,7 +20,7 @@
             <div class="w-full flex justify-end">
                 <FormButton @click="saveQualifiedAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PlusIcon class="w-6 h-6" />
-                    Qualified athletes
+                    New qualified
                 </FormButton>
             </div>
             <div class="w-full mt-4">
@@ -70,10 +70,6 @@ definePageMeta({
     layout: 'main'
 })
 
-onMounted(() => {
-    getEvent()
-})
-
 const state = reactive({
     isPageLoading: false,
     head: [
@@ -88,6 +84,11 @@ const state = reactive({
     error: null as any,
     searchFilter: null as any,
     search: null as any,
+})
+
+onMounted(() => {
+    getEvent()
+    fetchQualifiedAthletes()
 })
 
 async function getEvent() {
