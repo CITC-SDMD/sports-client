@@ -8,7 +8,7 @@
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Qualified</span>
+            <span class="text-3xl font-bold text-blue-500">Qualified athletes</span>
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
@@ -69,7 +69,7 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Qualified', href: path, current: true },
+    { name: 'Qualified athletes', href: path, current: true },
 ]
 
 definePageMeta({
