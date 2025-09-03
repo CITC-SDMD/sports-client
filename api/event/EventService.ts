@@ -28,6 +28,14 @@ class EventService extends BaseAPIService {
     async fetchQualifiedAthletes(params: object, uuid: string): Promise<any> {
         return await this.request(`/events/${uuid}/athletes`, 'GET', params)
     }
+
+    async saveQualifiedAthletes(params: object, uuid: string): Promise<any> {
+        return await this.request(`/events/${uuid}/athletes/store`, 'POST', params)
+    }
+
+    async sendInvitationToAthletes(params: object,): Promise<any> {
+        return await this.request(`/events/send-invitation`, 'POST', params)
+    }
 }
 
 export const eventService = new EventService()

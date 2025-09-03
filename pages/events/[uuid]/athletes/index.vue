@@ -17,11 +17,17 @@
         <ModulesEventProfile class="mt-4" v-if="state.event" :model="state.event" />
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
-            <div class="w-full flex justify-end">
-                <FormButton @click="saveQualifiedAthlete" class="flex items-center gap-x-2 w-full sm:w-auto">
+            <div v-if="state.body?.data?.length > 0" class="w-full flex justify-end gap-2">
+                <FormButton @click="sendInvitationToQualified" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PlusIcon class="w-6 h-6" />
-                    New qualified
+                    Send invitation
                 </FormButton>
+                <form @submit.prevent="saveQualifiedAthlete">
+                    <FormButton class="flex items-center gap-x-2 w-full sm:w-auto">
+                        <PlusIcon class="w-6 h-6" />
+                        New qualified
+                    </FormButton>
+                </form>
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -112,7 +118,24 @@ async function fetchQualifiedAthletes() {
         }
         const response = await eventService.fetchQualifiedAthletes(params, uuid)
         if (response.data) {
+            console.log(response)
             state.body = response
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
+async function sendInvitationToQualified() {
+    state.isPageLoading = true
+    try {
+        let params = {
+            event_uuid: uuid
+        }
+        const response = await eventService.sendInvitationToAthletes(params)
+        if (response) {
+            successAlert('Success!', 'Send invitation qualified athletes.')
         }
     } catch (error) {
         state.error = error
@@ -126,7 +149,7 @@ async function saveQualifiedAthlete() {
         let params = {
             search: state.search
         }
-        const response = await eventService.fetchQualifiedAthletes(params, uuid)
+        const response = await eventService.saveQualifiedAthletes(params, uuid)
         if (response.data) {
             state.body = response
             successAlert('Success!', 'Qualified created.')
