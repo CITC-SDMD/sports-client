@@ -39,7 +39,7 @@
                     </FormButton>
                 </form>
             </div>
-            <TableQualifiedAthlete :head=state.head :body="state.body" />
+            <TableQualified :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
     </div>
