@@ -25,7 +25,7 @@
                 <form @submit.prevent="saveQualifiedAthlete">
                     <FormButton class="flex items-center gap-x-2 w-full sm:w-auto">
                         <PlusIcon class="w-6 h-6" />
-                        New qualified
+                        Save qualified
                     </FormButton>
                 </form>
             </div>
