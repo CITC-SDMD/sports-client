@@ -29,15 +29,6 @@
                 </div>
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                    <a @click="goToViewPage(props.uuid)"
-                        :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
-                        <EyeIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        View
-                    </a>
-                    </MenuItem>
-                </div>
-                <div class="py-1">
-                    <MenuItem v-slot="{ active }">
                     <a @click="goToEditPage(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <PencilSquareIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
@@ -75,13 +66,6 @@ const props = defineProps({
         required: true
     }
 })
-
-function goToViewPage(data) {
-
-    if (path === `/events/${uuid}/athletes`) {
-        navigateTo(`/athletes/${data}/coaches`)
-    }
-}
 
 function goToEditPage(data) {
 

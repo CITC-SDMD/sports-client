@@ -16,14 +16,23 @@
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <div class="mt-4">
+            <div class="w-full flex justify-end gap-2">
+                <FormButton @click="openRequirement" class="flex items-center gap-x-2 w-full sm:w-auto">
+                    <PlusIcon class="w-6 h-6" />
+                    Upload Documents
+                </FormButton>
+            </div>
             <TableDocument :head=state.head :body="state.files" @refresh="getDocuments" />
         </div>
+        <ModalNewDocuments v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
 import { documentService } from '@/api/document/DocumentService'
+import { PlusIcon } from '@heroicons/vue/20/solid'
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -50,6 +59,7 @@ onMounted(() => {
 
 const state = reactive({
     isPageLoading: false,
+    isRequirementOpen: false,
     head: [
         { name: 'File name' },
         { name: 'File' },
@@ -84,6 +94,10 @@ async function getDocuments() {
     } catch (error) {
         state.error = error
     }
+}
+
+function openRequirement() {
+    state.isRequirementOpen = true
 }
 
 function goToPreviousPage() {
