@@ -221,6 +221,19 @@
                                     <FormError :error="state.error?.errors?.form.address?.[0]" />
                                 </div>
                             </div>
+                            <div class="col-span-2">
+                                <div>
+                                    <div class=" flex">
+                                        <FormLabel for="is_assistance" label="Was the player need Assistance?" />
+                                        <span class="text-red-500">*</span>
+                                    </div>
+                                    <div class="mt-4 flex items-center justify-start">
+                                        <FormToggle name="is_assistance" v-model="state.form.is_assistance" />
+                                        <FormError :error="v$?.form.is_assistance?.$errors[0]?.$message.toString()" />
+                                        <FormError :error="state.error?.errors?.form.is_assistance?.[0]" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -364,6 +377,7 @@ const state = reactive({
         contact_no: props.model.contact_no,
         occupation: props.model.occupation,
         club_name: props.model.club_name,
+        is_assistance: props.model.is_assistance,
         image: null as any,
         age: null as any,
         identification: null as any,
@@ -495,6 +509,9 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.', required),
             },
             club_name: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            is_assistance: {
                 required: helpers.withMessage('This field is required.', required),
             },
             identification: {

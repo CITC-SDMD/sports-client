@@ -82,6 +82,7 @@ async function editAthlete(data: any) {
         params.append('school_id', data.school_id)
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
+        params.append('is_assistance', data.is_assistance)
         params.append('photo', data.image)
         params.append('address', data.address)
         params.append('identification', data.identification)

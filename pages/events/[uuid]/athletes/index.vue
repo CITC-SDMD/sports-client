@@ -18,16 +18,7 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div v-if="state.body?.data?.length > 0" class="w-full flex justify-end gap-2">
-                <FormButton @click="sendInvitationToQualified" class="flex items-center gap-x-2 w-full sm:w-auto">
-                    <PlusIcon class="w-6 h-6" />
-                    Send invitation
-                </FormButton>
-                <form @submit.prevent="saveQualifiedAthlete">
-                    <FormButton class="flex items-center gap-x-2 w-full sm:w-auto">
-                        <PlusIcon class="w-6 h-6" />
-                        Save qualified
-                    </FormButton>
-                </form>
+                <MenuInvitation @isPageLoading="isPageLoading" />
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -48,7 +39,7 @@
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
-import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
@@ -127,37 +118,8 @@ async function fetchQualifiedAthletes() {
     state.isPageLoading = false
 }
 
-async function sendInvitationToQualified() {
-    state.isPageLoading = true
-    try {
-        let params = {
-            event_uuid: uuid
-        }
-        const response = await eventService.sendInvitationToAthletes(params)
-        if (response) {
-            successAlert('Success!', 'Send invitation qualified athletes.')
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-async function saveQualifiedAthlete() {
-    state.isPageLoading = true
-    try {
-        let params = {
-            search: state.search
-        }
-        const response = await eventService.saveQualifiedAthletes(params, uuid)
-        if (response.data) {
-            state.body = response
-            successAlert('Success!', 'Qualified created.')
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
+function isPageLoading(value: any) {
+    state.isPageLoading = value
 }
 
 async function previous() {
