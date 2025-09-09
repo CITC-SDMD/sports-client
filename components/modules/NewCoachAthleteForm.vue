@@ -293,6 +293,19 @@
                                 <FormError :error="state.error?.errors?.form.passport?.[0]" />
                             </div>
                         </div>
+
+                        <div v-if="props.model === 'athlete' && state.form.age < 18">
+                            <div class=" flex">
+                                <FormLabel for="parent_consent" label="Parent Consent" />
+                                <span class="text-red-500">*</span>
+                            </div>
+                            <div class="mt-2">
+                                <FormFileUpload name="parent_consent"
+                                    @fileSelected="(value) => state.form.parent_consent = value" />
+                                <FormError :error="v$?.form.parent_consent?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.form.parent_consent?.[0]" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -310,7 +323,7 @@
 
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
-import { required, helpers } from '@vuelidate/validators'
+import { required, helpers, requiredIf } from '@vuelidate/validators'
 import { useAlert } from '@/composables/alert'
 import { schoolService } from "@/api/school/SchoolService"
 
@@ -351,6 +364,7 @@ const state = reactive({
         pre_qualifying: null as any,
         entry_form: null as any,
         passport: null as any,
+        parent_consent: null as any
     },
     option: {
         sex: [
@@ -390,6 +404,7 @@ const state = reactive({
 onMounted(() => {
     fetchSchools()
 })
+
 
 watch(() => state.form.birth_date, (newValue) => {
     const currentYear = new Date().getFullYear()
@@ -473,6 +488,9 @@ const rules = computed(() => {
             },
             passport: {
                 required: helpers.withMessage('This field is required.', required),
+            },
+            parent_consent: {
+                required: helpers.withMessage('This field is required.', requiredIf(() => state.form.age < 18)),
             },
         },
     }

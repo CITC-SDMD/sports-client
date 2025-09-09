@@ -89,6 +89,7 @@ async function editAthlete(data: any) {
         params.append('pre_qualifying', data.pre_qualifying)
         params.append('entry_form', data.entry_form)
         params.append('passport', data.passport)
+        params.append('parent_consent', data.parent_consent)
         const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
             state.athlete = response.data

@@ -67,6 +67,7 @@ async function saveData(data: any) {
         params.append('pre_qualifying', data.pre_qualifying)
         params.append('entry_form', data.entry_form)
         params.append('passport', data.passport)
+        params.append('parent_consent', data.parent_consent)
         const response = await athleteService.createAthlete(params)
         if (response.data) {
             successAlert('Success!', 'Athlete created.')

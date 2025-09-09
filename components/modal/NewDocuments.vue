@@ -21,41 +21,39 @@
                         </div>
                         <ErrorAlert v-if="state.error" :message="state.error.message" />
                         <div class="md:col-span-2">
-                            <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl space-y-6 p-6">
-                                <div>
-                                    <div class="flex">
-                                        <FormLabel for="letter_request" label="Letter Request" />
-                                        <span class="text-red-500">*</span>
+                            <form @submit.prevent="submit">
+                                <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl space-y-6 p-6">
+                                    <div>
+                                        <div class="flex">
+                                            <FormLabel for="letter_request" label="Letter Request" />
+                                            <span class="text-red-500">*</span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <FormFileUpload name="letter_request"
+                                                @fileSelected="(value) => state.form.request_letter = value" />
+                                            <FormError
+                                                :error="v$?.form.request_letter?.$errors[0]?.$message.toString()" />
+                                            <FormError :error="state.error?.errors?.form.request_letter?.[0]" />
+                                        </div>
                                     </div>
-                                    <div class="mt-2">
-                                        <FormFileUpload name="letter_request"
-                                            @fileSelected="(value) => state.form.letter = value" />
+                                    <div>
+                                        <div class="flex">
+                                            <FormLabel for="brgy_clearance" label="Brgy Clearance" />
+                                            <span class="text-red-500">*</span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <FormFileUpload name="brgy_clearance"
+                                                @fileSelected="(value) => state.form.brgy_clearance = value" />
+                                            <FormError
+                                                :error="v$?.form.brgy_clearance?.$errors[0]?.$message.toString()" />
+                                            <FormError :error="state.error?.errors?.form.brgy_clearance?.[0]" />
+                                        </div>
+                                    </div>
+                                    <div class="mt-4 col-span-2">
+                                        <FormButton type="submit" class="w-full">Submit</FormButton>
                                     </div>
                                 </div>
-                                <div>
-                                    <div class="flex">
-                                        <FormLabel for="parent_consent" label="Parent`s Consent" />
-                                        <span class="text-red-500">*</span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <FormFileUpload name="parent_consent"
-                                            @fileSelected="(value) => state.form.consent = value" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="flex">
-                                        <FormLabel for="Brgy_clearance" label="Brgy Clearance" />
-                                        <span class="text-red-500">*</span>
-                                    </div>
-                                    <div class="mt-2">
-                                        <FormFileUpload name="Brgy_clearance"
-                                            @fileSelected="(value) => state.form.clearance = value" />
-                                    </div>
-                                </div>
-                                <div class="mt-4 col-span-2">
-                                    <FormButton type="submit" class="w-full">Submit</FormButton>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </DialogPanel>
                 </TransitionChild>
@@ -65,17 +63,15 @@
 </template>
 
 <script setup lang="ts">
+import { useVuelidate } from "@vuelidate/core"
+import { required, helpers } from '@vuelidate/validators'
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { XMarkIcon } from '@heroicons/vue/20/solid'
-import { documentService } from '@/api/document/DocumentService'
-import { useAlert } from '@/composables/alert'
-
-const { successAlert } = useAlert()
 
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
 
-const emit = defineEmits(['closeRequirement'])
+const emit = defineEmits(['closeRequirement', 'saveDocuments'])
 
 const props = defineProps({
     open: {
@@ -86,17 +82,37 @@ const props = defineProps({
 
 const state = reactive({
     form: {
-        letter: null as any,
-        consent: null as any,
-        clearance: null as any
+        request_letter: '' as any,
+        brgy_clearance: '' as any
     },
     error: null as any,
-    files: null as any,
 })
+
+
+const rules = computed(() => {
+    return {
+        form: {
+            request_letter: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+            brgy_clearance: {
+                required: helpers.withMessage('This field is required.', required),
+            },
+        }
+    }
+})
+
+const v$ = useVuelidate(rules, state)
+
+function submit() {
+    console.log('click')
+    v$.value.$validate()
+    if (!v$.value.$error) {
+        emit('saveDocuments', state.form)
+    }
+}
 
 function closeAction() {
     emit('closeRequirement', false)
 }
-
-
 </script>
