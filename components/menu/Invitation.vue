@@ -108,8 +108,11 @@ async function sendInvitationToQualified() {
 async function sendEndorsementLetter() {
     emit('isPageLoading', true)
     try {
-        const response = await eventService.sendEndorsementLetter(uuid)
-        if (response.data) {
+        let params = {
+            event_uuid: uuid
+        }
+        const response = await eventService.sendEndorsementLetter(params)
+        if (response) {
             successAlert('Success!', 'Send endorsement letter.')
         }
     } catch (error) {
