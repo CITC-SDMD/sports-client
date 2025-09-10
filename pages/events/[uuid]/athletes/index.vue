@@ -38,15 +38,11 @@
 
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
-import { useAlert } from '@/composables/alert'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
 const runtimeConfig = useRuntimeConfig()
-
-const { successAlert } = useAlert()
-
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
 
@@ -109,7 +105,6 @@ async function fetchQualifiedAthletes() {
         }
         const response = await eventService.fetchQualifiedAthletes(params, uuid)
         if (response.data) {
-            console.log(response)
             state.body = response
         }
     } catch (error) {

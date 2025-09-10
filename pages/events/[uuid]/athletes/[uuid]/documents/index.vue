@@ -118,7 +118,6 @@ async function saveDocuments(data: any) {
     }
 }
 
-
 function openRequirement() {
     state.isRequirementOpen = true
 }

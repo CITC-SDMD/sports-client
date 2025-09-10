@@ -219,7 +219,7 @@
                                 </div>
                             </div>
                             <div class="col-span-2">
-                                <div>
+                                <div v-if="props.model === 'athlete'">
                                     <div class=" flex">
                                         <FormLabel for="is_assistance" label="Was the player need Assistance?" />
                                         <span class="text-red-500">*</span>

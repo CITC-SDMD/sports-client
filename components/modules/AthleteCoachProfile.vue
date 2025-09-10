@@ -14,6 +14,7 @@
                             {{ props.model?.lastname }}
                         </span>
                     </div>
+
                     <div class="flex items-center gap-x-2">
                         <CakeIcon class="w-5 h-5 text-blue-600" />
                         <span class="text-sm">
@@ -47,6 +48,18 @@
                     </div>
                 </div>
                 <div class="flex-col space-y-3">
+                    <div class="flex items-center gap-x-2" v-if="props.model?.is_assistance">
+                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-blue-600" />
+                        <h1 class="font-bold text-xl">
+                            Required assistance
+                        </h1>
+                    </div>
+                    <div class="flex items-center gap-x-2" v-else="props.model?.is_assistance">
+                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-blue-600" />
+                        <h1 class="font-bold text-xl">
+                            Not required assistance
+                        </h1>
+                    </div>
                     <div class="flex items-center gap-x-2">
                         <PhoneIcon class="w-5 h-5 text-blue-600" />
                         <span class="text-sm">
@@ -103,7 +116,8 @@ import {
     PhoneIcon,
     ScaleIcon,
     TrophyIcon,
-    UserIcon
+    UserIcon,
+    DocumentCurrencyDollarIcon
 } from '@heroicons/vue/24/outline'
 
 const avatarUrl = ref('/img/avatars/user.svg')

@@ -38,10 +38,10 @@
                 </div>
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                    <a @click="sendEndorseLetter()"
+                    <a @click="sendEndorsementLetter()"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <PaperAirplaneIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Send endorse letter
+                        Send endorsement letter
                     </a>
                     </MenuItem>
                 </div>
@@ -76,6 +76,19 @@ const props = defineProps({
     }
 })
 
+async function generateQualifiedAthlete() {
+    emit('isPageLoading', true)
+    try {
+        const response = await eventService.generateQualifiedAthletes(uuid)
+        if (response.data) {
+            successAlert('Success!', 'Generate qualified athletes.')
+        }
+    } catch (error) {
+        state.error = error
+    }
+    emit('isPageLoading', false)
+}
+
 async function sendInvitationToQualified() {
     emit('isPageLoading', true)
     try {
@@ -92,12 +105,12 @@ async function sendInvitationToQualified() {
     emit('isPageLoading', false)
 }
 
-async function generateQualifiedAthlete() {
+async function sendEndorsementLetter() {
     emit('isPageLoading', true)
     try {
-        const response = await eventService.generateQualifiedAthletes(uuid)
+        const response = await eventService.sendEndorsementLetter(uuid)
         if (response.data) {
-            successAlert('Success!', 'Generate qualified athletes.')
+            successAlert('Success!', 'Send endorsement letter.')
         }
     } catch (error) {
         state.error = error
@@ -105,7 +118,5 @@ async function generateQualifiedAthlete() {
     emit('isPageLoading', false)
 }
 
-async function sendEndorseLetter() {
-    console.log('sample')
-}
+
 </script>
