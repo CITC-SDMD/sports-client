@@ -83,7 +83,21 @@ async function editEvent(data: any) {
             participant_type: data.participant_type,
             venue_name: data.venue_name,
             location: data.location,
-            capacity: data.capacity
+            capacity: data.capacity,
+            event_status: data.event_status,
+            registration_start: moment(data.registration_start).format('MM/DD/YYYY'),
+            registration_deadline: moment(data.registration_deadline).format('MM/DD/YYYY'),
+            screening_date: moment(data.screening_date).format('MM/DD/YYYY'),
+            draw_date: moment(data.draw_date).format('MM/DD/YYYY'),
+            availability_schedule: moment(data.availability_schedule).format('MM/DD/YYYY'),
+            referees: data.referees,
+            scorers: data.scorers,
+            marshals: data.marshals,
+            task_assigment: data.task_assigment,
+            scoring_format: data.scoring_format,
+            tie_breaking_rule: data.tie_breaking_rule,
+            max_team: data.max_team,
+            min_team: data.min_team,
         }
         const response = await eventService.updateEvent(params, uuid)
         if (response.data) {
