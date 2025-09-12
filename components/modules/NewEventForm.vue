@@ -270,14 +270,10 @@
                             <div>
                                 <div class="flex">
                                     <FormLabel for="availability_schedule" label="Availability schedule" />
-                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormDatePicker name="availability_schedule" class="w-full"
                                         v-model="state.form.availability_schedule" />
-                                    <FormError
-                                        :error="v$?.form.availability_schedule?.$errors[0]?.$message.toString()" />
-                                    <FormError :error="state.error?.errors?.form.availability_schedule?.[0]" />
                                 </div>
                             </div>
                         </div>

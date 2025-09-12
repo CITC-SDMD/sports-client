@@ -269,7 +269,6 @@
                             <div>
                                 <div class="flex">
                                     <FormLabel for="availability_schedule" label="Availability schedule" />
-                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
                                     <FormDatePicker name="availability_schedule" class="w-full"
