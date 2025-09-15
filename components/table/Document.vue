@@ -27,7 +27,7 @@
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuDocuementTable :uuid="document.uuid" @refresh="$emit('refresh')"
+                                <MenuDocuementTable :uuid="document.uuid" @refresh="$emit('updateDocuements')"
                                     :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>
@@ -44,10 +44,7 @@
 </template>
 
 <script setup lang="ts">
-import { EyeIcon } from '@heroicons/vue/24/outline'
-import moment from 'moment'
-
-const emit = defineEmits(['refresh'])
+const emit = defineEmits(['updateDocuements']);
 
 const props = defineProps({
     head: {

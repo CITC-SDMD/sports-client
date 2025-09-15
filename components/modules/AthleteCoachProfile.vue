@@ -49,14 +49,14 @@
                 </div>
                 <div class="flex-col space-y-3">
                     <div class="flex items-center gap-x-2" v-if="props.model?.is_assistance">
-                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-blue-600" />
-                        <h1 class="font-bold text-xl">
+                        <ExclamationCircleIcon class="w-5 h-5 text-red-600" />
+                        <h1 class="font-bold text-xl text-red-600">
                             Required assistance
                         </h1>
                     </div>
                     <div class="flex items-center gap-x-2" v-else="props.model?.is_assistance">
-                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-blue-600" />
-                        <h1 class="font-bold text-xl">
+                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-red-600" />
+                        <h1 class="font-bold text-xl text-red-600">
                             Not required assistance
                         </h1>
                     </div>
@@ -117,7 +117,8 @@ import {
     ScaleIcon,
     TrophyIcon,
     UserIcon,
-    DocumentCurrencyDollarIcon
+    DocumentCurrencyDollarIcon,
+    ExclamationCircleIcon
 } from '@heroicons/vue/24/outline'
 
 const avatarUrl = ref('/img/avatars/user.svg')

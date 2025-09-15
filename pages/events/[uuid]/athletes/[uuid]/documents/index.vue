@@ -22,7 +22,7 @@
                     Upload Documents
                 </FormButton>
             </div>
-            <TableDocument :head=state.head :body="state.files" @refresh="getDocuments" />
+            <TableDocument :head=state.head :body="state.files" @updateDocuements="getDocuments" />
         </div>
         <ModalNewDocuments v-model:open="state.isRequirementOpen" @saveDocuments="saveDocuments"
             @closeRequirement="(value: any) => state.isRequirementOpen = value" />
@@ -105,6 +105,12 @@ async function saveDocuments(data: any) {
     try {
         let params = new FormData
         params.append('athlete_uuid', uuid)
+        params.append('identification', data.identification)
+        params.append('birth_certificate', data.birth_certificate)
+        params.append('pre_qualifying', data.pre_qualifying)
+        params.append('entry_form', data.entry_form)
+        params.append('passport', data.passport)
+        params.append('parent_consent', data.parent_consent)
         params.append('request_letter', data.request_letter)
         params.append('brgy_clearance', data.brgy_clearance)
         const response = await documentService.createDocuments(params)
