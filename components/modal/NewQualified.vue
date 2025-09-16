@@ -91,7 +91,6 @@ async function fetchModel() {
                 })
             )
             state.option.model = options
-            console.log(response.data, 'qualified athletes options')
         }
     } catch (error) {
         state.error = error

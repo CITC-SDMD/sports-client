@@ -24,7 +24,7 @@
             </div>
             <TableDocument :head=state.head :body="state.files" @updateDocuements="getDocuments" />
         </div>
-        <ModalNewDocuments v-model:open="state.isRequirementOpen" @saveDocuments="saveDocuments"
+        <ModalNewDocuments v-model:open="state.isRequirementOpen" :model="state.athlete" @saveDocuments="saveDocuments"
             @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>

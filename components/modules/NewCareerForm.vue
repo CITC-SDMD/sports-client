@@ -328,7 +328,6 @@ async function fetchPerformances() {
             type: props.model
         }
         const response = await performanceService.fetchPerformanceList(params)
-        console.log(response)
         if (response.data) {
             let options: any = []
             response.data.forEach(

@@ -112,7 +112,6 @@ function submitCoach() {
     if (!v$.value.$error) {
         emit('saveAthlete', state.selectedAthlete)
     }
-    console.log(v$.value)
 }
 
 async function createNewAthlete(data: any) {

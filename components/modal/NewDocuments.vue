@@ -96,15 +96,18 @@
                                                 <FormError :error="state.error?.errors?.form.passport?.[0]" />
                                             </div>
                                         </div>
-                                        <div v-if="!hasDocument('Parent Consent')">
+                                        <div v-if="state.age < 18 || !hasDocument('Parent Consent')">
                                             <div class=" flex gap-1">
                                                 <FormLabel for="parent_consent" label="Parent Consent" />
-                                                <span class="text-red-500"> (Optional)</span>
+                                                <span class="text-red-500">*</span>
 
                                             </div>
                                             <div class="mt-2">
                                                 <FormFileUpload name="parent_consent"
                                                     @fileSelected="(value) => state.form.parent_consent = value" />
+                                                <FormError
+                                                    :error="v$?.form.parent_consent?.$errors[0]?.$message.toString()" />
+                                                <FormError :error="state.error?.errors?.form.parent_consent?.[0]" />
                                             </div>
                                         </div>
                                         <div v-if="!hasDocument('Request Letter')">
@@ -164,6 +167,10 @@ const props = defineProps({
         type: Boolean,
         required: true
     },
+    model: {
+        type: String,
+        required: true
+    }
 })
 
 const state = reactive({
@@ -191,6 +198,14 @@ const hasDocument = computed(() => {
 const hasComplete = computed(() => {
     return state.files.length === 8;
 });
+
+watch(() => props.model, (newValue: any) => {
+    const currentYear = new Date().getFullYear()
+    const birthDate = newValue?.birth_date
+    const birthYear = new Date(birthDate).getFullYear()
+    const age = currentYear - birthYear
+    state.age = age
+})
 
 
 onMounted(() => {
@@ -244,6 +259,9 @@ const rules = computed(() => {
             brgy_clearance: {
                 required: helpers.withMessage('This field is required.', requiredIf(() => !hasDocument.value('Brgy Clearance'))),
             },
+            parent_consent: {
+                required: helpers.withMessage('This field is required.', requiredIf(() => state.age < 18)),
+            }
         }
     }
 })
@@ -251,7 +269,6 @@ const rules = computed(() => {
 const v$ = useVuelidate(rules, state)
 
 function submit() {
-    console.log('click')
     v$.value.$validate()
     if (!v$.value.$error) {
         emit('saveDocuments', state.form)
