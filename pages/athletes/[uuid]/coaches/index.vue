@@ -15,7 +15,7 @@
             <FormButton @click="openRequirement">View Documents</FormButton>
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
-        <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
+        <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end">

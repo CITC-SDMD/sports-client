@@ -66,7 +66,7 @@ async function deleteFile(data) {
     try {
         const response = await documentService.deleteDocuments(data)
         if (response.message == 'Success.') {
-            successAlert('Success.', 'File deleted.')
+            successAlert('Success.', 'Document deleted.')
             emit('refresh')
         }
     } catch (error) {

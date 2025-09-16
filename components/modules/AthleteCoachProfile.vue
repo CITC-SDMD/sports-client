@@ -48,17 +48,19 @@
                     </div>
                 </div>
                 <div class="flex-col space-y-3">
-                    <div class="flex items-center gap-x-2" v-if="props.model?.is_assistance">
-                        <ExclamationCircleIcon class="w-5 h-5 text-red-600" />
-                        <h1 class="font-bold text-xl text-red-600">
-                            Required assistance
-                        </h1>
-                    </div>
-                    <div class="flex items-center gap-x-2" v-else="props.model?.is_assistance">
-                        <DocumentCurrencyDollarIcon class="w-5 h-5 text-red-600" />
-                        <h1 class="font-bold text-xl text-red-600">
-                            Not required assistance
-                        </h1>
+                    <div v-if="props.identity === 'athlete'">
+                        <div class="flex items-center gap-x-2" v-if="props.model?.is_assistance">
+                            <ExclamationCircleIcon class="w-5 h-5 text-red-600" />
+                            <h1 class="font-bold text-xl text-red-600">
+                                Required assistance
+                            </h1>
+                        </div>
+                        <div class="flex items-center gap-x-2" v-else="props.model?.is_assistance">
+                            <DocumentCurrencyDollarIcon class="w-5 h-5 text-red-600" />
+                            <h1 class="font-bold text-xl text-red-600">
+                                Not required assistance
+                            </h1>
+                        </div>
                     </div>
                     <div class="flex items-center gap-x-2">
                         <PhoneIcon class="w-5 h-5 text-blue-600" />
@@ -126,6 +128,10 @@ const avatarUrl = ref('/img/avatars/user.svg')
 const props = defineProps({
     model: {
         type: Object,
+        required: true
+    },
+    identity: {
+        type: String,
         required: true
     }
 })

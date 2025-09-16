@@ -14,7 +14,7 @@
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
-        <ModulesAthleteCoachProfile class="mt-4" v-if="state.athlete" :model="state.athlete" />
+        <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
         <div class="mt-4">
             <div class="w-full flex justify-end gap-2">
                 <FormButton @click="openRequirement" class="flex items-center gap-x-2 w-full sm:w-auto">

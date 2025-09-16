@@ -584,7 +584,6 @@ async function fetchEvents() {
                 })
             )
             state.options.sport = options
-            console.log(response.data)
         }
     } catch (error) {
         emit('showError', state.error)
