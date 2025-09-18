@@ -66,53 +66,21 @@ async function goToViewDocuments(value) {
         if (response) {
             const blobContent = new Blob([response], { type: "application/pdf" });
             const blobUrl = URL.createObjectURL(blobContent);
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = 'Certificate.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(blobUrl);
+            const iframe = document.createElement('iframe')
+            iframe.style.display = 'none'
+            iframe.src = blobUrl
+            document.body.appendChild(iframe)
+            iframe.onload = () => {
+                iframe.contentWindow.print()
+                iframe.onload = () => {
+                    URL.revokeObjectURL(blobUrl)
+                    document.body.removeChild(iframe)
+                }
+            }
         }
     } catch (error) {
 
     }
 }
 
-function goToViewPage(data) {
-    // if (path === '/coaches') {
-    //     navigateTo(`${path}/${data}/athletes`)
-    // }
-
-    // if (path === `/coaches/${uuid}/athletes`) {
-    //     navigateTo(`/athletes/${data}/coaches`)
-    // }
-
-    // if (path === `/athletes/${uuid}/coaches`) {
-    //     navigateTo(`/coaches/${data}/athletes`)
-    // }
-
-    // if (path === '/athletes') {
-    //     navigateTo(`${path}/${data}/coaches`)
-    // }
-}
-
-function goToEditPage(data) {
-
-    // if (path === '/coaches') {
-    //     navigateTo(`${path}/${data}/edit`)
-    // }
-
-    // if (path === `/coaches/${uuid}/athletes`) {
-    //     navigateTo(`/athletes/${data}/edit`)
-    // }
-
-    // if (path === `/athletes/${uuid}/coaches`) {
-    //     navigateTo(`/coaches/${data}/edit`)
-    // }
-
-    // if (path === '/athletes') {
-    //     navigateTo(`${path}/${data}/edit`)
-    // }
-}
 </script>

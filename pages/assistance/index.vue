@@ -16,7 +16,7 @@
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
 
-
+        <Tabs :tabs="tabs" class="mt-4" />
         <div class="w-full mt-4">
             <form @submit.prevent="search" class="flex w-full space-x-4">
                 <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search athlete" />
@@ -42,9 +42,16 @@ const runtimeConfig = useRuntimeConfig()
 
 const route = useRoute()
 const path = route.fullPath
+const assistanceUrl = path.replace('/assistance', '/assistance/processing')
+
 
 const pages = [
     { name: 'Assistance', href: path, current: true },
+]
+
+const tabs = [
+    { name: 'Signing certification', href: path, current: true },
+    { name: 'Processing', href: assistanceUrl, current: false },
 ]
 
 definePageMeta({
