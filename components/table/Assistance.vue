@@ -17,10 +17,11 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
                             :key="body.uuid">
-                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                            <td v-if="props.model != 'processing'"
+                                class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 <div class="flex items-center gap-x-2">
-                                    <input type="checkbox" name="" value="" id=""
-                                        class="w-5 h-5  border-gray-300 rounded-sm  text-blue-600 focus:ring-blue-500">
+                                    <input type="checkbox" :value="body.uuid" v-model="state.select"
+                                        class=" w-6 h-6 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
@@ -70,5 +71,23 @@ const props = defineProps({
         type: Object,
         required: false
     } as any,
+    model: {
+        type: Object,
+        required: false
+    } as any,
+})
+
+const emit = defineEmits(['Selected'])
+
+
+const state = reactive({
+    isPageLoading: false,
+    error: null as any,
+    select: [] as any
+})
+
+watch(() => state.select, (newValue: any) => {
+    console.log(newValue, ' selected')
+    emit('Selected', newValue)
 })
 </script>

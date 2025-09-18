@@ -15,19 +15,28 @@
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-
-        <Tabs :tabs="tabs" class="mt-4" />
-        <div class="w-full mt-4">
-            <form @submit.prevent="search" class="flex w-full space-x-4">
-                <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search athlete" />
-                <FormButton type="submit" class="flex items-center gap-x-2">
-                    <MagnifyingGlassIcon class="w-6 h-6" />
-                    Search
-                </FormButton>
-            </form>
+        <div v-if="state.selected.length > 0" class="w-full flex justify-end">
+            <FormButton @click="openSignCertificate" class="flex items-center gap-x-2">
+                <PlusIcon class="w-6 h-6" />
+                Sign certification
+            </FormButton>
         </div>
-        <TableAssistance :head=state.head :body="state.body" />
-        <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
+        <Tabs :tabs="tabs" class="mt-4" />
+        <div class="mt-4">
+            <div class="w-full mt-4">
+                <form @submit.prevent="search" class="flex w-full space-x-4">
+                    <FormTextField name="search" v-model=state.searchFilter class="w-full"
+                        placeholder="Search athlete" />
+                    <FormButton type="submit" class="flex items-center gap-x-2">
+                        <MagnifyingGlassIcon class="w-6 h-6" />
+                        Search
+                    </FormButton>
+                </form>
+            </div>
+            <TableAssistance :head=state.head :body="state.body" @selected="hasSelected" :model="'signing'" />
+            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
+        </div>
+        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" />
     </div>
 
 </template>
@@ -44,13 +53,12 @@ const route = useRoute()
 const path = route.fullPath
 const assistanceUrl = path.replace('/assistance', '/assistance/processing')
 
-
 const pages = [
     { name: 'Assistance', href: path, current: true },
 ]
 
 const tabs = [
-    { name: 'Signing certification', href: path, current: true },
+    { name: 'For approval', href: path, current: true },
     { name: 'Processing', href: assistanceUrl, current: false },
 ]
 
@@ -70,6 +78,8 @@ const state = reactive({
         { name: 'Contact no.' },
     ],
     body: [] as any,
+    isSignCertificateOpen: false,
+    selected: [] as any,
     search: null as any,
     searchFilter: null as any
 })
@@ -93,6 +103,14 @@ async function getAssistance() {
         state.error = error
     }
     state.isPageLoading = false
+}
+
+function openSignCertificate() {
+    state.isSignCertificateOpen = true
+}
+
+function hasSelected(value: any) {
+    state.selected = value
 }
 
 async function search() {
