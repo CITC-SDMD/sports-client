@@ -60,9 +60,9 @@ const props = defineProps({
 })
 
 
-async function goToViewDocuments() {
+async function goToViewDocuments(value) {
     try {
-        const response = await athleteService.fetchCertificate(uuid)
+        const response = await athleteService.fetchCertificate(value)
         if (response) {
             const blobContent = new Blob([response], { type: "application/pdf" });
             const blobUrl = URL.createObjectURL(blobContent);
