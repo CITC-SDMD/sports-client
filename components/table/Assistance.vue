@@ -21,7 +21,7 @@
                                 class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 <div class="flex items-center gap-x-2">
                                     <input type="checkbox" :value="body.uuid" v-model="state.select"
-                                        class=" w-6 h-6 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
+                                        class=" w-5 h-5 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
@@ -43,7 +43,7 @@
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuAssistanceTable :uuid="body.uuid"
+                                <MenuAssistanceTable :uuid="body.uuid" :model="props.model"
                                     :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>
