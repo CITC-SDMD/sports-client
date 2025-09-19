@@ -15,8 +15,8 @@
 </template>
 
 <script setup lang="ts">
-import { userService } from '~/api/user/UserService'
-import { useAlert } from '~/composables/alert'
+import { userService } from '@/api/user/UserService'
+import { useAlert } from '@/composables/alert'
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -37,14 +37,14 @@ const state = reactive({
 async function makeUser(data: any) {
     state.isPageLoading = true
     try {
-        let params = {
-            firstname: data.firstname,
-            middlename: data.middlename ?? null,
-            lastname: data.lastname,
-            username: data.username,
-            password: data.password,
-            role: data.role,
-        }
+        let params = new FormData
+        params.append('firstname', data.firstname)
+        params.append('middlename', data.middlename)
+        params.append('lastname', data.lastname)
+        params.append('username', data.username)
+        params.append('password', data.password)
+        params.append('role', data.role)
+        params.append('file', data.signature)
         const response = await userService.createUser(params)
         if (response.data) {
             successAlert('Success!', 'User created.')

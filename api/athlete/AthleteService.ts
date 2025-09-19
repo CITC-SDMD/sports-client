@@ -29,6 +29,10 @@ class AthleteService extends BaseAPIService {
         return await this.request(`/athletes`, 'POST', params)
     }
 
+    async saveAssistanceApprove(params: object): Promise<any> {
+        return await this.request(`/athletes/update/assistance-generated`, 'PUT', params)
+    }
+
     async updateAthlete(params: object, uuid: string): Promise<any> {
         return await this.request(`/athletes/${uuid}/update`, 'POST', params)
     }

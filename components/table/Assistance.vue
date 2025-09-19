@@ -20,7 +20,8 @@
                             <td v-if="props.model != 'done'"
                                 class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 <div class="flex items-center gap-x-2">
-                                    <input type="checkbox" :value="body.uuid" v-model="state.select"
+                                    <input type="checkbox" :value="body.uuid" :checked="isRowSelected(body.uuid).value"
+                                        @change="Selected(body.uuid, $event.target.checked)"
                                         class=" w-5 h-5 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
                                 </div>
                             </td>
@@ -75,10 +76,13 @@ const props = defineProps({
         type: Object,
         required: false
     } as any,
+    selected: {
+        type: Array,
+        default: () => [],
+    } as any,
 })
 
 const emit = defineEmits(['Selected'])
-
 
 const state = reactive({
     isPageLoading: false,
@@ -86,8 +90,19 @@ const state = reactive({
     select: [] as any
 })
 
-watch(() => state.select, (newValue: any) => {
-    console.log(newValue, ' selected')
-    emit('Selected', newValue)
-})
+const isRowSelected = (uuid: string) => {
+    return computed(() => props.selected.includes(uuid));
+};
+
+const Selected = (uuid: string, checked: any) => {
+    let newSelected = [...props.selected];
+
+    if (checked) {
+        newSelected.push(uuid);
+    } else {
+        newSelected = newSelected.filter((item) => item !== uuid);
+    }
+
+    emit('Selected', newSelected);
+};
 </script>

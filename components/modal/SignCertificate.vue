@@ -16,14 +16,13 @@
                         <ErrorAlert v-if="state.error" :message="state.error.message" />
                         <div>
                             <div class="flex py-2">
-                                <FormLabel for="sign_certificate" label="Sign certificate" />
+                                <FormLabel for="password" label="Sign certificate" />
                                 <span class="text-red-500">*</span>
                             </div>
                             <div>
-                                <FormTextField name="sign_certificate" v-model="state.sign_certificate" class="w-full"
-                                    placeholder="Enter password" />
-                                <FormError :error="v$?.sign_certificate?.$errors[0]?.$message.toString()" />
-                                <FormError :error="state.error?.errors?.sign_certificate?.[0]" />
+                                <FormPassword name="password" class="w-full" v-model="state.password" />
+                                <FormError :error="v$?.password?.$errors[0]?.$message.toString()" />
+                                <FormError :error="state.error?.errors?.password?.[0]" />
                             </div>
                         </div>
                         <div class="flex space-x-2 mt-4 justify-between items-center">
@@ -59,12 +58,12 @@ const emit = defineEmits(['update:open', 'saveSignCertificate'])
 
 const state = reactive({
     error: null as any,
-    sign_certificate: null as any,
+    password: null as any,
 })
 
 const rules = computed(() => {
     return {
-        sign_certificate: {
+        password: {
             required: helpers.withMessage('This field is required.', requiredIf(props.open)),
         },
     }
@@ -75,7 +74,7 @@ const v$ = useVuelidate(rules, state)
 function submitCertificate() {
     v$.value.$validate()
     if (!v$.value.$error) {
-        emit('saveSignCertificate', state.sign_certificate)
+        emit('saveSignCertificate', state.password)
         closeModal()
     }
 }

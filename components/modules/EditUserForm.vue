@@ -68,6 +68,19 @@
                         </div>
                     </div>
                 </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div v-if="state.form.role === 'Department Head'">
+                        <div class="flex">
+                            <FormLabel for="file" label="Signature" />
+                        </div>
+                        <div class="mt-2">
+                            <FormFileUpload name="parent_consent"
+                                @fileSelected="(value) => state.form.signature = value" />
+                            <FormError :error="v$?.form.signature?.$errors[0]?.$message.toString()" />
+                            <FormError :error="state.error?.errors?.form.signature?.[0]" />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="mt-4 col-span-2">
@@ -79,7 +92,7 @@
 
 <script setup lang="ts">
 import { useVuelidate } from "@vuelidate/core"
-import { required, helpers } from '@vuelidate/validators'
+import { required, helpers, requiredIf } from '@vuelidate/validators'
 
 const emit = defineEmits(['submitForm'])
 
@@ -98,10 +111,15 @@ const state = reactive({
         username: props.user.username,
         role: props.user.role,
         password: null as any,
+        signature: null as any,
     },
     error: null as any,
     option: {
         role: [
+            {
+                value: 'Department Head',
+                label: 'Department Head'
+            },
             {
                 value: 'Admin',
                 label: 'Admin'
