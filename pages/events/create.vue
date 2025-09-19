@@ -69,7 +69,9 @@ async function saveEvent(data: any) {
             registration_deadline: moment(data.registration_deadline).format('MM/DD/YYYY'),
             screening_date: moment(data.screening_date).format('MM/DD/YYYY'),
             draw_date: moment(data.draw_date).format('MM/DD/YYYY'),
-            availability_schedule: moment(data.availability_schedule).format('MM/DD/YYYY'),
+            availability_schedule: moment(data.availability_schedule).isValid()
+                ? moment(data.availability_schedule).format('MM/DD/YYYY')
+                : null,
             referees: data.referees,
             scorers: data.scorers,
             marshals: data.marshals,
