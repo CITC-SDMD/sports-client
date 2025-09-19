@@ -198,7 +198,12 @@ const navigation = [
       'events-uuid-athletes-uuid-documents',
     ] as any
   },
-  { name: 'Assistance', href: '/assistance', icon: DocumentCurrencyDollarIcon, activeRouteNames: ['assistance'] as any },
+  {
+    name: 'Assistance', href: '/assistance', icon: DocumentCurrencyDollarIcon, activeRouteNames: [
+      'assistance',
+      'assistance-processing'
+    ] as any
+  },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
 ]
 

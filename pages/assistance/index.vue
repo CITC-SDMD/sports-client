@@ -60,6 +60,7 @@ const pages = [
 const tabs = [
     { name: 'For approval', href: path, current: true },
     { name: 'Processing', href: assistanceUrl, current: false },
+    { name: 'Done', href: assistanceUrl, current: false },
 ]
 
 definePageMeta({

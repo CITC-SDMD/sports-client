@@ -15,12 +15,12 @@
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <!-- <div v-if="state.selected.length > 0" class="w-full flex justify-end">
+        <div v-if="state.selected.length > 0" class="w-full flex justify-end">
             <FormButton @click="openSignCertificate" class="flex items-center gap-x-2">
                 <PlusIcon class="w-6 h-6" />
-                Sign certification
+                Notify athlete
             </FormButton>
-        </div> -->
+        </div>
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full mt-4">
@@ -36,7 +36,7 @@
             <TableAssistance :head=state.head :body="state.body" @selected="hasSelected" :model="'processing'" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <!-- <ModalSignCertificate v-model:open="state.isSignCertificateOpen" /> -->
+        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" />
     </div>
 
 </template>
@@ -60,6 +60,7 @@ const pages = [
 const tabs = [
     { name: 'For approval', href: assistanceUrl, current: false },
     { name: 'Processing', href: path, current: true },
+    { name: 'Done', href: assistanceUrl, current: false },
 ]
 
 definePageMeta({
@@ -70,6 +71,7 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
+        { name: '' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },
