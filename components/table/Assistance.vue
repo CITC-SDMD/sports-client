@@ -21,7 +21,7 @@
                                 class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 <div class="flex items-center gap-x-2">
                                     <input type="checkbox" :value="body.uuid" :checked="isRowSelected(body.uuid).value"
-                                        @change="Selected(body.uuid, $event.target.checked)"
+                                        @change="Selected(body.uuid, $event.target?.checked)"
                                         class=" w-5 h-5 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
                                 </div>
                             </td>
@@ -42,7 +42,10 @@
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.contact_no }}
                             </td>
-                            <td
+                            <td v-if="props.model == 'approval'"
+                                class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
+                            </td>
+                            <td v-else
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
                                 <MenuAssistanceTable :uuid="body.uuid" :model="props.model"
                                     :is-reversed-dropdown="index >= props.body.data.length - 3" />

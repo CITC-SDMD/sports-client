@@ -15,8 +15,19 @@
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="w-full flex justify-end">
-            <MenuApproval @selectAll="selectAll" @signCertificate="openSignCertificate" :select="state.selected" />
+        <div class="w-full flex justify-end space-x-4 ">
+            <div v-if="state.body?.data?.length > 0">
+                <FormButton @click="selectAll" class="flex items-center gap-x-2 w-full sm:w-auto">
+                    <CheckIcon class="w-6 h-6" />
+                    Select all
+                </FormButton>
+            </div>
+            <div v-if="state.selected.length > 0">
+                <FormButton @click="openSignCertificate" class="flex items-center gap-x-2 w-full sm:w-auto">
+                    <PlusIcon class="w-6 h-6" />
+                    Sign certification
+                </FormButton>
+            </div>
         </div>
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
@@ -31,17 +42,18 @@
                 </form>
             </div>
             <TableAssistance :head=state.head :body="state.body" @selected="hasSelected" :selected="state.selected"
-                :model="'signing'" />
+                :model="'approval'" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" @saveSignCertificate="saveAssistance" />
+        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" @saveSignCertificate="saveAssistance"
+            @close="state.selected = []" />
     </div>
 
 </template>
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
-import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { PlusIcon, MagnifyingGlassIcon, CheckIcon } from '@heroicons/vue/20/solid'
 import { useAlert } from '@/composables/alert'
 
 let currentPage = 1
@@ -108,7 +120,6 @@ async function getAssistance() {
 }
 
 async function saveAssistance(data: any) {
-    console.log(data.password)
     state.isPageLoading = true
     try {
         let params = {
@@ -118,9 +129,10 @@ async function saveAssistance(data: any) {
         }
         const response = await athleteService.saveAssistanceApprove(params)
         if (response) {
-            getAssistance()
             successAlert('Success!', 'Athlete approved.')
+            getAssistance()
             state.selected = []
+            navigateTo(assistanceUrl)
         }
     } catch (error) {
         state.error = error
@@ -130,7 +142,9 @@ async function saveAssistance(data: any) {
 
 function selectAll() {
     state.selected = state.body.data.map((item: any) => item.uuid)
-    openSignCertificate()
+    if (state.selected.length > 0) {
+        openSignCertificate()
+    }
 }
 
 function openSignCertificate() {

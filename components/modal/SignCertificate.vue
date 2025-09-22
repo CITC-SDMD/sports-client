@@ -54,7 +54,7 @@ const props = defineProps({
     },
 })
 
-const emit = defineEmits(['update:open', 'saveSignCertificate'])
+const emit = defineEmits(['update:open', 'saveSignCertificate', 'close'])
 
 const state = reactive({
     error: null as any,
@@ -81,6 +81,7 @@ function submitCertificate() {
 
 function closeModal() {
     emit('update:open', false)
+    emit('close')
 }
 
 </script>
