@@ -37,14 +37,14 @@ const state = reactive({
 async function makeUser(data: any) {
     state.isPageLoading = true
     try {
-        let params = new FormData
-        params.append('firstname', data.firstname)
-        params.append('middlename', data.middlename)
-        params.append('lastname', data.lastname)
-        params.append('username', data.username)
-        params.append('password', data.password)
-        params.append('role', data.role)
-        params.append('file', data.signature)
+        let params = {
+            firstname: data.firstname,
+            middlename: data.middlename,
+            lastname: data.lastname,
+            username: data.username,
+            password: data.password,
+            role: data.role
+        }
         const response = await userService.createUser(params)
         if (response.data) {
             successAlert('Success!', 'User created.')

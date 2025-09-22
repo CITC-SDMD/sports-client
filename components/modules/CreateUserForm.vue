@@ -69,20 +69,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div v-if="state.form.role === 'Department Head'">
-                        <div class="flex">
-                            <FormLabel for="file" label="Signature" />
-                            <span class="text-red-500">*</span>
-                        </div>
-                        <div class="mt-2">
-                            <FormFileUpload name="parent_consent"
-                                @fileSelected="(value) => state.form.signature = value" />
-                            <FormError :error="v$?.form.signature?.$errors[0]?.$message.toString()" />
-                            <FormError :error="state.error?.errors?.form.signature?.[0]" />
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="mt-4 col-span-2">
@@ -106,7 +92,6 @@ const state = reactive({
         username: null as any,
         role: null as any,
         password: null as any,
-        signature: null as any,
     },
     error: null as any,
     option: {
@@ -144,9 +129,6 @@ const rules = computed(() => {
             },
             role: {
                 required: helpers.withMessage('This field is required.', required),
-            },
-            signature: {
-                required: helpers.withMessage('This field is required.', requiredIf(() => state.form.role === 'Department Head')),
             },
         }
     }
