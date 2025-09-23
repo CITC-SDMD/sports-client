@@ -15,7 +15,11 @@
                 <nav class="-mb-px flex space-x-8" aria-label="Tabs">
                     <NuxtLink v-for="tab in props.tabs" :key="tab.name" :to="tab.href"
                         :class="[tab.current ? 'border-indigo-500 text-indigo-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700', 'whitespace-nowrap border-b-2 px-1 py-4 text-sm font-medium']"
-                        :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}</NuxtLink>
+                        :aria-current="tab.current ? 'page' : undefined">{{ tab.name }}
+                        <span v-if="tab.count !== undefined" class="ml-1 text-medium font-large text-red-500">
+                            ( {{ tab.count }} )
+                        </span>
+                    </NuxtLink>
                 </nav>
             </div>
         </div>
@@ -29,6 +33,6 @@ const props = defineProps({
     tabs: {
         type: Array,
         required: true
-    } as any
+    } as any,
 })
 </script>

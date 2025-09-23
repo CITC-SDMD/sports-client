@@ -58,6 +58,7 @@ import { useAlert } from '@/composables/alert'
 
 let currentPage = 1
 
+
 const runtimeConfig = useRuntimeConfig()
 
 const { successAlert } = useAlert()
@@ -67,20 +68,15 @@ const path = route.fullPath
 const assistanceUrl = path.replace(path, '/assistance/process')
 const releaseUrl = path.replace(path, '/assistance/release')
 
-
 const pages = [
     { name: 'Assistance', href: path, current: true },
 ]
 
-const tabs = [
-    { name: 'For approval', href: path, current: true },
+const tabs = computed(() => [
+    { name: 'For approval', href: path, current: true, count: state.body?.data?.length },
     { name: 'Processing request', href: assistanceUrl, current: false },
     { name: 'Release of assistance', href: releaseUrl, current: false },
-]
-
-definePageMeta({
-    layout: 'main'
-})
+])
 
 const state = reactive({
     isPageLoading: false,
@@ -98,6 +94,10 @@ const state = reactive({
     selected: [] as any,
     search: null as any,
     searchFilter: null as any
+})
+
+definePageMeta({
+    layout: 'main'
 })
 
 onMounted(() => {

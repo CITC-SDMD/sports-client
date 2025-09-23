@@ -47,7 +47,6 @@
         </div>
         <ModalSignCertificate v-model:open="state.isSignCertificateOpen" />
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -65,18 +64,16 @@ const assistanceUrl = path.replace(path, '/assistance')
 const processingUrl = path.replace(path, '/assistance/process')
 const releaseUrl = path.replace(path, '/assistance/release')
 
-
-
 const pages = [
     { name: 'Assistance', href: assistanceUrl, current: false },
     { name: 'Processing request ', href: releaseUrl, current: true },
 ]
 
-const tabs = [
+const tabs = computed(() => [
     { name: 'For approval', href: assistanceUrl, current: false },
-    { name: 'Processing request', href: processingUrl, current: true },
+    { name: 'Processing request', href: processingUrl, current: true, count: state.body?.data?.length },
     { name: 'Release of assistance', href: releaseUrl, current: false },
-]
+])
 
 definePageMeta({
     layout: 'main'
@@ -114,7 +111,6 @@ async function getAssistance() {
         const response = await athleteService.fetchAssistanceListApproved(params)
         if (response.data) {
             state.body = response
-            console.log(state.body)
         }
     } catch (error) {
         state.error = error

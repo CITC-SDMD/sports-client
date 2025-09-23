@@ -56,11 +56,11 @@ const pages = [
     { name: 'Release of assistance', href: processingUrl, current: true },
 ]
 
-const tabs = [
+const tabs = computed(() => [
     { name: 'For approval', href: assistanceUrl, current: false },
-    { name: 'Processing request', href: processingUrl, current: false },
-    { name: 'Release of assistance', href: releaseUrl, current: true },
-]
+    { name: 'Processing request', href: processingUrl, current: false, },
+    { name: 'Release of assistance', href: releaseUrl, current: true, count: state.body?.data?.length },
+])
 
 definePageMeta({
     layout: 'main'
@@ -97,20 +97,11 @@ async function getAssistance() {
         const response = await athleteService.fetchAssistanceListApproved(params)
         if (response.data) {
             state.body = response
-            console.log(state.body)
         }
     } catch (error) {
         state.error = error
     }
     state.isPageLoading = false
-}
-
-function selectAll() {
-    state.selected = state.body.data.map((item: any) => item.uuid)
-}
-
-function openSignCertificate() {
-    state.isSignCertificateOpen = true
 }
 
 function hasSelected(value: any) {
