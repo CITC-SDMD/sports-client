@@ -27,7 +27,7 @@
                     </a>
                     </MenuItem>
                 </div>
-                <div v-if="props.model == 'processing'" class="py-1">
+                <div v-if="props.model != 'approval'" class="py-1">
                     <MenuItem v-slot="{ active }">
                     <a @click="goToViewProcessing(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
@@ -93,6 +93,12 @@ async function goToViewDocuments(value) {
         }
     } catch (error) {
 
+    }
+}
+
+function goToViewProcessing(data) {
+    if (path === '/assistance/process') {
+        navigateTo(`${path}/${data}/assistance/create`)
     }
 }
 

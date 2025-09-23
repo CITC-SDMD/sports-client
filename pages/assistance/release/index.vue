@@ -15,21 +15,7 @@
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="w-full flex justify-end space-x-4">
-            <div v-if="state.body?.data?.length > 0">
-                <FormButton @click="selectAll" class="flex items-center gap-x-2 w-full sm:w-auto">
-                    <CheckIcon class="w-6 h-6" />
-                    Select all
-                </FormButton>
-            </div>
-            <div v-if="state.selected.length > 0">
-                <FormButton @click="openSignCertificate" class="flex items-center gap-x-2 w-full sm:w-auto">
-                    <PlusIcon class="w-6 h-6" />
-                    Sign certification
-                </FormButton>
-            </div>
-        </div>
-        <Tabs :tabs="tabs" class="mt-4 pb-0.5" />
+        <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -42,40 +28,38 @@
                 </form>
             </div>
             <TableAssistance :head=state.head :body="state.body" @selected="hasSelected" :selected="state.selected"
-                :model="'approval'" />
+                :model="'release'" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" @saveSignCertificate="saveAssistance"
-            @close="state.selected = []" />
+        <ModalSignCertificate v-model:open="state.isSignCertificateOpen" />
     </div>
 
 </template>
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
-import { PlusIcon, MagnifyingGlassIcon, CheckIcon } from '@heroicons/vue/20/solid'
-import { useAlert } from '@/composables/alert'
+import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
 const runtimeConfig = useRuntimeConfig()
 
-const { successAlert } = useAlert()
-
 const route = useRoute()
 const path = route.fullPath
-const assistanceUrl = path.replace(path, '/assistance/process')
+
+const assistanceUrl = path.replace(path, '/assistance')
+const processingUrl = path.replace(path, '/assistance/process')
 const releaseUrl = path.replace(path, '/assistance/release')
 
-
 const pages = [
-    { name: 'Assistance', href: path, current: true },
+    { name: 'Assistance', href: assistanceUrl, current: false },
+    { name: 'Release of assistance', href: processingUrl, current: true },
 ]
 
 const tabs = [
-    { name: 'For approval', href: path, current: true },
-    { name: 'Processing request', href: assistanceUrl, current: false },
-    { name: 'Release of assistance', href: releaseUrl, current: false },
+    { name: 'For approval', href: assistanceUrl, current: false },
+    { name: 'Processing request', href: processingUrl, current: false },
+    { name: 'Release of assistance', href: releaseUrl, current: true },
 ]
 
 definePageMeta({
@@ -86,7 +70,6 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
-        { name: '' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },
@@ -111,30 +94,10 @@ async function getAssistance() {
             page: currentPage,
             search: state.search
         }
-        const response = await athleteService.fetchAssistanceList(params)
+        const response = await athleteService.fetchAssistanceListApproved(params)
         if (response.data) {
             state.body = response
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-async function saveAssistance(data: any) {
-    state.isPageLoading = true
-    try {
-        let params = {
-            password: data,
-            athlete_uuid: state.selected,
-            is_approved: true,
-        }
-        const response = await athleteService.saveAssistanceApprove(params)
-        if (response) {
-            successAlert('Success!', 'Athlete approved.')
-            getAssistance()
-            state.selected = []
-            navigateTo(assistanceUrl)
+            console.log(state.body)
         }
     } catch (error) {
         state.error = error
@@ -144,9 +107,6 @@ async function saveAssistance(data: any) {
 
 function selectAll() {
     state.selected = state.body.data.map((item: any) => item.uuid)
-    if (state.selected.length > 0) {
-        openSignCertificate()
-    }
 }
 
 function openSignCertificate() {

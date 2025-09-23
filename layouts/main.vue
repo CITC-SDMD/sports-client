@@ -145,7 +145,7 @@ import {
   RectangleGroupIcon,
   XMarkIcon,
 } from '@heroicons/vue/24/outline'
-import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon, CalendarIcon, DocumentCurrencyDollarIcon } from '@heroicons/vue/24/outline'
+import { ChevronDownIcon, TrophyIcon, UserGroupIcon, UsersIcon, CalendarIcon, ExclamationCircleIcon } from '@heroicons/vue/24/outline'
 import { useUserStore } from '@/store/user'
 import { authService } from '@/api/auth/AuthService'
 
@@ -199,7 +199,7 @@ const navigation = [
     ] as any
   },
   {
-    name: 'Assistance', href: '/assistance', icon: DocumentCurrencyDollarIcon, activeRouteNames: [
+    name: 'Assistance', href: '/assistance', icon: ExclamationCircleIcon, activeRouteNames: [
       'assistance',
       'assistance-processing'
     ] as any

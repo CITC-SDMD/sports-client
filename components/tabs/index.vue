@@ -1,5 +1,5 @@
 <template>
-    <div class="overflow-hidden rounded-lg border-l-blue-500 border border-x-4 bg-white shadow">
+    <div class="overflow-hidden rounded-lg border-l-blue-500 border border-x-4 bg-white shadow ">
         <div class="grid grid-cols-1 sm:hidden">
             <!-- Use an "onChange" listener to redirect the user to the selected tab URL. -->
             <select aria-label="Select a tab"

@@ -17,7 +17,7 @@
                     <tbody class="divide-y divide-gray-200 bg-white">
                         <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
                             :key="body.uuid">
-                            <td v-if="props.model != 'done'"
+                            <td v-if="props.model != 'release'"
                                 class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 <div class="flex items-center gap-x-2">
                                     <input type="checkbox" :value="body.uuid" :checked="isRowSelected(body.uuid).value"

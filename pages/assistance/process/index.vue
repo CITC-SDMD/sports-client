@@ -24,12 +24,12 @@
             </div>
             <div v-if="state.selected.length > 0">
                 <FormButton @click="openSignCertificate" class="flex items-center gap-x-2 w-full sm:w-auto">
-                    <PlusIcon class="w-6 h-6" />
-                    Notify athlete
+                    <PaperAirplaneIcon class="w-6 h-6" />
+                    Send notification
                 </FormButton>
             </div>
         </div>
-        <Tabs :tabs="tabs" class="mt-4" />
+        <Tabs :tabs="tabs" class="mt-4 pb-0.5" />
         <div class="mt-4">
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -52,7 +52,7 @@
 
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
-import { PlusIcon, MagnifyingGlassIcon, CheckIcon } from '@heroicons/vue/20/solid'
+import { PaperAirplaneIcon, MagnifyingGlassIcon, CheckIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
 
@@ -60,16 +60,22 @@ const runtimeConfig = useRuntimeConfig()
 
 const route = useRoute()
 const path = route.fullPath
-const assistanceUrl = path.replace('/assistance/processing', '/assistance')
+
+const assistanceUrl = path.replace(path, '/assistance')
+const processingUrl = path.replace(path, '/assistance/process')
+const releaseUrl = path.replace(path, '/assistance/release')
+
+
 
 const pages = [
-    { name: 'Assistance', href: path, current: true },
+    { name: 'Assistance', href: assistanceUrl, current: false },
+    { name: 'Processing request ', href: releaseUrl, current: true },
 ]
 
 const tabs = [
     { name: 'For approval', href: assistanceUrl, current: false },
-    { name: 'Processing', href: path, current: true },
-    { name: 'Done', href: assistanceUrl, current: false },
+    { name: 'Processing request', href: processingUrl, current: true },
+    { name: 'Release of assistance', href: releaseUrl, current: false },
 ]
 
 definePageMeta({
