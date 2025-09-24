@@ -55,12 +55,6 @@
                                 Required assistance
                             </h1>
                         </div>
-                        <div class="flex items-center gap-x-2" v-else="props.model?.is_assistance">
-                            <ExclamationCircleIcon class="w-5 h-5 text-red-600" />
-                            <h1 class="font-bold text-xl text-red-600">
-                                Not required assistance
-                            </h1>
-                        </div>
                     </div>
                     <div class="flex items-center gap-x-2">
                         <PhoneIcon class="w-5 h-5 text-blue-600" />

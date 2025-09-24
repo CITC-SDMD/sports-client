@@ -23,7 +23,7 @@
                     <a @click="goToViewDocuments(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <EyeIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        View certificate
+                        View Certificate
                     </a>
                     </MenuItem>
                 </div>
@@ -32,7 +32,7 @@
                     <a @click="goToViewProcessing(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <PencilSquareIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Request form
+                        Athlete Assistance
                     </a>
                     </MenuItem>
                 </div>
@@ -98,7 +98,7 @@ async function goToViewDocuments(value) {
 
 function goToViewProcessing(data) {
     if (path === '/assistance/process') {
-        navigateTo(`${path}/${data}/assistance/create`)
+        navigateTo(`${path}/${data}/assistance`)
     }
 }
 

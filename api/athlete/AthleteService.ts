@@ -29,6 +29,14 @@ class AthleteService extends BaseAPIService {
         return await this.request(`/athletes/${uuid}/download-certificate`, 'GET')
     }
 
+    async fetchAssistanceRelease(params: object): Promise<any> {
+        return await this.request(`/athletes/notified-athlete/list`, 'GET', params)
+    }
+
+    async sendNotificationAthlete(params: object): Promise<any> {
+        return await this.request(`/athletes/notifications/send`, 'POST', params)
+    }
+
     async createAthlete(params: object): Promise<any> {
         return await this.request(`/athletes`, 'POST', params)
     }

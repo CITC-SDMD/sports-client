@@ -94,7 +94,7 @@ async function getAssistance() {
             page: currentPage,
             search: state.search
         }
-        const response = await athleteService.fetchAssistanceListApproved(params)
+        const response = await athleteService.fetchAssistanceRelease(params)
         if (response.data) {
             state.body = response
         }

@@ -17,7 +17,7 @@
         <ModulesEventProfile class="mt-4" v-if="state.event" :model="state.event" />
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
-            <div v-if="state.body?.data?.length > 0" class="w-full flex justify-end gap-2">
+            <div class="w-full flex justify-end gap-2">
                 <MenuInvitation @isPageLoading="isPageLoading" />
             </div>
             <div class="w-full mt-4">
@@ -115,6 +115,7 @@ async function fetchQualifiedAthletes() {
 
 function isPageLoading(value: any) {
     state.isPageLoading = value
+    fetchQualifiedAthletes()
 }
 
 async function previous() {

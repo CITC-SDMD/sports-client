@@ -18,16 +18,15 @@
                         <!-- Show table rows if there's data -->
                         <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.sport?.sports_name }}
+                                {{ body.type_assistance }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_start ? moment(body.event_start).format('MMMM DD, YYYY') : '' }}
+                                {{ body.description }}
+
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_end ? moment(body.event_end).format('MMMM DD, YYYY') : '' }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.location }}
+                                {{ body.provider }}
+
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">

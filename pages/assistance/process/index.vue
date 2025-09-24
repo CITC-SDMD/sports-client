@@ -23,7 +23,7 @@
                 </FormButton>
             </div>
             <div v-if="state.selected.length > 0">
-                <FormButton @click="openSignCertificate" class="flex items-center gap-x-2 w-full sm:w-auto">
+                <FormButton @click="sendNotification" class="flex items-center gap-x-2 w-full sm:w-auto">
                     <PaperAirplaneIcon class="w-6 h-6" />
                     Send notification
                 </FormButton>
@@ -52,8 +52,12 @@
 <script setup lang="ts">
 import { athleteService } from '@/api/athlete/AthleteService'
 import { PaperAirplaneIcon, MagnifyingGlassIcon, CheckIcon } from '@heroicons/vue/20/solid'
+import { useAlert } from '@/composables/alert'
 
 let currentPage = 1
+
+const { successAlert } = useAlert()
+
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -98,10 +102,10 @@ const state = reactive({
 })
 
 onMounted(() => {
-    getAssistance()
+    getAthleteAssistance()
 })
 
-async function getAssistance() {
+async function getAthleteAssistance() {
     state.isPageLoading = true
     try {
         let params = {
@@ -111,6 +115,24 @@ async function getAssistance() {
         const response = await athleteService.fetchAssistanceListApproved(params)
         if (response.data) {
             state.body = response
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
+async function sendNotification() {
+    state.isPageLoading = true
+    try {
+        let params = {
+            athlete_uuid: state.selected
+        }
+        const response = await athleteService.sendNotificationAthlete(params)
+        if (response) {
+            successAlert('Success!', 'Assistance created.')
+            state.selected = []
+            goToReleasePage()
         }
     } catch (error) {
         state.error = error
@@ -134,16 +156,21 @@ async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    getAssistance()
+    getAthleteAssistance()
 }
 
 async function previous() {
     currentPage--
-    getAssistance()
+    getAthleteAssistance()
 }
 
 async function next() {
     currentPage++
-    getAssistance()
+    getAthleteAssistance()
 }
+
+function goToReleasePage() {
+    navigateTo(releaseUrl)
+}
+
 </script>

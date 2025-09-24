@@ -59,7 +59,7 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
-        { name: 'Event name' },
+        { name: 'Sport' },
         { name: 'Event start' },
         { name: 'Event end' },
         { name: 'Location' },

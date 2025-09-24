@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="sport_id" label="Sports name" />
+                                    <FormLabel for="sport_id" label="Sports" />
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
