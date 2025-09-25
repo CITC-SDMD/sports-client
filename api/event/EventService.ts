@@ -37,7 +37,7 @@ class EventService extends BaseAPIService {
         return await this.request(`/events/send-invitation`, 'POST', params)
     }
 
-    async sendEndorsementLetter(params: object, uuid: string): Promise<any> {
+    async sendEndorsementLetter(params: object): Promise<any> {
         return await this.request(`/events/send-endorsement-letter`, 'POST', params)
     }
 }

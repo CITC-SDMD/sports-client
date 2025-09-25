@@ -21,13 +21,13 @@
                                 {{ body.sport?.sports_name }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_start ? moment(body.event_start).format('MMMM DD, YYYY') : '' }}
+                                {{ body?.organizer }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.event_end ? moment(body.event_end).format('MMMM DD, YYYY') : '' }}
+                                {{ body?.event_type }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.location }}
+                                {{ body?.event_status }}
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">

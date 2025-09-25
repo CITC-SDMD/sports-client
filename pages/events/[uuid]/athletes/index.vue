@@ -18,7 +18,7 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end gap-2">
-                <MenuInvitation @isPageLoading="isPageLoading" />
+                <MenuInvitation @isPageLoading="isPageLoading" @error="state.error" />
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -81,7 +81,7 @@ const state = reactive({
 
 onMounted(() => {
     getEvent()
-    fetchQualifiedAthletes()
+    getQualifiedAthletes()
 })
 
 async function getEvent() {
@@ -97,7 +97,7 @@ async function getEvent() {
     state.isPageLoading = false
 }
 
-async function fetchQualifiedAthletes() {
+async function getQualifiedAthletes() {
     state.isPageLoading = true
     try {
         let params = {
@@ -115,24 +115,23 @@ async function fetchQualifiedAthletes() {
 
 function isPageLoading(value: any) {
     state.isPageLoading = value
-    fetchQualifiedAthletes()
 }
 
 async function previous() {
     currentPage--
-    fetchQualifiedAthletes()
+    getQualifiedAthletes()
 }
 
 async function next() {
     currentPage++
-    fetchQualifiedAthletes()
+    getQualifiedAthletes()
 }
 
 async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    fetchQualifiedAthletes()
+    getQualifiedAthletes()
 }
 
 

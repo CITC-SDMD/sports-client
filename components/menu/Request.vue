@@ -20,19 +20,10 @@
             ]">
                 <div class="py-1">
                     <MenuItem v-slot="{ active }">
-                    <a @click="goToViewDocuments(props.uuid)"
-                        :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
-                        <EyeIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        View Certificate
-                    </a>
-                    </MenuItem>
-                </div>
-                <div v-if="props.model != 'approval'" class="py-1">
-                    <MenuItem v-slot="{ active }">
-                    <a @click="goToViewProcessing(props.uuid)"
+                    <a @click="goToEditPage(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <PencilSquareIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Create Assistance
+                        Edit
                     </a>
                     </MenuItem>
                 </div>
@@ -42,7 +33,6 @@
 </template>
 
 <script setup>
-import { athleteService } from '@/api/athlete/AthleteService'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import {
     ChevronDownIcon,
@@ -56,7 +46,6 @@ const path = route.fullPath
 
 const router = useRouter()
 const uuid = router?.currentRoute?.value?.params?.uuid
-
 const props = defineProps({
     isReversedDropdown: {
         type: Boolean,
@@ -65,40 +54,12 @@ const props = defineProps({
     uuid: {
         type: String,
         required: true
-    },
-    model: {
-        type: Object,
-        required: false
-    },
+    }
 })
 
-
-async function goToViewDocuments(value) {
-    try {
-        const response = await athleteService.fetchCertificate(value)
-        if (response) {
-            const blobContent = new Blob([response], { type: "application/pdf" });
-            const blobUrl = URL.createObjectURL(blobContent);
-            const iframe = document.createElement('iframe')
-            iframe.style.display = 'none'
-            iframe.src = blobUrl
-            document.body.appendChild(iframe)
-            iframe.onload = () => {
-                iframe.contentWindow.print()
-                iframe.onload = () => {
-                    URL.revokeObjectURL(blobUrl)
-                    document.body.removeChild(iframe)
-                }
-            }
-        }
-    } catch (error) {
-
-    }
-}
-
-function goToViewProcessing(data) {
-    if (path === '/assistance/process') {
-        navigateTo(`${path}/${data}/assistance`)
+function goToEditPage(data) {
+    if (path === `/assistance/process/${uuid}/assistance`) {
+        navigateTo(`${path}/${data}/edit`)
     }
 }
 

@@ -30,7 +30,7 @@
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuEventTable :uuid="body.uuid"
+                                <MenuRequest :uuid="body.uuid"
                                     :is-reversed-dropdown="props.body.data >= props.body.data.length - 3" />
                             </td>
                         </tr>

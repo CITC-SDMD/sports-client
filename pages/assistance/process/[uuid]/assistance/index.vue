@@ -15,7 +15,8 @@
         </div>
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
-        <div class="w-full flex justify-end mb-5">
+        <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
+        <div class="w-full flex justify-end mt-4">
             <FormButton @click="goToCreateAssistance" class="flex items-center gap-x-2">
                 <PlusIcon class="w-6 h-6" />
                 New assistance
@@ -27,6 +28,7 @@
 </template>
 
 <script setup lang="ts">
+import { athleteService } from '@/api/athlete/AthleteService'
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { PlusIcon, MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 import { useAlert } from '@/composables/alert'
@@ -41,6 +43,7 @@ const uuid = String(router?.currentRoute?.value?.params?.uuid)
 
 const route = useRoute()
 const path = route.fullPath
+console.log('path', path)
 const processUrl = path.replace(`/${uuid}/assistance`, '')
 
 const pages = [
@@ -58,6 +61,8 @@ const state = reactive({
         { name: 'Discription' },
         { name: 'Provider' },
     ],
+    athleteUuid: uuid as string,
+    athlete: null as any,
     body: [] as any,
     search: null as any,
     searchFilter: null as any,
@@ -66,8 +71,22 @@ const state = reactive({
 })
 
 onMounted(() => {
+    getAthlete()
     getAssistance()
 })
+
+async function getAthlete() {
+    state.isPageLoading = true
+    try {
+        const response = await athleteService.fetchAthlete(state.athleteUuid)
+        if (response.data) {
+            state.athlete = response.data
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
 
 async function getAssistance() {
     state.isPageLoading = true

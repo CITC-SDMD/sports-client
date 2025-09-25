@@ -117,9 +117,9 @@ async function sendEndorsementLetter() {
         }
     } catch (error) {
         state.error = error
+    } finally {
+        emit('isPageLoading', false)
     }
-    emit('isPageLoading', false)
 }
-
 
 </script>

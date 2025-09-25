@@ -60,9 +60,9 @@ const state = reactive({
     error: null as any,
     head: [
         { name: 'Sport' },
-        { name: 'Event start' },
-        { name: 'Event end' },
-        { name: 'Location' },
+        { name: 'Organizer' },
+        { name: 'Type of event' },
+        { name: 'Status of event' },
     ],
     body: [] as any,
     search: null as any,
