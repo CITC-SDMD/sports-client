@@ -43,6 +43,7 @@
                                                         <a :href="file.file_url" target="_blank"
                                                             class="underline text-blue-500">
                                                             {{ file.type }}
+
                                                         </a>
                                                     </td>
                                                     <td class="py-4 flex justify-end">

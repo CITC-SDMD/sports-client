@@ -18,6 +18,9 @@
                         <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
                             :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ body.id }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.firstname }}
                                 {{ (body.middlename != 'null') ? body.middlename : '' }}
                                 {{ body.lastname }}

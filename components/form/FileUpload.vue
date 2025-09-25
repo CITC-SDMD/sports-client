@@ -10,9 +10,21 @@
                 </label>
             </div>
 
+            <div v-if="state.previewUrl" class="mt-2 flex flex-col items-center justify-center">
+                <img :src="state.previewUrl" alt="Preview" class="w-full h-80    object-cover rounded shadow mb-2" />
+            </div>
+
+
             <!-- Show selected file name -->
             <p v-if="state.fileName" class="mt-2 text-sm text-gray-700 font-medium">
                 Selected file: {{ state.fileName }}
+            </p>
+
+            <p v-else-if="props.fileUrl" class="mt-2 text-xs text-gray-500 break-all">
+                <!-- {{ props.fileUrl.split('/').pop() }} -->
+                <a :href="props.fileUrl" target="_blank" class="underline text-blue-500">
+                    {{ props.fileUrl }}
+                </a>
             </p>
 
             <p v-else class="text-xs/5 text-gray-600">PNG, JPG, PDF up to 10MB</p>
@@ -29,13 +41,18 @@ const props = defineProps({
     name: {
         type: String,
         required: true
+    },
+    fileUrl: {
+        type: String,
+        default: ''
     }
 })
 
 const inputId = computed(() => `file-upload-${props.name}-${Math.random().toString(36).slice(2, 8)}`)
 
 const state = reactive({
-    fileName: null as string | null
+    fileName: null as string | null,
+    previewUrl: null as string | null
 })
 
 function handleFileChange(event: Event) {
@@ -44,6 +61,17 @@ function handleFileChange(event: Event) {
         const file = target.files[0]
         state.fileName = file.name
         emit('fileSelected', file)
+
+        // FileReader for image preview
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                state.previewUrl = e.target?.result as string
+            }
+            reader.readAsDataURL(file)
+        } else {
+            state.previewUrl = null
+        }
     }
 }
 </script>

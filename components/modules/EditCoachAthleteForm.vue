@@ -224,13 +224,11 @@
                             <div class="col-span-2">
                                 <div v-if="props.entity === 'athlete'">
                                     <div class=" flex">
-                                        <FormLabel for="is_assistance" label="Was the player need Assistance?" />
-                                        <span class="text-red-500">*</span>
+                                        <FormLabel for="is_assistance" label="Player need Assistance?" />
                                     </div>
-                                    <div class="mt-4 flex items-center justify-start">
+                                    <div class="mt-4 flex items-center gap-2 ">
                                         <FormToggle name="is_assistance" v-model="state.form.is_assistance" />
-                                        <FormError :error="v$?.form.is_assistance?.$errors[0]?.$message.toString()" />
-                                        <FormError :error="state.error?.errors?.form.is_assistance?.[0]" />
+                                        ({{ state.form.is_assistance ? 'Yes' : 'No' }})
                                     </div>
                                 </div>
                             </div>
@@ -255,8 +253,9 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="identification"
+                                <FormFileUpload name="identification" :fileUrl="state.form.identification"
                                     @fileSelected="(value) => state.form.identification = value" />
+
                                 <FormError :error="v$?.form.identification?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.identification?.[0]" />
                             </div>
@@ -267,7 +266,7 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="birth_certificate"
+                                <FormFileUpload name="birth_certificate" :fileUrl="state.form.birth_certificate"
                                     @fileSelected="(value) => state.form.birth_certificate = value" />
                                 <FormError :error="v$?.form.birth_certificate?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.birth_certificate?.[0]" />
@@ -279,7 +278,7 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="pre_qualifying"
+                                <FormFileUpload name="pre_qualifying" :fileUrl="state.form.pre_qualifying"
                                     @fileSelected="(value) => state.form.pre_qualifying = value" />
                                 <FormError :error="v$?.form.pre_qualifying?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.pre_qualifying?.[0]" />
@@ -291,7 +290,7 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="entry_form"
+                                <FormFileUpload name="entry_form" :fileUrl="state.form.entry_form"
                                     @fileSelected="(value) => state.form.entry_form = value" />
                                 <FormError :error="v$?.form.entry_form?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.entry_form?.[0]" />
@@ -303,7 +302,7 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="passport"
+                                <FormFileUpload name="passport" :fileUrl="state.form.passport"
                                     @fileSelected="(value) => state.form.passport = value" />
                                 <FormError :error="v$?.form.passport?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.passport?.[0]" />
@@ -316,7 +315,7 @@
                                 <span class="text-red-500">*</span>
                             </div>
                             <div class="mt-2">
-                                <FormFileUpload name="parent_consent"
+                                <FormFileUpload name="parent_consent" :fileUrl="state.form.parent_consent"
                                     @fileSelected="(value) => state.form.parent_consent = value" />
                                 <FormError :error="v$?.form.parent_consent?.$errors[0]?.$message.toString()" />
                                 <FormError :error="state.error?.errors?.form.parent_consent?.[0]" />
@@ -358,7 +357,11 @@ const props = defineProps({
     entity: {
         type: String,
         required: true
-    }
+    },
+    document: {
+        type: Array,
+        required: false
+    } as any,
 })
 
 const state = reactive({
@@ -428,6 +431,31 @@ onMounted(() => {
         avatarUrl.value = props.model.image
     }
     fetchSchools()
+
+    if (Array.isArray(props.model.documents)) {
+        props.model.documents.forEach((doc: any) => {
+            switch (doc.type) {
+                case 'Identification':
+                    state.form.identification = doc.file_url
+                    break
+                case 'Birth Certificate':
+                    state.form.birth_certificate = doc.file_url
+                    break
+                case 'Pre-Qualifying Results':
+                    state.form.pre_qualifying = doc.file_url
+                    break
+                case 'Entry Form':
+                    state.form.entry_form = doc.file_url
+                    break
+                case 'Passport':
+                    state.form.passport = doc.file_url
+                    break
+                case 'Parent Consent':
+                    state.form.parent_consent = doc.file_url
+                    break
+            }
+        })
+    }
 })
 
 const computedAge = computed(() => {
@@ -509,9 +537,6 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.', required),
             },
             club_name: {
-                required: helpers.withMessage('This field is required.', required),
-            },
-            is_assistance: {
                 required: helpers.withMessage('This field is required.', required),
             },
             identification: {

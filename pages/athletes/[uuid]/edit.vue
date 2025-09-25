@@ -49,7 +49,8 @@ onMounted(() => {
 const state = reactive({
     isPageLoading: false,
     error: null as any,
-    athlete: null as any
+    athlete: null as any,
+    document: [] as any
 })
 
 async function getAthlete() {
@@ -58,6 +59,7 @@ async function getAthlete() {
         const response = await athleteService.fetchAthlete(uuid)
         if (response.data) {
             state.athlete = response.data
+            state.document = response.data.documents
         }
     } catch (error) {
         state.error = error
@@ -85,11 +87,21 @@ async function editAthlete(data: any) {
         params.append('club_name', data.club_name)
         params.append('is_assistance', data.is_assistance)
         params.append('photo', data.image)
-        params.append('identification', data.identification)
-        params.append('birth_certificate', data.birth_certificate)
-        params.append('pre_qualifying', data.pre_qualifying)
-        params.append('entry_form', data.entry_form)
-        params.append('passport', data.passport)
+        if (data.identification instanceof File) {
+            params.append('identification', data.identification)
+        }
+        if (data.birth_certificate instanceof File) {
+            params.append('birth_certificate', data.birth_certificate)
+        }
+        if (data.pre_qualifying instanceof File) {
+            params.append('pre_qualifying', data.pre_qualifying)
+        }
+        if (data.entry_form instanceof File) {
+            params.append('entry_form', data.entry_form)
+        }
+        if (data.passport instanceof File) {
+            params.append('passport', data.passport)
+        }
         params.append('parent_consent', data.parent_consent)
         const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
