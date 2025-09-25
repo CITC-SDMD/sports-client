@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { useAlert } from '@/composables/alert'
-import { ModulesNewAssistance } from '#components';
 
 const { successAlert } = useAlert()
 

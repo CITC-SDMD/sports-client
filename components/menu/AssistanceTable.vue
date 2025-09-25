@@ -100,6 +100,13 @@ function goToViewProcessing(data) {
     if (path === '/assistance/process') {
         navigateTo(`${path}/${data}/assistance`)
     }
+
+    if (path === '/assistance/release') {
+        navigateTo(`${path}/${data}/assistance`)
+    }
 }
+
+console.log(path)
+console.log(uuid)
 
 </script>

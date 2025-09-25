@@ -88,6 +88,7 @@ const state = reactive({
     error: null as any,
     head: [
         { name: '' },
+        { name: 'Sport' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },

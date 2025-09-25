@@ -61,6 +61,10 @@ function goToEditPage(data) {
     if (path === `/assistance/process/${uuid}/assistance`) {
         navigateTo(`${path}/${data}/edit`)
     }
+
+    if (path === `/assistance/release/${uuid}/assistance`) {
+        navigateTo(`${path}/${data}/edit`)
+    }
 }
 
 </script>

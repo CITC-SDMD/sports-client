@@ -26,6 +26,9 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ getSportNames(body.events) }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.firstname }}
                                 {{ (body.middlename != 'null') ? body.middlename : '' }}
                                 {{ body.lastname }}
@@ -107,5 +110,16 @@ const Selected = (uuid: string, checked: any) => {
     }
 
     emit('Selected', newSelected);
+};
+
+const getSportNames = (events: any[]): string => {
+    if (!events || events.length === 0) {
+        return '';
+    }
+
+    return events
+        .map(event => event?.sport?.sports_name)
+        .filter(name => name) // Filter out null/undefined names
+        .join(', ');
 };
 </script>

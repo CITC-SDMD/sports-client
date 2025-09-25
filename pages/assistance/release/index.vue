@@ -70,6 +70,7 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
+        { name: 'Sport' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },

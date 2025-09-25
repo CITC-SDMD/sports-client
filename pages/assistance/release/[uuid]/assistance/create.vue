@@ -11,13 +11,13 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Edit Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">New Assistance</span>
         </div>
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesEditAssistance v-if="state.assistance" :career="state.assistance" @submitForm="editAssistance"
-                :model="'athlete'" @cancelAction="goToPreviousPage" @showError="showErrorMessage" />
+            <ModulesNewAssistance @cancelAction="goToPreviousPage" @submitForm="saveAssistance"
+                @showError="showErrorMessage" />
         </div>
     </div>
 </template>
@@ -35,11 +35,11 @@ const uuid = String(router?.currentRoute?.value?.params?.uuid)
 
 const route = useRoute()
 const path = route.fullPath
-const processUrl = path.replace(`/${uuid}/edit`, '')
+const processUrl = path.replace(`/${uuid}/assistance/create`, `/${uuid}/assistance`)
 
 const pages = [
     { name: 'Assistance', href: processUrl, current: false },
-    { name: 'Edit Assistance', href: path, current: true },
+    { name: 'New Assistance', href: path, current: true },
 ]
 
 definePageMeta({
@@ -47,38 +47,20 @@ definePageMeta({
 })
 
 const state = reactive({
-    assistance: null as any,
     isPageLoading: false,
     error: null as any,
 })
 
-onMounted(() => {
-    getAssistance()
-})
-
-async function getAssistance() {
-    state.isPageLoading = true
-    try {
-        const response = await assistanceService.fetchAssistance(uuid)
-        if (response.data) {
-            state.assistance = response.data
-        }
-    } catch (error) {
-        state.error = error
-    }
-    state.isPageLoading = false
-}
-
-
-async function editAssistance(data: any) {
+async function saveAssistance(data: any) {
     state.isPageLoading = true
     try {
         let params = {
+            athlete_uuid: uuid,
             type_assistance: data.type_assistance,
             description: data.description,
             provider: data.provider,
         }
-        const response = await assistanceService.updateAssistance(params, uuid)
+        const response = await assistanceService.createAssistance(params)
         if (response.data) {
             successAlert('Success!', 'Assistance created.')
             goToPreviousPage()
