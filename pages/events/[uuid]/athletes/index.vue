@@ -115,6 +115,7 @@ async function getQualifiedAthletes() {
 
 function isPageLoading(value: any) {
     state.isPageLoading = value
+    getQualifiedAthletes()
 }
 
 async function previous() {
