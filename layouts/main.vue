@@ -201,7 +201,15 @@ const navigation = [
   {
     name: 'Assistance', href: '/assistance', icon: ExclamationCircleIcon, activeRouteNames: [
       'assistance',
-      'assistance-processing'
+      'assistance-process',
+      'assistance-process-uuid-assistance',
+      'assistance-process-uuid-assistance-create',
+      'assistance-process-uuid-assistance-uuid-edit',
+      'assistance-release',
+      'assistance-release-uuid-assistance',
+      'assistance-release-uuid-assistance-create',
+      'assistance-release-uuid-assistance-uuid-edit'
+
     ] as any
   },
   { name: 'Users', href: '/users', icon: UsersIcon, activeRouteNames: ['users'] as any },
