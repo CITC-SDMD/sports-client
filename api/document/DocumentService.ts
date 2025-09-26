@@ -10,6 +10,10 @@ class DocumentService extends BaseAPIService {
         return await this.request(`/documents`, 'GET', params)
     }
 
+    async updateDocuments(params: object, uuid: string): Promise<any> {
+        return await this.request(`/documents/${uuid}`, 'PUT', params)
+    }
+
     async deleteDocuments(uuid: string): Promise<any> {
         return await this.request(`/documents/${uuid}`, 'DELETE')
     }

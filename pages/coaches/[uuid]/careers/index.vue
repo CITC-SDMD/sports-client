@@ -8,11 +8,11 @@
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Coaches</span>
+            <span class="text-3xl font-bold text-blue-500">Performance & Career</span>
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <FormButton @click="openRequirement">View Documents</FormButton>
+            <!-- <FormButton @click="openRequirement">View Documents</FormButton> -->
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile :identity="'coach'" class="mt-4" v-if="state.coach" :model="state.coach" />
@@ -37,8 +37,8 @@
             <TableCareer :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
+        <!-- <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" /> -->
     </div>
 </template>
 
@@ -57,6 +57,7 @@ const uuid = router?.currentRoute?.value?.params?.uuid
 const route = useRoute()
 const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/careers`, '')
+const documentUrl = path.replace('/careers', '/documents')
 const athleteUrl = path.replace('/careers', '/athletes')
 
 const pages = [
@@ -65,8 +66,9 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Athletes', href: athleteUrl, current: false },
     { name: 'Performance and Career', href: path, current: true },
+    { name: 'Documents', href: documentUrl, current: false },
+    { name: 'Athletes', href: athleteUrl, current: false },
 ]
 
 definePageMeta({

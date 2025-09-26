@@ -96,11 +96,10 @@
                                                 <FormError :error="state.error?.errors?.form.passport?.[0]" />
                                             </div>
                                         </div>
-                                        <div v-if="state.age < 18 || !hasDocument('Parent Consent')">
+                                        <div v-if="state.age < 18 && !hasDocument('Parent Consent')">
                                             <div class=" flex gap-1">
                                                 <FormLabel for="parent_consent" label="Parent Consent" />
                                                 <span class="text-red-500">*</span>
-
                                             </div>
                                             <div class="mt-2">
                                                 <FormFileUpload name="parent_consent"
@@ -260,7 +259,7 @@ const rules = computed(() => {
                 required: helpers.withMessage('This field is required.', requiredIf(() => !hasDocument.value('Brgy Clearance'))),
             },
             parent_consent: {
-                required: helpers.withMessage('This field is required.', requiredIf(() => state.age < 18)),
+                required: helpers.withMessage('This field is required.', requiredIf(() => state.age < 18 && !hasDocument.value('Parent Consent'))),
             }
         }
     }

@@ -474,10 +474,10 @@ const state = reactive({
             { value: 'other', label: 'Other' },
         ],
         organizer: [
-            { value: 'LGU', label: 'LGU' },
             { value: 'barangay', label: 'Barangay' },
             { value: 'school', label: 'School' },
-            { value: 'psc', label: 'PSC' },
+            { value: 'LGU', label: ' Local Government Unit (LGU)' },
+            { value: 'psc', label: 'Philippine Sports Commission (PSC)' },
         ],
         age_category: [
             { value: 'u12', label: 'under 12 years old' },

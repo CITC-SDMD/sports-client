@@ -8,11 +8,11 @@
         <Loader v-if="state.isPageLoading" />
         <Breadcrumbs :pages="pages" class="mt-4" />
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Coaches</span>
+            <span class="text-3xl font-bold text-blue-500">Athletes</span>
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <FormButton @click="openRequirement">View Documents</FormButton>
+            <!-- <FormButton @click="openRequirement">View Documents</FormButton> -->
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile :identity="'coach'" class="mt-4" v-if="state.coach" :model="state.coach" />
@@ -39,8 +39,8 @@
         </div>
         <ModalNewCoachAthlete v-model:open="state.isNewAthleteOpen" :model="'athlete'" :buttonText="'New Athlete'"
             @saveCoach="saveCoachAthlete" />
-        <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
+        <!-- <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" /> -->
     </div>
 </template>
 
@@ -62,6 +62,7 @@ const uuid = String(router?.currentRoute?.value?.params?.uuid)
 const route = useRoute()
 const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/athletes`, '')
+const documentUrl = path.replace('/athletes', '/documents')
 const careerUrl = path.replace('/athletes', '/careers')
 
 const pages = [
@@ -70,8 +71,9 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Athletes', href: path, current: true },
     { name: 'Performance and Career', href: careerUrl, current: false },
+    { name: 'Documents', href: documentUrl, current: false },
+    { name: 'Athletes', href: path, current: true },
 ]
 
 definePageMeta({
@@ -86,6 +88,7 @@ onMounted(() => {
 const state = reactive({
     isPageLoading: false,
     head: [
+        { name: 'ID' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },

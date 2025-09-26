@@ -12,7 +12,7 @@
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <FormButton @click="openRequirement">View Documents</FormButton>
+            <!-- <FormButton @click="openRequirement">View Documents</FormButton> -->
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
@@ -38,8 +38,8 @@
         </div>
         <ModalNewCoachAthlete v-model:open="state.isNewCoachOpen" :model="'coach'" :buttonText="'New Coach'"
             @saveCoach="saveAthleteCoach" />
-        <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
+        <!-- <ModalRequirements v-model:open="state.isRequirementOpen"
+            @closeRequirement="(value: any) => state.isRequirementOpen = value" /> -->
     </div>
 </template>
 
@@ -63,6 +63,7 @@ const path = route.fullPath
 
 const athleteUrl = path.replace(path, '/athletes')
 const careerUrl = path.replace('/coaches', '/careers')
+const documentUrl = path.replace('/coaches', '/documents')
 
 const pages = [
     { name: 'Athletes', href: athleteUrl, current: false },
@@ -70,9 +71,11 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Coaches', href: path, current: true },
     { name: 'Performance and Career', href: careerUrl, current: false },
+    { name: 'Documents', href: documentUrl, current: false },
+    { name: 'Coaches', href: path, current: true },
 ]
+
 
 definePageMeta({
     layout: 'main'
@@ -91,6 +94,7 @@ const state = reactive({
     athleteUuid: uuid as string,
     age: null as any,
     head: [
+        { name: 'ID' },
         { name: 'Name' },
         { name: 'Sex' },
         { name: 'Birthday' },

@@ -74,6 +74,7 @@ async function editAthlete(data: any) {
         params.append('lastname', data.lastname)
         params.append('email', data.email)
         params.append('nationality', data.nationality)
+        params.append('address', data.address)
         params.append('birth_date', data.birth_date)
         params.append('sex', data.sex)
         params.append('civil_status', data.civil_status)
@@ -83,21 +84,32 @@ async function editAthlete(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.image)
-        params.append('address', data.address)
-        params.append('identification', data.identification)
-        params.append('birth_certificate', data.birth_certificate)
-        params.append('pre_qualifying', data.pre_qualifying)
-        params.append('entry_form', data.entry_form)
-        params.append('passport', data.passport)
-        params.append('parent_consent', data.parent_consent)
+        if (data.identification instanceof File) {
+            params.append('identification', data.identification)
+        }
+        if (data.birth_certificate instanceof File) {
+            params.append('birth_certificate', data.birth_certificate)
+        }
+        if (data.pre_qualifying instanceof File) {
+            params.append('pre_qualifying', data.pre_qualifying)
+        }
+        if (data.entry_form instanceof File) {
+            params.append('entry_form', data.entry_form)
+        }
+        if (data.passport instanceof File) {
+            params.append('passport', data.passport)
+        }
+        if (data.parent_consent instanceof File) {
+            params.append('parent_consent', data.parent_consent)
+        }
         const response = await coachService.updateCoach(params, uuid)
         if (response.data) {
             state.coach = response.data
-            successAlert('Success!', 'coache updated.')
+            successAlert('Success!', 'coach updated.')
             navigateTo(coachUrl)
         }
     } catch (error) {
-        errorAlert('Error!', 'Error in updating coache.')
+        errorAlert('Error!', 'Error in updating coach.')
         state.error = error
     }
     state.isPageLoading = false

@@ -9,7 +9,8 @@
                             <span class="text-red-500">*</span>
                         </div>
                         <div class="mt-2">
-                            <FormTextField name="id_number" class="w-full" v-model=state.form.id_number />
+                            <FormTextField name="id_number" :disabled="true" class="w-full"
+                                v-model=state.form.id_number />
                             <FormError :error="v$?.form.id_number?.$errors[0]?.$message.toString()" />
                             <FormError :error="state.error?.errors?.form.id_number?.[0]" />
                         </div>
@@ -237,9 +238,18 @@ const props = defineProps({
     }
 })
 
+const computedIdNumber = computed(() => {
+    const date = new Date();
+    const year = date.getFullYear();
+    const system = "DCASIS";
+    const randomString = Math.random().toString(36).substring(2, 6).toUpperCase();
+
+    return `${system}-${year}-${randomString}`;
+});
+
 const state = reactive({
     form: {
-        id_number: null as any,
+        id_number: computedIdNumber,
         performance_id: null as any,
         career_date: null as any,
         sport_id: null as any,
@@ -285,6 +295,8 @@ onMounted(() => {
     fetchCompetitions()
     fetchPerformances()
 })
+
+
 
 async function fetchSports() {
     try {

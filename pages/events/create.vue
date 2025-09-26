@@ -22,11 +22,14 @@
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
+import { useSweetAlert } from '@/composables/sweetAlert'
 import moment from 'moment';
+
 
 const runtimeConfig = useRuntimeConfig()
 
 const { successAlert } = useAlert()
+const { successSweetAlert } = useSweetAlert()
 
 const route = useRoute()
 const path = route.fullPath
@@ -84,7 +87,9 @@ async function saveEvent(data: any) {
         const response = await eventService.createEvent(params)
         if (response.data) {
             successAlert('Success!', 'Event created.')
-            goToPreviousPage()
+            // goToPreviousPage()
+            successSweetAlert('Are you sure?', 'Do you want to generate a list of qualifiers?')
+
         }
     } catch (error) {
         state.error = error

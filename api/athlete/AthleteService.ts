@@ -49,6 +49,10 @@ class AthleteService extends BaseAPIService {
         return await this.request(`/athletes/${uuid}/update`, 'POST', params)
     }
 
+    async updateAthleteDocuments(params: object, uuid: string): Promise<any> {
+        return await this.request(`/athletes/${uuid}/document`, 'PUT', params)
+    }
+
     async deleteAthlete(uuid: string): Promise<any> {
         return await this.request(`/athletes/${uuid}`, 'DELETE')
     }

@@ -37,7 +37,7 @@
                             </div>
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="sport_id" label="Sports" />
+                                    <FormLabel for="sport_id" label="Sport" />
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
@@ -187,7 +187,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-8 mt-4">
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="age_category" label="Age category" />
+                                    <FormLabel for="age_category" label="Age" />
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
@@ -199,7 +199,7 @@
                             </div>
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="gender_category" label="Gender category" />
+                                    <FormLabel for="gender_category" label="Gender" />
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
@@ -464,10 +464,10 @@ const state = reactive({
             { value: 'other', label: 'Other' },
         ],
         organizer: [
-            { value: 'LGU', label: 'LGU' },
             { value: 'barangay', label: 'Barangay' },
             { value: 'school', label: 'School' },
-            { value: 'psc', label: 'PSC' },
+            { value: 'LGU', label: ' Local Government Unit (LGU)' },
+            { value: 'psc', label: 'Philippine Sports Commission (PSC)' },
         ],
         age_category: [
             { value: 'u12', label: 'under 12 years old' },

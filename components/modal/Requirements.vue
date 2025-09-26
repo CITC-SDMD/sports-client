@@ -15,7 +15,7 @@
                         class="relative transform overflow-visible rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-7xl sm:p-6">
                         <div class="flex items-center justify-end">
                             <button type="button" @click="closeAction"
-                                class="rounded-md bg-white px-3 py-2 text-xs font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-100">
+                                class="rounded-md bg-white px-3 mb-4 py-2 text-xs font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-100">
                                 <XMarkIcon class="h-5 w-5" />
                             </button>
                         </div>
