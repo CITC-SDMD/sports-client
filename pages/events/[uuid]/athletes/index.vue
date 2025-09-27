@@ -18,7 +18,7 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end gap-2">
-                <MenuInvitation @isPageLoading="isPageLoading" @error="state.error" />
+                <MenuInvitation @isPageLoading="isPageLoading" @showError="state.error" />
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">
@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
+import { eventAthleteService } from '@/api/eventAthlete/eventAthlete'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
 
 let currentPage = 1
@@ -45,7 +46,6 @@ let currentPage = 1
 const runtimeConfig = useRuntimeConfig()
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
-
 const route = useRoute()
 const path = route.fullPath
 const baseUrl = path.replace(`/${uuid}/athletes`, '')
@@ -66,6 +66,7 @@ definePageMeta({
 const state = reactive({
     isPageLoading: false,
     head: [
+        { name: '' },
         { name: 'Full name' },
         { name: 'Gender' },
         { name: 'Date of birth' },
@@ -81,7 +82,7 @@ const state = reactive({
 
 onMounted(() => {
     getEvent()
-    getQualifiedAthletes()
+    getEventAthlete()
 })
 
 async function getEvent() {
@@ -97,15 +98,16 @@ async function getEvent() {
     state.isPageLoading = false
 }
 
-async function getQualifiedAthletes() {
+async function getEventAthlete() {
     state.isPageLoading = true
     try {
         let params = {
             search: state.search
         }
-        const response = await eventService.fetchQualifiedAthletes(params, uuid)
+        const response = await eventAthleteService.fetchEventAthlete(params, uuid)
         if (response.data) {
             state.body = response
+            console.log(response.data)
         }
     } catch (error) {
         state.error = error
@@ -115,24 +117,24 @@ async function getQualifiedAthletes() {
 
 function isPageLoading(value: any) {
     state.isPageLoading = value
-    getQualifiedAthletes()
+    getEventAthlete()
 }
 
 async function previous() {
     currentPage--
-    getQualifiedAthletes()
+    getEventAthlete()
 }
 
 async function next() {
     currentPage++
-    getQualifiedAthletes()
+    getEventAthlete()
 }
 
 async function search() {
     currentPage = 1
     let filterString = JSON.stringify(state.searchFilter?.trim()?.split(/\s+/).filter(Boolean) || [])
     state.search = filterString
-    getQualifiedAthletes()
+    getEventAthlete()
 }
 
 

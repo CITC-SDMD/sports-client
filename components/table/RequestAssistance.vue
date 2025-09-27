@@ -21,12 +21,16 @@
                                 {{ body.type_assistance }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.description }}
-
+                                {{ body.amount }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.provider }}
-
+                                {{ body?.provider }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ (body?.date_applied) ? moment(body?.date_applied).format("MMMM DD, YYYY") : '' }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ (body?.date_released) ? moment(body?.date_released).format("MMMM DD, YYYY") : '' }}
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">

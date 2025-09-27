@@ -58,7 +58,7 @@ import { useAlert } from '@/composables/alert'
 
 const { successAlert } = useAlert()
 
-const emit = defineEmits(['isPageLoading'])
+const emit = defineEmits(['isPageLoading', 'showError'])
 
 const route = useRoute()
 const path = route.fullPath
@@ -76,6 +76,10 @@ const props = defineProps({
     }
 })
 
+const state = reactive({
+    error: null
+})
+
 async function generateQualifiedAthlete() {
     emit('isPageLoading', true)
     try {
@@ -84,7 +88,7 @@ async function generateQualifiedAthlete() {
             successAlert('Success!', 'Generate qualified athletes.')
         }
     } catch (error) {
-        state.error = error
+        emit('showError', state.error)
     }
     emit('isPageLoading', false)
 }

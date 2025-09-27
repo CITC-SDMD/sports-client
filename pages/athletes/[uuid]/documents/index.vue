@@ -25,7 +25,8 @@
             </div>
             <TableDocument :head=state.head :body="state.files" @updateDocuements="getDocuments" />
         </div>
-        <ModalNewDocuments v-model:open="state.isRequirementOpen" :model="state.athlete" @saveDocuments="saveDocuments"
+        <ModalEditCoachAthleteDocuments v-model:open="state.isRequirementOpen" :model="state.athlete"
+            :identity="'athlete'" @editDocuments="editDocuments"
             @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
@@ -110,19 +111,44 @@ async function getDocuments() {
     state.isPageLoading = false
 }
 
-async function saveDocuments(data: any) {
+async function editDocuments(data: any) {
     try {
-        let params = new FormData
-        params.append('athlete_uuid', uuid)
-        params.append('identification', data.identification)
-        params.append('birth_certificate', data.birth_certificate)
-        params.append('pre_qualifying', data.pre_qualifying)
-        params.append('entry_form', data.entry_form)
-        params.append('passport', data.passport)
-        params.append('parent_consent', data.parent_consent)
-        params.append('request_letter', data.request_letter)
-        params.append('brgy_clearance', data.brgy_clearance)
-        const response = await documentService.createDocuments(params)
+        let params = new FormData()
+        params.append('firstname', state.athlete.firstname)
+        params.append('middlename', state.athlete.middlename)
+        params.append('lastname', state.athlete.lastname)
+        params.append('email', state.athlete.email)
+        params.append('nationality', state.athlete.nationality)
+        params.append('address', state.athlete.address)
+        params.append('birth_date', state.athlete.birth_date)
+        params.append('sex', state.athlete.sex)
+        params.append('civil_status', state.athlete.civil_status)
+        params.append('birth_place', state.athlete.birth_place)
+        params.append('contact_no', state.athlete.contact_no)
+        params.append('school_id', state.athlete.school_id)
+        params.append('occupation', state.athlete.occupation)
+        params.append('club_name', state.athlete.club_name)
+        params.append('is_assistance', state.athlete.is_assistance)
+        params.append('photo', state.athlete.image)
+        if (data.identification instanceof File) {
+            params.append('identification', data.identification)
+        }
+        if (data.birth_certificate instanceof File) {
+            params.append('birth_certificate', data.birth_certificate)
+        }
+        if (data.pre_qualifying instanceof File) {
+            params.append('pre_qualifying', data.pre_qualifying)
+        }
+        if (data.entry_form instanceof File) {
+            params.append('entry_form', data.entry_form)
+        }
+        if (data.passport instanceof File) {
+            params.append('passport', data.passport)
+        }
+        if (data.parent_consent instanceof File) {
+            params.append('parent_consent', data.parent_consent)
+        }
+        const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
             getDocuments()
             state.isRequirementOpen = false

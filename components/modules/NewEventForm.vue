@@ -31,8 +31,8 @@
                                 <div class="mt-2">
                                     <FormSelect :options="state.options.event_type" name="event_type" class="w-full"
                                         v-model="state.form.event_type" />
-                                    <FormError :error="v$?.form.event_name?.$errors[0]?.$message.toString()" />
-                                    <FormError :error="state.error?.errors?.form.event_name?.[0]" />
+                                    <FormError :error="v$?.form.event_type?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.event_type?.[0]" />
                                 </div>
                             </div>
                             <div>

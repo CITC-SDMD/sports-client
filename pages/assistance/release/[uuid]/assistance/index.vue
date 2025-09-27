@@ -57,9 +57,11 @@ definePageMeta({
 
 const state = reactive({
     head: [
-        { name: 'Assistance' },
-        { name: 'Discription' },
+        { name: 'Type of assistance' },
+        { name: 'Amount' },
         { name: 'Provider' },
+        { name: 'Date applied' },
+        { name: 'Date released' },
     ],
     athleteUuid: uuid as string,
     athlete: null as any,

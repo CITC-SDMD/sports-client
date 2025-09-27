@@ -24,10 +24,13 @@
                             </div>
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="description" label="Description" />
+                                    <FormLabel for="amount" label="Amount" />
+                                    <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormTextField name="description" class="w-full" v-model="state.form.description" />
+                                    <FormTextField name="amount" class="w-full" v-model="state.form.amount" />
+                                    <FormError :error="v$?.form.amount?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.amount?.[0]" />
                                 </div>
                             </div>
                             <div>
@@ -35,7 +38,29 @@
                                     <FormLabel for="provider" label="Provider" />
                                 </div>
                                 <div class="mt-2">
-                                    <FormTextField name="provider" class="w-full" v-model="state.form.provider" />
+                                    <FormSelect :options="state.option.provider" name="provider" class="w-full"
+                                        v-model="state.form.provider" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex">
+                                    <FormLabel for="date_applied" label="Date applied" />
+                                    <span class="text-red-500">*</span>
+                                </div>
+                                <div class="mt-2">
+                                    <FormDatePicker name="date_applied" class="w-full"
+                                        v-model="state.form.date_applied" />
+                                    <FormError :error="v$?.form.date_applied?.$errors[0]?.$message.toString()" />
+                                    <FormError :error="state.error?.errors?.form.date_applied?.[0]" />
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex">
+                                    <FormLabel for="date_released" label="Date released" />
+                                </div>
+                                <div class="mt-2">
+                                    <FormDatePicker name="date_released" class="w-full"
+                                        v-model="state.form.date_released" />
                                 </div>
                             </div>
                         </div>
@@ -73,7 +98,10 @@ const state = reactive({
     form: {
         type_assistance: props.career.type_assistance,
         description: props.career.description,
+        amount: props.career.amount,
         provider: props.career.provider,
+        date_applied: props.career.date_applied,
+        date_released: props.career.date_released,
     },
     option: {
         type_assistance: [
@@ -138,6 +166,24 @@ const state = reactive({
                 label: 'Health Support '
             },
         ],
+        provider: [
+            {
+                value: 'PSC / LGU / Sponsor',
+                label: 'PSC / LGU / Sponsor '
+            },
+            {
+                value: 'PSC / LGU / Private Donor',
+                label: 'PSC / LGU / Private Donor '
+            },
+            {
+                value: 'PSC / LGU clinic',
+                label: 'PSC / LGU clinic '
+            },
+            {
+                value: 'LGU / DepEd / School',
+                label: 'LGU / DepEd / School '
+            },
+        ]
     },
     error: null as any,
 })

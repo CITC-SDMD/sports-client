@@ -25,7 +25,7 @@
 <script setup lang="ts">
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { useAlert } from '@/composables/alert'
-import { ModulesNewAssistance } from '#components';
+import moment from 'moment';
 
 const { successAlert } = useAlert()
 
@@ -52,13 +52,20 @@ const state = reactive({
 })
 
 async function saveAssistance(data: any) {
+    console.log('date_applied', data.date_applied)
+    console.log('date_released', data.date_released)
+
     state.isPageLoading = true
     try {
         let params = {
             athlete_uuid: uuid,
             type_assistance: data.type_assistance,
-            description: data.description,
+            amount: data.amount,
             provider: data.provider,
+            date_applied: moment(data.date_applied).format('MM/DD/YYYY'),
+            date_released: moment(data.date_released).isValid()
+                ? moment(data.date_released).format('MM/DD/YYYY')
+                : null,
         }
         const response = await assistanceService.createAssistance(params)
         if (response.data) {

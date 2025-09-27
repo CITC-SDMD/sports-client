@@ -18,7 +18,7 @@
                         <!-- Show table rows if there's data -->
                         <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body?.id }}
+                                {{ body?.unique_id }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body?.event_name }}

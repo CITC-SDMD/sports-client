@@ -101,7 +101,9 @@ async function saveEvent(data: any) {
             });
 
             if (result.isConfirmed) {
-                await getQualifiedAthletes()
+                await generateQualifiedAthlete()
+                goToPreviousPage()
+                state.isPageLoading = false
             } else {
                 goToPreviousPage()
                 state.isPageLoading = false
@@ -112,23 +114,19 @@ async function saveEvent(data: any) {
     }
 }
 
-async function getQualifiedAthletes() {
+async function generateQualifiedAthlete() {
     state.isPageLoading = true
     try {
-        let params = {
-            search: state.search
-        }
-        const response = await eventService.fetchQualifiedAthletes(params, state.event_uuid)
+        const response = await eventService.generateQualifiedAthletes(state.event_uuid)
         if (response.data) {
-            state.body = response
-            goToPreviousPage()
+            successAlert('Success!', 'Generate qualified athletes.')
         }
     } catch (error) {
         state.error = error
-    } finally {
-        state.isPageLoading = false
     }
+    state.isPageLoading = false
 }
+
 
 function showErrorMessage(data: any) {
     state.error = data
