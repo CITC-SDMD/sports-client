@@ -25,7 +25,6 @@
 <script setup lang="ts">
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { useAlert } from '@/composables/alert'
-import { ModulesNewAssistance } from '#components';
 
 const { successAlert } = useAlert()
 
@@ -38,7 +37,7 @@ const path = route.fullPath
 const processUrl = path.replace(`/${uuid}/assistance/create`, `/${uuid}/assistance`)
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
+    { name: 'Assistances', href: processUrl, current: false },
     { name: 'New Assistance', href: path, current: true },
 ]
 

@@ -30,7 +30,7 @@
                     </FormButton>
                 </form>
             </div>
-            <TableQualified :head=state.head :body="state.body" />
+            <TableQualified :head=state.head :body="state.body" @selected="hasSelected" :selected="state.selected" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
     </div>
@@ -40,6 +40,9 @@
 import { eventService } from '@/api/event/EventService'
 import { eventAthleteService } from '@/api/eventAthlete/eventAthlete'
 import { MagnifyingGlassIcon } from '@heroicons/vue/20/solid'
+import { useAlert } from '@/composables/alert'
+
+const { successAlert } = useAlert()
 
 let currentPage = 1
 
@@ -73,6 +76,7 @@ const state = reactive({
         { name: 'Civil Status' },
         { name: 'Contact no.' },
     ],
+    selected: [] as any,
     body: [] as any,
     event: null as any,
     error: null as any,
@@ -113,6 +117,30 @@ async function getEventAthlete() {
         state.error = error
     }
     state.isPageLoading = false
+}
+
+
+async function saveEventAtheleInterest() {
+    state.isPageLoading = true
+    try {
+        let params = {
+            athlete_uuid: state.selected,
+            is_interested: state.selected ? true : false
+        }
+        const response = await eventAthleteService.saveEventAthleteInterest(params)
+        if (response.data) {
+            console.log(response.data)
+            successAlert('Success!', 'Assistance created.')
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
+async function hasSelected(value: any) {
+    state.selected = value
+    await saveEventAtheleInterest();
 }
 
 function isPageLoading(value: any) {

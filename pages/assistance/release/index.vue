@@ -11,7 +11,7 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">Assistances</span>
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -52,7 +52,7 @@ const processingUrl = path.replace(path, '/assistance/process')
 const releaseUrl = path.replace(path, '/assistance/release')
 
 const pages = [
-    { name: 'Assistance', href: assistanceUrl, current: false },
+    { name: 'Assistances', href: assistanceUrl, current: false },
     { name: 'Release of assistance', href: processingUrl, current: true },
 ]
 

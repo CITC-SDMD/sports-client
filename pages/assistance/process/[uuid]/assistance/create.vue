@@ -38,7 +38,7 @@ const path = route.fullPath
 const processUrl = path.replace(`/${uuid}/assistance/create`, `/${uuid}/assistance`)
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
+    { name: 'Assistances', href: processUrl, current: false },
     { name: 'New Assistance', href: path, current: true },
 ]
 

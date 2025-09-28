@@ -37,7 +37,7 @@ const path = route.fullPath
 const processUrl = path.replace(`/${uuid}/edit`, '')
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
+    { name: 'Assistances', href: processUrl, current: false },
     { name: 'Edit Assistance', href: path, current: true },
 ]
 
