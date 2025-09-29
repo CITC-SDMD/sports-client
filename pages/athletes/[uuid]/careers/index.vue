@@ -12,7 +12,6 @@
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <!-- <FormButton @click="openRequirement">View Documents</FormButton> -->
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
@@ -37,8 +36,6 @@
             <TableCareer :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <!-- <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" /> -->
     </div>
 </template>
 

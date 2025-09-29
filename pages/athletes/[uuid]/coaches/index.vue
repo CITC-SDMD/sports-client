@@ -38,8 +38,6 @@
         </div>
         <ModalNewCoachAthlete v-model:open="state.isNewCoachOpen" :model="'coach'" :buttonText="'New Coach'"
             @saveCoach="saveAthleteCoach" />
-        <!-- <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" /> -->
     </div>
 </template>
 

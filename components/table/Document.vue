@@ -25,11 +25,6 @@
                                     {{ document.type }}
                                 </a>
                             </td>
-                            <!-- <td
-                                class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuDocuementTable :uuid="document.uuid" @refresh="$emit('updateDocuements')"
-                                    :is-reversed-dropdown="index >= props.body.data.length - 3" />
-                            </td> -->
                             <td
                                 class="whitespace-nowrap px-3 py-4 text-base flex items-center justify-end text-gray-500 max-w-48 truncate">
                                 <FormButton @click="deleteFile(document.uuid)" class="bg-red-500 hover:!bg-red-700">
@@ -53,7 +48,7 @@
 import { documentService } from '@/api/document/DocumentService'
 import { useAlert } from '@/composables/alert'
 
-const { successAlert } = useAlert()
+const { errorAlert } = useAlert()
 
 const emit = defineEmits(['updateDocuements'])
 
@@ -78,7 +73,7 @@ async function deleteFile(data: any) {
     try {
         const response = await documentService.deleteDocuments(data)
         if (response.message == 'Success.') {
-            successAlert('Success.', 'File deleted.')
+            errorAlert('Success.', 'Document has been deleted.')
             emit('updateDocuements')
         }
     } catch (error) {
