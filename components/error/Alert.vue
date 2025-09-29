@@ -1,5 +1,5 @@
 <template>
-    <div v-if="visible" class="rounded-md bg-red-200/50 p-4">
+    <div class="rounded-md bg-red-200/50 p-4">
         <div class="flex items-center">
             <div class="flex-shrink-0">
                 <XCircleIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
@@ -20,12 +20,4 @@ const props = defineProps({
         required: true,
     }
 })
-
-const visible = ref(true);
-
-onMounted(() => {
-    setTimeout(() => {
-        visible.value = false;
-    }, 3000);
-});
 </script>
