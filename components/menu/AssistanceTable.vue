@@ -23,7 +23,7 @@
                     <a @click="goToViewDocuments(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <EyeIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Letter head certificate
+                        View certificate
                     </a>
                     </MenuItem>
                 </div>
@@ -32,7 +32,7 @@
                     <a @click="goToViewProcessing(props.uuid)"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
                         <EyeIcon :class="[active ? 'text-blue-500' : '', 'mr-3 size-5']" aria-hidden="true" />
-                        Assistance
+                        View Assistance
                     </a>
                     </MenuItem>
                 </div>

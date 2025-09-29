@@ -130,7 +130,7 @@ async function saveAssistance(data: any) {
         }
         const response = await athleteService.saveAssistanceApprove(params)
         if (response) {
-            successAlert('Success!', 'Athlete approved.')
+            successAlert('Success!', 'Assistance has been approved.')
             getAssistance()
             state.selected = []
             navigateTo(assistanceUrl)
