@@ -111,7 +111,9 @@ async function getEventAthlete() {
         const response = await eventAthleteService.fetchEventAthlete(params, uuid)
         if (response.data) {
             state.body = response
-            console.log(response.data)
+            state.selected = response.data
+                .filter((row: any) => row.is_interested === true)
+                .map((row: any) => row.athlete?.uuid)
         }
     } catch (error) {
         state.error = error
@@ -120,17 +122,17 @@ async function getEventAthlete() {
 }
 
 
-async function saveEventAtheleInterest() {
+async function saveEventAtheleInterest(athleteUuid: string, isInterested: boolean) {
     state.isPageLoading = true
     try {
         let params = {
-            athlete_uuid: state.selected,
-            is_interested: state.selected ? true : false
+            athlete_uuid: [athleteUuid],
+            is_interested: isInterested
         }
         const response = await eventAthleteService.saveEventAthleteInterest(params)
         if (response.data) {
-            console.log(response.data)
-            successAlert('Success!', 'Assistance created.')
+            successAlert('Success!', 'Athlete interest has been created.')
+            getEventAthlete()
         }
     } catch (error) {
         state.error = error
@@ -138,9 +140,8 @@ async function saveEventAtheleInterest() {
     state.isPageLoading = false
 }
 
-async function hasSelected(value: any) {
-    state.selected = value
-    await saveEventAtheleInterest();
+async function hasSelected(value: { uuid: string, is_interested: boolean }) {
+    await saveEventAtheleInterest(value.uuid, value.is_interested);
 }
 
 function isPageLoading(value: any) {

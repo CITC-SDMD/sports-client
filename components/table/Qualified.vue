@@ -21,7 +21,7 @@
                                 <div class="flex items-center gap-x-2">
                                     <input type="checkbox" :value="body.athlete?.uuid"
                                         :checked="isRowSelected(body.athlete?.uuid).value"
-                                        @change="Selected(body.athlete?.uuid, $event.target?.checked)"
+                                        @input="Selected(body.athlete?.uuid, ($event.target as HTMLInputElement).checked)"
                                         class=" w-5 h-5 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
                                 </div>
                             </td>
@@ -82,7 +82,7 @@ const props = defineProps({
 const emit = defineEmits(['Selected'])
 
 const isRowSelected = (uuid: string) => {
-    return computed(() => props.selected.includes(uuid, console.log(uuid)));
+    return computed(() => props.selected.includes(uuid));
 };
 
 const Selected = (uuid: string, checked: any) => {
@@ -94,8 +94,6 @@ const Selected = (uuid: string, checked: any) => {
         newSelected = newSelected.filter((item) => item !== uuid);
     }
 
-    emit('Selected', newSelected);
+    emit('Selected', { uuid, is_interested: checked });
 };
-
-
 </script>
