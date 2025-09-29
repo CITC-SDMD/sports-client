@@ -36,7 +36,7 @@
                     </a>
                     </MenuItem>
                 </div>
-                <div class="py-1">
+                <div v-if="canSendLetter" class="py-1">
                     <MenuItem v-slot="{ active }">
                     <a @click="sendEndorsementLetter()"
                         :class="[active ? 'bg-gray-100 text-blue-600 outline-none' : 'text-gray-700', 'group flex items-center px-4 py-2 text-sm cursor-pointer']">
@@ -55,6 +55,7 @@ import { eventService } from '@/api/event/EventService'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ChevronDownIcon, UsersIcon, PaperAirplaneIcon } from '@heroicons/vue/20/solid'
 import { useAlert } from '@/composables/alert'
+import moment from 'moment';
 
 const { successAlert } = useAlert()
 
@@ -73,11 +74,20 @@ const props = defineProps({
     uuid: {
         type: String,
         required: true
-    }
+    },
+    eventStart: {
+        type: String,
+        required: true
+    },
 })
 
 const state = reactive({
     error: null
+})
+
+const canSendLetter = computed(() => {
+    if (!props.eventStart?.event_start) return false
+    return moment(props.eventStart?.event_start).isSameOrAfter(moment(), 'day')
 })
 
 async function generateQualifiedAthlete() {

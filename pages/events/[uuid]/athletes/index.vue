@@ -18,7 +18,7 @@
         <Tabs :tabs="tabs" class="mt-4" />
         <div class="mt-4">
             <div class="w-full flex justify-end gap-2">
-                <MenuInvitation @isPageLoading="isPageLoading" @showError="state.error" />
+                <MenuInvitation @isPageLoading="isPageLoading" @showError="state.error" :eventStart="state.event" />
             </div>
             <div class="w-full mt-4">
                 <form @submit.prevent="search" class="flex w-full space-x-4">

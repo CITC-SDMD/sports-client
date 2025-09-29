@@ -42,13 +42,13 @@
 </template>
 
 <script setup>
+import { eventService } from '@/api/event/EventService'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import {
     ChevronDownIcon,
-    EyeIcon,
     DocumentIcon,
     PencilSquareIcon,
-    TrashIcon,
+
 } from '@heroicons/vue/20/solid'
 
 const route = useRoute()
@@ -64,7 +64,8 @@ const props = defineProps({
     uuid: {
         type: String,
         required: true
-    }
+    },
+
 })
 
 function goToEditPage(data) {
