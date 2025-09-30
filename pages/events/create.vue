@@ -32,7 +32,7 @@ const { successAlert } = useAlert()
 
 const route = useRoute()
 const path = route.fullPath
-
+console.log(path)
 const eventeUrl = path.replace('/create', '')
 
 const pages = [
@@ -108,6 +108,8 @@ async function saveEvent(data: any) {
                 goToPreviousPage()
                 state.isPageLoading = false
             }
+            const url = path.replace('/create', `/${state.event_uuid}/athletes`)
+            navigateTo(url)
         }
     } catch (error) {
         state.error = error
