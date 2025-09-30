@@ -100,16 +100,16 @@ async function saveEvent(data: any) {
                 confirmButtonText: "Confirm it!"
             });
 
+            const url = path.replace('/create', `/${state.event_uuid}/athletes`)
+
             if (result.isConfirmed) {
                 await generateQualifiedAthlete()
-                goToPreviousPage()
+                navigateTo(url)
                 state.isPageLoading = false
             } else {
-                goToPreviousPage()
+                navigateTo(url)
                 state.isPageLoading = false
             }
-            const url = path.replace('/create', `/${state.event_uuid}/athletes`)
-            navigateTo(url)
         }
     } catch (error) {
         state.error = error
