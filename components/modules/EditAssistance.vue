@@ -16,8 +16,8 @@
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormSelect :options="state.option.type_assistance" name="type_assistance"
-                                        class="w-full" v-model="state.form.type_assistance" />
+                                    <FormSelect :options="state.option.type_assistance" :disable="true"
+                                        name="type_assistance" class="w-full" v-model="state.form.type_assistance" />
                                     <FormError :error="v$?.form.type_assistance?.$errors[0]?.$message.toString()" />
                                     <FormError :error="state.error?.errors?.form.type_assistance?.[0]" />
                                 </div>
@@ -28,7 +28,8 @@
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormTextField name="amount" class="w-full" v-model="state.form.amount" />
+                                    <FormTextField name="amount" class="w-full" v-model="state.form.amount"
+                                        :disable="true" />
                                     <FormError :error="v$?.form.amount?.$errors[0]?.$message.toString()" />
                                     <FormError :error="state.error?.errors?.form.amount?.[0]" />
                                 </div>
@@ -38,8 +39,8 @@
                                     <FormLabel for="provider" label="Provider" />
                                 </div>
                                 <div class="mt-2">
-                                    <FormSelect :options="state.option.provider" name="provider" class="w-full"
-                                        v-model="state.form.provider" />
+                                    <FormSelect :options="state.option.provider" :disable="true" name="provider"
+                                        class="w-full" v-model="state.form.provider" />
                                 </div>
                             </div>
                             <div>
@@ -48,8 +49,8 @@
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">
-                                    <FormDatePicker name="date_applied" class="w-full"
-                                        v-model="state.form.date_applied" />
+                                    <FormDatePicker name="date_applied" class="w-full" v-model="state.form.date_applied"
+                                        :disable="true" />
                                     <FormError :error="v$?.form.date_applied?.$errors[0]?.$message.toString()" />
                                     <FormError :error="state.error?.errors?.form.date_applied?.[0]" />
                                 </div>
