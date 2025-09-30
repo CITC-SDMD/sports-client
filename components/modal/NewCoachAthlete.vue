@@ -44,7 +44,7 @@
                 </div>
             </Dialog>
         </TransitionRoot>
-        <ModalCreateCoachAthlete v-model:open="state.isCreateCoachModalOpen"
+        <ModalCreateCoachAthlete v-model:open="state.isCreateCoachModalOpen" :model="props.model"
             @createNewCoachAthlete="createCoachAthlete" />
     </div>
 </template>
@@ -158,11 +158,18 @@ async function createCoachAthlete(data: any) {
         params.append('occupation', data.occupation)
         params.append('club_name', data.club_name)
         params.append('photo', data.photo)
+        params.append('identification', data.identification)
+        params.append('birth_certificate', data.birth_certificate)
+        params.append('pre_qualifying', data.pre_qualifying)
+        params.append('entry_form', data.entry_form)
+        params.append('passport', data.passport)
+        params.append('parent_consent', data.parent_consent)
         if (props.model === 'coach') {
             const response = await coachService.createCoach(params)
             if (response.data) {
                 successAlert('Success!', 'Coach created.')
                 fetchModel()
+                emit('update:open', true)
                 state.selectedCoachAthlete = response.data.uuid
             }
         } else {
@@ -170,6 +177,7 @@ async function createCoachAthlete(data: any) {
             if (response.data) {
                 successAlert('Success!', 'Athlete created.')
                 fetchModel()
+                emit('update:open', true)
                 state.selectedCoachAthlete = response.data.uuid
             }
         }
@@ -179,11 +187,13 @@ async function createCoachAthlete(data: any) {
 }
 
 function newCoach() {
+    emit('update:open', false)
     state.isCreateCoachModalOpen = true
 }
 
 function closeModal() {
     emit('update:open', false)
+    state.isCreateCoachModalOpen = false
 }
 
 </script>
