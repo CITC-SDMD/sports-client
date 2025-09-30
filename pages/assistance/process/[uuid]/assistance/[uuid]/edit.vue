@@ -17,7 +17,7 @@
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
             <ModulesEditAssistance v-if="state.assistance" :career="state.assistance" @submitForm="editAssistance"
-                :model="'athlete'" @cancelAction="goToPreviousPage" @showError="showErrorMessage" />
+                :identity="'processing'" @cancelAction="goToPreviousPage" @showError="showErrorMessage" />
         </div>
     </div>
 </template>

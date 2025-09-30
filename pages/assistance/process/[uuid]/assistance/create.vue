@@ -16,7 +16,7 @@
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesNewAssistance @cancelAction="goToPreviousPage" @submitForm="saveAssistance"
+            <ModulesNewAssistance :identity="'processing'" @cancelAction="goToPreviousPage" @submitForm="saveAssistance"
                 @showError="showErrorMessage" />
         </div>
     </div>

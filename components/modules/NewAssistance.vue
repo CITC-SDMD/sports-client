@@ -54,7 +54,7 @@
                                     <FormError :error="state.error?.errors?.form.date_applied?.[0]" />
                                 </div>
                             </div>
-                            <div>
+                            <div v-if="props.identity != 'processing'">
                                 <div class="flex">
                                     <FormLabel for="date_released" label="Date released" />
                                 </div>
@@ -85,6 +85,13 @@ import { useAlert } from '@/composables/alert'
 const emit = defineEmits(['cancelAction', 'submitForm', 'showError'])
 
 const { successAlert } = useAlert()
+
+const props = defineProps({
+    identity: {
+        type: String,
+        required: true
+    },
+})
 
 const state = reactive({
     form: {

@@ -54,7 +54,7 @@
                                     <FormError :error="state.error?.errors?.form.date_applied?.[0]" />
                                 </div>
                             </div>
-                            <div>
+                            <div v-if="props.identity != 'processing'">
                                 <div class="flex">
                                     <FormLabel for="date_released" label="Date released" />
                                 </div>
@@ -88,7 +88,7 @@ const props = defineProps({
         type: Object,
         required: true
     },
-    model: {
+    identity: {
         type: String,
         required: true
     }

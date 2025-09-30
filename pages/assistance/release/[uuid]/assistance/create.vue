@@ -16,7 +16,7 @@
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesNewAssistance @cancelAction="goToPreviousPage" @submitForm="saveAssistance"
+            <ModulesNewAssistance :identity="'release'" @cancelAction="goToPreviousPage" @submitForm="saveAssistance"
                 @showError="showErrorMessage" />
         </div>
     </div>
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { useAlert } from '@/composables/alert'
+import moment from 'moment';
 
 const { successAlert } = useAlert()
 
@@ -56,8 +57,12 @@ async function saveAssistance(data: any) {
         let params = {
             athlete_uuid: uuid,
             type_assistance: data.type_assistance,
-            description: data.description,
+            amount: data.amount,
             provider: data.provider,
+            date_applied: moment(data.date_applied).format('MM/DD/YYYY'),
+            date_released: moment(data.date_released).isValid()
+                ? moment(data.date_released).format('MM/DD/YYYY')
+                : null,
         }
         const response = await assistanceService.createAssistance(params)
         if (response.data) {
