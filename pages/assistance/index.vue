@@ -143,9 +143,6 @@ async function saveAssistance(data: any) {
 
 function selectAll() {
     state.selected = state.body.data.map((item: any) => item.uuid)
-    if (state.selected.length > 0) {
-        openSignCertificate()
-    }
 }
 
 function openSignCertificate() {
