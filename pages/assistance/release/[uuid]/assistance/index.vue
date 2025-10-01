@@ -11,7 +11,7 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Provision Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">Assistance</span>
         </div>
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -44,7 +44,7 @@ const processUrl = path.replace(`/${uuid}/assistance`, '')
 
 const pages = [
     { name: 'Assistances', href: processUrl, current: false },
-    { name: 'Provision Assistance', href: path, current: true },
+    { name: 'Assistance', href: path, current: true },
 ]
 
 definePageMeta({
