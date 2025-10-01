@@ -11,7 +11,7 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">Assistances</span>
         </div>
 
         <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -69,7 +69,7 @@ const assistanceUrl = path.replace(path, '/assistance/process')
 const releaseUrl = path.replace(path, '/assistance/release')
 
 const pages = [
-    { name: 'Assistance', href: path, current: true },
+    { name: 'Assistances', href: path, current: true },
 ]
 
 const tabs = computed(() => [
@@ -83,12 +83,10 @@ const state = reactive({
     error: null as any,
     head: [
         { name: '' },
-        { name: 'Sport' },
-        { name: 'Full name' },
-        { name: 'Gender' },
-        { name: 'Date of birth' },
-        { name: 'Civil Status' },
+        { name: 'ID' },
+        { name: 'Requestor' },
         { name: 'Contact no.' },
+        { name: 'Event name' },
     ],
     body: [] as any,
     isSignCertificateOpen: false,
@@ -132,7 +130,7 @@ async function saveAssistance(data: any) {
         }
         const response = await athleteService.saveAssistanceApprove(params)
         if (response) {
-            successAlert('Success!', 'Athlete approved.')
+            successAlert('Success!', 'Assistance has been approved.')
             getAssistance()
             state.selected = []
             navigateTo(assistanceUrl)
@@ -145,9 +143,6 @@ async function saveAssistance(data: any) {
 
 function selectAll() {
     state.selected = state.body.data.map((item: any) => item.uuid)
-    if (state.selected.length > 0) {
-        openSignCertificate()
-    }
 }
 
 function openSignCertificate() {

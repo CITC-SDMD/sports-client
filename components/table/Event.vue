@@ -9,7 +9,7 @@
                                 class="px-3 py-3.5 text-left text-lg font-bold text-gray-100">
                                 {{ head.name }}
                             </th>
-                            <th scope=" col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
                                 <span class="sr-only">Edit</span>
                             </th>
                         </tr>
@@ -18,13 +18,19 @@
                         <!-- Show table rows if there's data -->
                         <tr v-if="props.body?.data?.length > 0" v-for="body in props.body.data" :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.sport?.sports_name }}
+                                {{ body?.unique_id }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body?.organizer }}
+                                {{ body?.event_name }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body?.event_type }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ body?.sport?.sports_name }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ body?.organizer }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body?.event_status }}

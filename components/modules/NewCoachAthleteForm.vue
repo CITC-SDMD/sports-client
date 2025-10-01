@@ -105,7 +105,7 @@
                             </div>
                             <div>
                                 <div class="flex">
-                                    <FormLabel for="sex" label="Sex" />
+                                    <FormLabel for="sex" label="Gender" />
                                     <span class="text-red-500">*</span>
                                 </div>
                                 <div class="mt-2">

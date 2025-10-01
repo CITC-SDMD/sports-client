@@ -109,32 +109,6 @@
                                                 <FormError :error="state.error?.errors?.form.parent_consent?.[0]" />
                                             </div>
                                         </div>
-                                        <div v-if="!hasDocument('Request Letter')">
-                                            <div class="flex">
-                                                <FormLabel for="letter_request" label="Letter Request" />
-                                                <span class="text-red-500">*</span>
-                                            </div>
-                                            <div class="mt-2">
-                                                <FormFileUpload name="letter_request"
-                                                    @fileSelected="(value) => state.form.request_letter = value" />
-                                                <FormError
-                                                    :error="v$?.form.request_letter?.$errors[0]?.$message.toString()" />
-                                                <FormError :error="state.error?.errors?.form.request_letter?.[0]" />
-                                            </div>
-                                        </div>
-                                        <div v-if="!hasDocument('Brgy Clearance')">
-                                            <div class="flex">
-                                                <FormLabel for="brgy_clearance" label="Brgy Clearance" />
-                                                <span class="text-red-500">*</span>
-                                            </div>
-                                            <div class="mt-2">
-                                                <FormFileUpload name="brgy_clearance"
-                                                    @fileSelected="(value) => state.form.brgy_clearance = value" />
-                                                <FormError
-                                                    :error="v$?.form.brgy_clearance?.$errors[0]?.$message.toString()" />
-                                                <FormError :error="state.error?.errors?.form.brgy_clearance?.[0]" />
-                                            </div>
-                                        </div>
                                         <div class="mt-4 col-span-2">
                                             <FormButton type="submit" class="w-full">Submit</FormButton>
                                         </div>
@@ -159,7 +133,7 @@ import { XMarkIcon, CheckCircleIcon } from '@heroicons/vue/20/solid'
 const router = useRouter()
 const uuid = String(router?.currentRoute?.value?.params?.uuid)
 
-const emit = defineEmits(['closeRequirement', 'saveDocuments'])
+const emit = defineEmits(['closeRequirement', 'editDocuments'])
 
 const props = defineProps({
     open: {
@@ -169,19 +143,22 @@ const props = defineProps({
     model: {
         type: String,
         required: true
+    },
+    identity: {
+        type: String,
+        required: true
     }
 })
 
 const state = reactive({
     form: {
+
         identification: null as any,
         birth_certificate: null as any,
         pre_qualifying: null as any,
         entry_form: null as any,
         passport: null as any,
         parent_consent: null as any,
-        request_letter: null as any,
-        brgy_clearance: null as any
     },
     files: [] as any[],
     age: null as any,
@@ -195,7 +172,13 @@ const hasDocument = computed(() => {
 });
 
 const hasComplete = computed(() => {
-    return state.files.length === 8;
+    if (props.identity === 'athlete') {
+        return [6, 7, 8].includes(state.files.length);
+    }
+    if (props.identity === 'coach') {
+        return [5, 6, 7].includes(state.files.length);
+    }
+    return false;
 });
 
 watch(() => props.model, (newValue: any) => {
@@ -219,6 +202,7 @@ async function getDocuments() {
         const response = await documentService.fetchDocuments(params)
         if (response.data) {
             state.files = response.data
+            console.log(state.files)
         }
     } catch (error) {
         state.error = error
@@ -252,12 +236,6 @@ const rules = computed(() => {
             passport: {
                 required: helpers.withMessage('This field is required.', requiredIf(() => !hasDocument.value('Passport'))),
             },
-            request_letter: {
-                required: helpers.withMessage('This field is required.', requiredIf(() => !hasDocument.value('Request Letter'))),
-            },
-            brgy_clearance: {
-                required: helpers.withMessage('This field is required.', requiredIf(() => !hasDocument.value('Brgy Clearance'))),
-            },
             parent_consent: {
                 required: helpers.withMessage('This field is required.', requiredIf(() => state.age < 18 && !hasDocument.value('Parent Consent'))),
             }
@@ -270,7 +248,7 @@ const v$ = useVuelidate(rules, state)
 function submit() {
     v$.value.$validate()
     if (!v$.value.$error) {
-        emit('saveDocuments', state.form)
+        emit('editDocuments', state.form)
     }
 }
 

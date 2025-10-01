@@ -26,7 +26,7 @@
                                 </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ getSportNames(body.events) }}
+                                {{ body?.unique_id }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
                                 {{ body.firstname }}
@@ -34,16 +34,10 @@
                                 {{ body.lastname }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.sex }}
+                                {{ body?.contact_no }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.birth_date ? moment(body.birth_date).format('MMMM DD, YYYY') : '' }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.civil_status }}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.contact_no }}
+                                {{ getEventNames(body?.events) }}
                             </td>
                             <td v-if="props.model == 'approval'"
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
@@ -112,14 +106,14 @@ const Selected = (uuid: string, checked: any) => {
     emit('Selected', newSelected);
 };
 
-const getSportNames = (events: any[]): string => {
+const getEventNames = (events: any[]): string => {
     if (!events || events.length === 0) {
         return '';
     }
 
     return events
-        .map(event => event?.sport?.sports_name)
-        .filter(name => name) // Filter out null/undefined names
+        .map(event => event?.event_name)
+        .filter(name => name)
         .join(', ');
 };
 </script>

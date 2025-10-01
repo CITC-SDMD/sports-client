@@ -16,8 +16,9 @@
         <FormBackButton @click="goToPreviousPage" />
         <div class="mt-8">
             <ErrorAlert v-if="state.error" :message="state.error.message" />
-            <ModulesEditAssistance v-if="state.assistance" :career="state.assistance" @submitForm="editAssistance"
-                :model="'athlete'" @cancelAction="goToPreviousPage" @showError="showErrorMessage" />
+            <ModulesEditAssistance v-if="state.assistance" :identity="'release'" :career="state.assistance"
+                @submitForm="editAssistance" :model="'athlete'" @cancelAction="goToPreviousPage"
+                @showError="showErrorMessage" />
         </div>
     </div>
 </template>
@@ -25,6 +26,7 @@
 <script setup lang="ts">
 import { assistanceService } from '@/api/assistance/AssistanceService';
 import { useAlert } from '@/composables/alert'
+import moment from 'moment';
 
 const { successAlert } = useAlert()
 
@@ -37,7 +39,7 @@ const path = route.fullPath
 const processUrl = path.replace(`/${uuid}/edit`, '')
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
+    { name: 'Assistances', href: processUrl, current: false },
     { name: 'Edit Assistance', href: path, current: true },
 ]
 
@@ -74,8 +76,12 @@ async function editAssistance(data: any) {
     try {
         let params = {
             type_assistance: data.type_assistance,
-            description: data.description,
+            amount: data.amount,
             provider: data.provider,
+            date_applied: moment(data.date_applied).format('MM/DD/YYYY'),
+            date_released: moment(data.date_released).isValid()
+                ? moment(data.date_released).format('MM/DD/YYYY')
+                : null,
         }
         const response = await assistanceService.updateAssistance(params, uuid)
         if (response.data) {

@@ -12,7 +12,6 @@
         </div>
         <div class="flex items-center justify-between">
             <FormBackButton @click="goToPreviousPage" class="mt-4" />
-            <FormButton @click="openRequirement">View Documents</FormButton>
         </div>
         <ErrorAlert v-if="state.error" :message="state.error.message" class="my-4" />
         <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
@@ -37,8 +36,6 @@
             <TableCareer :head=state.head :body="state.body" />
             <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <ModalRequirements v-model:open="state.isRequirementOpen"
-            @closeRequirement="(value: any) => state.isRequirementOpen = value" />
     </div>
 </template>
 
@@ -58,6 +55,7 @@ const route = useRoute()
 const path = route.fullPath
 
 const baseUrl = path.replace(`/${uuid}/careers`, '')
+const documenthUrl = path.replace('/careers', '/documents')
 const coachUrl = path.replace('/careers', '/coaches')
 const athleteUrl = path.replace(path, '/athletes')
 
@@ -67,8 +65,9 @@ const pages = [
 ]
 
 const tabs = [
-    { name: 'Coaches', href: coachUrl, current: false },
     { name: 'Performance and Career', href: path, current: true },
+    { name: 'Documents', href: documenthUrl, current: false },
+    { name: 'Coaches', href: coachUrl, current: false },
 ]
 
 definePageMeta({

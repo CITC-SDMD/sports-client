@@ -199,7 +199,7 @@ const navigation = [
     ] as any
   },
   {
-    name: 'Assistance', href: '/assistance', icon: ExclamationCircleIcon, activeRouteNames: [
+    name: 'Assistances', href: '/assistance', icon: ExclamationCircleIcon, activeRouteNames: [
       'assistance',
       'assistance-process',
       'assistance-process-uuid-assistance',

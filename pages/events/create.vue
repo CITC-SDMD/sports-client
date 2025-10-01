@@ -22,15 +22,17 @@
 <script setup lang="ts">
 import { eventService } from '@/api/event/EventService'
 import { useAlert } from '@/composables/alert'
+import Swal from 'sweetalert2'
 import moment from 'moment';
 
 const runtimeConfig = useRuntimeConfig()
 
 const { successAlert } = useAlert()
 
+
 const route = useRoute()
 const path = route.fullPath
-
+console.log(path)
 const eventeUrl = path.replace('/create', '')
 
 const pages = [
@@ -43,12 +45,15 @@ definePageMeta({
 })
 
 const state = reactive({
+    body: [] as any,
+    event_uuid: null as any,
+    searchFilter: null as any,
+    search: null as any,
     isPageLoading: false,
     error: null as any,
 })
 
 async function saveEvent(data: any) {
-    state.isPageLoading = true
     try {
         let params = {
             event_name: data.event_name,
@@ -83,15 +88,47 @@ async function saveEvent(data: any) {
         }
         const response = await eventService.createEvent(params)
         if (response.data) {
+            state.event_uuid = response.data?.uuid
             successAlert('Success!', 'Event created.')
-            goToPreviousPage()
+            const result = await Swal.fire({
+                title: "Are you sure?",
+                text: "Do you want to generate a list of qualifiers?",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Confirm it!"
+            });
+
+            const url = path.replace('/create', `/${state.event_uuid}/athletes`)
+
+            if (result.isConfirmed) {
+                await generateQualifiedAthlete()
+                navigateTo(url)
+                state.isPageLoading = false
+            } else {
+                navigateTo(url)
+                state.isPageLoading = false
+            }
         }
     } catch (error) {
         state.error = error
-    } finally {
-        state.isPageLoading = false
     }
 }
+
+async function generateQualifiedAthlete() {
+    state.isPageLoading = true
+    try {
+        const response = await eventService.generateQualifiedAthletes(state.event_uuid)
+        if (response.data) {
+            successAlert('Success!', 'Generate qualified athletes.')
+        }
+    } catch (error) {
+        state.error = error
+    }
+    state.isPageLoading = false
+}
+
 
 function showErrorMessage(data: any) {
     state.error = data

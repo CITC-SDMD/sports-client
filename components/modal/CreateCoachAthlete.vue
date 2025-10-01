@@ -242,6 +242,89 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div
+                                            class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl space-y-6 p-6">
+                                            <div>
+                                                <div class="flex">
+                                                    <FormLabel for="identification" label="Proof of Identification" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="identification"
+                                                        @fileSelected="(value) => state.form.identification = value" />
+                                                    <FormError
+                                                        :error="x$?.form.identification?.$errors[0]?.$message.toString()" />
+                                                    <FormError :error="state.error?.errors?.form.identification?.[0]" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex">
+                                                    <FormLabel for="birth_certificate" label="Birth Certificate" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="birth_certificate"
+                                                        @fileSelected="(value) => state.form.birth_certificate = value" />
+                                                    <FormError
+                                                        :error="x$?.form.birth_certificate?.$errors[0]?.$message.toString()" />
+                                                    <FormError
+                                                        :error="state.error?.errors?.form.birth_certificate?.[0]" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex">
+                                                    <FormLabel for="pre_qualifying" label="Pre-Qualifying Results" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="pre_qualifying"
+                                                        @fileSelected="(value) => state.form.pre_qualifying = value" />
+                                                    <FormError
+                                                        :error="x$?.form.pre_qualifying?.$errors[0]?.$message.toString()" />
+                                                    <FormError :error="state.error?.errors?.form.pre_qualifying?.[0]" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex">
+                                                    <FormLabel for="entry_form" label="Entry Form" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="entry_form"
+                                                        @fileSelected="(value) => state.form.entry_form = value" />
+                                                    <FormError
+                                                        :error="x$?.form.entry_form?.$errors[0]?.$message.toString()" />
+                                                    <FormError :error="state.error?.errors?.form.entry_form?.[0]" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex">
+                                                    <FormLabel for="passport" label="Passport" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="passport"
+                                                        @fileSelected="(value) => state.form.passport = value" />
+                                                    <FormError
+                                                        :error="x$?.form.passport?.$errors[0]?.$message.toString()" />
+                                                    <FormError :error="state.error?.errors?.form.passport?.[0]" />
+                                                </div>
+                                            </div>
+
+                                            <div v-if="props.model === 'athlete' && state.form.age < 18">
+                                                <div class=" flex">
+                                                    <FormLabel for="parent_consent" label="Parent Consent" />
+                                                    <span class="text-red-500">*</span>
+                                                </div>
+                                                <div class="mt-2">
+                                                    <FormFileUpload name="parent_consent"
+                                                        @fileSelected="(value) => state.form.parent_consent = value" />
+                                                    <FormError
+                                                        :error="x$?.form.parent_consent?.$errors[0]?.$message.toString()" />
+                                                    <FormError :error="state.error?.errors?.form.parent_consent?.[0]" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="flex space-x-2 mt-4 justify-between items-center">
@@ -280,6 +363,10 @@ const props = defineProps({
         type: Boolean,
         required: true
     },
+    model: {
+        type: String,
+        required: true
+    }
 })
 
 const emit = defineEmits(['update:open', 'errorMessage', 'createNewCoachAthlete'])
@@ -302,6 +389,12 @@ const state = reactive({
         school_id: null as any,
         club_name: null as any,
         photo: null as any,
+        identification: null as any,
+        birth_certificate: null as any,
+        pre_qualifying: null as any,
+        entry_form: null as any,
+        passport: null as any,
+        parent_consent: null as any
     },
     option: {
         civil_status: [
@@ -457,6 +550,30 @@ const rules = computed(() => {
             club_name: {
                 required: helpers.withMessage('This field is required.',
                     requiredIf(() => props.open == true)),
+            },
+            identification: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => props.open == true)),
+            },
+            birth_certificate: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => props.open == true)),
+            },
+            pre_qualifying: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => props.open == true)),
+            },
+            entry_form: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => props.open == true)),
+            },
+            passport: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => props.open == true)),
+            },
+            parent_consent: {
+                required: helpers.withMessage('This field is required.',
+                    requiredIf(() => state.form.age < 18)),
             },
         }
     }

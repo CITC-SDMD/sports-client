@@ -69,7 +69,7 @@ const props = defineProps({
 
 function goToViewPage(data) {
     if (path === '/coaches') {
-        navigateTo(`${path}/${data}/athletes`)
+        navigateTo(`${path}/${data}/careers`)
     }
 
     if (path === `/coaches/${uuid}/athletes`) {
@@ -81,7 +81,7 @@ function goToViewPage(data) {
     }
 
     if (path === '/athletes') {
-        navigateTo(`${path}/${data}/coaches`)
+        navigateTo(`${path}/${data}/careers`)
     }
 }
 

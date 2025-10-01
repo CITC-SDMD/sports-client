@@ -11,7 +11,7 @@
             </div>
 
             <div v-if="state.previewUrl" class="mt-2 flex flex-col items-center justify-center">
-                <img :src="state.previewUrl" alt="Preview" class="w-full h-80    object-cover rounded shadow mb-2" />
+                <img :src="state.previewUrl" alt="Preview" class="w-full h-80    object-cover rounded " />
             </div>
 
 
@@ -21,9 +21,9 @@
             </p>
 
             <p v-else-if="props.fileUrl" class="mt-2 text-xs text-gray-500 break-all">
-                <!-- {{ props.fileUrl.split('/').pop() }} -->
+                File uploaded:
                 <a :href="props.fileUrl" target="_blank" class="underline text-blue-500">
-                    {{ props.fileUrl }}
+                    {{ props.fileUrl.split('/').pop() }}
                 </a>
             </p>
 

@@ -18,25 +18,34 @@
                         <tr v-if="props.body?.data?.length > 0" v-for="(body, index) in props.body.data"
                             :key="body.uuid">
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.firstname }}
-                                {{ (body.middlename != 'null') ? body.middlename : '' }}
-                                {{ body.lastname }}
+                                <div class="flex items-center gap-x-2">
+                                    <input type="checkbox" :value="body.athlete?.uuid"
+                                        :checked="isRowSelected(body.athlete?.uuid).value"
+                                        @input="Selected(body.athlete?.uuid, ($event.target as HTMLInputElement).checked)"
+                                        class=" w-5 h-5 border-gray-500 rounded-sm text-blue-600 focus:ring-blue-500">
+                                </div>
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.sex }}
+                                {{ body?.athlete?.firstname }}
+                                {{ (body?.athlete?.middlename != 'null') ? body?.athlete?.middlename : '' }}
+                                {{ body?.athlete?.lastname }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.birth_date ? moment(body.birth_date).format('MMMM DD, YYYY') : '' }}
+                                {{ body?.athlete?.sex }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.civil_status }}
+                                {{ body?.athlete?.birth_date ? moment(body?.athlete?.birth_date).format('MMMM DD, YYYY')
+                                    : '' }}
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
-                                {{ body.contact_no }}
+                                {{ body?.athlete?.civil_status }}
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-base text-gray-500">
+                                {{ body?.athlete?.contact_no }}
                             </td>
                             <td
                                 class="whitespace-nowrap py-7 pl-3 pr-4 flex items-center justify-end font-medium sm:pr-6">
-                                <MenuQualifiedTable :uuid="body.uuid"
+                                <MenuQualifiedTable :uuid="body?.athlete?.uuid"
                                     :is-reversed-dropdown="index >= props.body.data.length - 3" />
                             </td>
                         </tr>
@@ -64,5 +73,27 @@ const props = defineProps({
         type: Object,
         required: false
     } as any,
+    selected: {
+        type: Array,
+        default: () => [],
+    } as any,
 })
+
+const emit = defineEmits(['Selected'])
+
+const isRowSelected = (uuid: string) => {
+    return computed(() => props.selected.includes(uuid));
+};
+
+const Selected = (uuid: string, checked: any) => {
+    let newSelected = [...props.selected];
+
+    if (checked) {
+        newSelected.push(uuid);
+    } else {
+        newSelected = newSelected.filter((item) => item !== uuid);
+    }
+
+    emit('Selected', { uuid, is_interested: checked });
+};
 </script>

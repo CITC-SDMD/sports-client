@@ -23,7 +23,7 @@
         </div>
         <div class="w-full mt-4">
             <form @submit.prevent="search" class="flex w-full space-x-4">
-                <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search name" />
+                <FormTextField name="search" v-model=state.searchFilter class="w-full" placeholder="Search event" />
                 <FormButton type="submit" class="flex items-center gap-x-2">
                     <MagnifyingGlassIcon class="w-6 h-6" />
                     Search
@@ -59,10 +59,12 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     head: [
+        { name: 'ID' },
+        { name: 'Event name' },
+        { name: 'Event type' },
         { name: 'Sport' },
         { name: 'Organizer' },
-        { name: 'Type of event' },
-        { name: 'Status of event' },
+        { name: 'Event status' }
     ],
     body: [] as any,
     search: null as any,

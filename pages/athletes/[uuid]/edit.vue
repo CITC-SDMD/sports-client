@@ -50,7 +50,6 @@ const state = reactive({
     isPageLoading: false,
     error: null as any,
     athlete: null as any,
-    document: [] as any
 })
 
 async function getAthlete() {
@@ -59,7 +58,6 @@ async function getAthlete() {
         const response = await athleteService.fetchAthlete(uuid)
         if (response.data) {
             state.athlete = response.data
-            state.document = response.data.documents
         }
     } catch (error) {
         state.error = error
@@ -102,7 +100,9 @@ async function editAthlete(data: any) {
         if (data.passport instanceof File) {
             params.append('passport', data.passport)
         }
-        params.append('parent_consent', data.parent_consent)
+        if (data.parent_consent instanceof File) {
+            params.append('parent_consent', data.parent_consent)
+        }
         const response = await athleteService.updateAthlete(params, uuid)
         if (response.data) {
             state.athlete = response.data

@@ -1,7 +1,7 @@
 <template>
 
     <Head>
-        <Title>{{ runtimeConfig?.public?.appName }} | Athlete Assistance</Title>
+        <Title>{{ runtimeConfig?.public?.appName }} | Assistance</Title>
     </Head>
 
     <div>
@@ -11,7 +11,7 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Athlete Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">Assistance</span>
         </div>
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
@@ -47,8 +47,8 @@ console.log('path', path)
 const processUrl = path.replace(`/${uuid}/assistance`, '')
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
-    { name: 'Athlete Assistance', href: path, current: true },
+    { name: 'Assistances', href: processUrl, current: false },
+    { name: 'Assistance', href: path, current: true },
 ]
 
 definePageMeta({
@@ -57,9 +57,11 @@ definePageMeta({
 
 const state = reactive({
     head: [
-        { name: 'Assistance' },
-        { name: 'Discription' },
+        { name: 'Type of assistance' },
+        { name: 'Amount' },
         { name: 'Provider' },
+        { name: 'Date applied' },
+        { name: 'Date released' },
     ],
     athleteUuid: uuid as string,
     athlete: null as any,

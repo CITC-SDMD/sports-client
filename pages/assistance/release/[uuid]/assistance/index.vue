@@ -11,19 +11,15 @@
         </div>
 
         <div class="mt-4">
-            <span class="text-3xl font-bold text-blue-500">Athlete Assistance</span>
+            <span class="text-3xl font-bold text-blue-500">Assistance</span>
         </div>
         <FormBackButton @click="goToPreviousPage" />
         <ErrorAlert v-if="state.error" :message="state.error.message" />
         <ModulesAthleteCoachProfile :identity="'athlete'" class="mt-4" v-if="state.athlete" :model="state.athlete" />
-        <div class="w-full flex justify-end mt-4">
-            <FormButton @click="goToCreateAssistance" class="flex items-center gap-x-2">
-                <PlusIcon class="w-6 h-6" />
-                New assistance
-            </FormButton>
+        <div class="mt-4">
+            <TableRequestAssistance :head=state.head :body="state.body" />
+            <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
         </div>
-        <TableRequestAssistance :head=state.head :body="state.body" />
-        <Pagination v-if="state.body?.data?.length > 0" :data="state.body" @previous="previous()" @next="next()" />
     </div>
 </template>
 
@@ -47,8 +43,8 @@ console.log('path', path)
 const processUrl = path.replace(`/${uuid}/assistance`, '')
 
 const pages = [
-    { name: 'Assistance', href: processUrl, current: false },
-    { name: 'Athlete Assistance', href: path, current: true },
+    { name: 'Assistances', href: processUrl, current: false },
+    { name: 'Assistance', href: path, current: true },
 ]
 
 definePageMeta({
@@ -57,9 +53,11 @@ definePageMeta({
 
 const state = reactive({
     head: [
-        { name: 'Assistance' },
-        { name: 'Discription' },
+        { name: 'Type of assistance' },
+        { name: 'Amount' },
         { name: 'Provider' },
+        { name: 'Date applied' },
+        { name: 'Date released' },
     ],
     athleteUuid: uuid as string,
     athlete: null as any,
